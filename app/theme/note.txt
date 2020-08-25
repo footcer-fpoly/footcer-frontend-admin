@@ -1,0 +1,1 @@
+theme chứa các styles hay gọi cách khác là CSS chung của app
