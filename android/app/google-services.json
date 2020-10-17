@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "501388229164",
+    "firebase_url": "https://footcer-admin.firebaseio.com",
+    "project_id": "footcer-admin",
+    "storage_bucket": "footcer-admin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501388229164:android:d94db64c281964e3372f89",
+        "android_client_info": {
+          "package_name": "com.footceradmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501388229164-4a2rohfcjhbbn6qj18vn4uuav52fcl7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCclJoDVkDczHI89q7ynqcVp3dqz4vQ5wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501388229164-4a2rohfcjhbbn6qj18vn4uuav52fcl7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
