@@ -128,6 +128,7 @@ export default function LoginScreen({navigation}) {
         <TextInput
           keyboardType={'phone-pad'}
           placeholder="Number phone"
+          maxLength={10}
           onChangeText={(text) => setPhone(text)}
         />
         <TouchableOpacity onPress={() => checkPhone()}>
@@ -155,11 +156,13 @@ export default function LoginScreen({navigation}) {
           <TextInput
             secureTextEntry={true}
             keyboardType={'number-pad'}
+            maxLength={6}
             placeholder="Password"
             onChangeText={(text) => setUser({...user, password: text})}
           />
           <TextInput
             secureTextEntry={true}
+            maxLength={6}
             keyboardType={'number-pad'}
             placeholder="Confirm password"
             onChangeText={(text) => setUser({...user, confirmPassword: text})}
