@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,13 +17,18 @@ export default function LoginScreen({navigation}) {
   const [confirmResult, setConfirmResult] = useState();
   const [isHandleSentCode, setIsHandleSentCode] = useState(false);
   const [isHandleVerifyCode, setIsHandleVerifyCode] = useState(false);
-  const [user, setUser] = useState({
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [userSignUp, setUserSignUp] = useState({
     phone: '',
     image: 'http://footcer.tk:4000/static/user/avatar.png',
     password: '',
     confirmPassword: '',
     displayName: '',
     role: 1,
+  });
+  const [userSignIn, setUserSignIn] = useState({
+    phone: '',
+    password: '',
   });
   const checkPhone = () => {
     return API.post('/users/valid-phone', {phone: phone})
@@ -50,13 +55,41 @@ export default function LoginScreen({navigation}) {
       });
   };
   const signUp = () => {
-    setUser({...user, phone: phone});
     return API.post('/users/sign-up-phone', {
-      phone: user.phone,
-      password: user.password,
-      avatar: user.avatar,
-      displayName: user.displayName,
+      phone: userSignUp.phone,
+      password: userSignUp.password,
+      avatar: userSignUp.avatar,
+      displayName: userSignUp.displayName,
       role: 1,
+    })
+      .then(({data}) => {
+        console.log('signUp -> data', data);
+        if (data.code === 200) {
+          setIsHandleSentCode(true);
+          ToastAndroid.showWithGravity(
+            'Sign up successfully',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+          );
+          setIsSignIn(true);
+        } else {
+          ToastAndroid.showWithGravity(
+            'Sign up failed',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+          );
+          setIsHandleSentCode(false);
+        }
+      })
+      .catch((onError) => {
+        setIsHandleSentCode(false);
+        console.log(onError);
+      });
+  };
+  const signIn = () => {
+    return API.post('/users/sign-in-phone', {
+      phone: userSignIn.phone,
+      password: userSignIn.password,
     })
       .then(({data}) => {
         if (data.code === 200) {
@@ -116,80 +149,119 @@ export default function LoginScreen({navigation}) {
       );
     }
   };
+  useEffect(() => {
+    setUserSignUp({...userSignUp, phone: phone});
+  }, [phone]);
   return (
     <SafeAreaView>
-      <Text> Login </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <TextInput
-          keyboardType={'phone-pad'}
-          placeholder="Number phone"
-          maxLength={10}
-          onChangeText={(text) => setPhone(text)}
-        />
-        <TouchableOpacity onPress={() => checkPhone()}>
-          <Text>Check phone</Text>
-        </TouchableOpacity>
-      </View>
+      {!isSignIn ? (
+        <View>
+          <Text> Sign Up </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <TextInput
+              keyboardType={'phone-pad'}
+              placeholder="Number phone"
+              maxLength={10}
+              onChangeText={(text) => setPhone(text)}
+            />
+            <TouchableOpacity onPress={() => checkPhone()}>
+              <Text>Check phone</Text>
+            </TouchableOpacity>
+          </View>
 
-      {isHandleSentCode && (
-        <View>
-          <TouchableOpacity onPress={() => handleSendCode()}>
-            <Text>Sent Verify Code</Text>
-          </TouchableOpacity>
-          <TextInput
-            keyboardType={'number-pad'}
-            placeholder="Verify Code"
-            onChangeText={(text) => setVerifyCode(text)}
-          />
-          <TouchableOpacity onPress={() => handleVerifyCode()}>
-            <Text>Handle Verify Code</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {isHandleVerifyCode && (
-        <View>
-          <TextInput
-            secureTextEntry={true}
-            keyboardType={'number-pad'}
-            maxLength={6}
-            placeholder="Password"
-            onChangeText={(text) => setUser({...user, password: text})}
-          />
-          <TextInput
-            secureTextEntry={true}
-            maxLength={6}
-            keyboardType={'number-pad'}
-            placeholder="Confirm password"
-            onChangeText={(text) => setUser({...user, confirmPassword: text})}
-          />
-          <TextInput
-            placeholder="Display name"
-            onChangeText={(text) => setUser({...user, displayName: text})}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              if (user.password && user.confirmPassword && user.displayName) {
-                user.password === user.confirmPassword
-                  ? signUp()
-                  : ToastAndroid.showWithGravity(
-                      'Confirm password not match',
+          {isHandleSentCode && (
+            <View>
+              <TouchableOpacity onPress={() => handleSendCode()}>
+                <Text>Sent Verify Code</Text>
+              </TouchableOpacity>
+              <TextInput
+                keyboardType={'number-pad'}
+                placeholder="Verify Code"
+                onChangeText={(text) => setVerifyCode(text)}
+              />
+              <TouchableOpacity onPress={() => handleVerifyCode()}>
+                <Text>Handle Verify Code</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {isHandleVerifyCode && (
+            <View>
+              <TextInput
+                secureTextEntry={true}
+                keyboardType={'number-pad'}
+                maxLength={6}
+                placeholder="Password"
+                onChangeText={(text) =>
+                  setUserSignUp({...userSignUp, password: text})
+                }
+              />
+              <TextInput
+                secureTextEntry={true}
+                maxLength={6}
+                keyboardType={'number-pad'}
+                placeholder="Confirm password"
+                onChangeText={(text) =>
+                  setUserSignUp({...userSignUp, confirmPassword: text})
+                }
+              />
+              <TextInput
+                placeholder="Display name"
+                onChangeText={(text) =>
+                  setUserSignUp({...userSignUp, displayName: text})
+                }
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  if (
+                    userSignUp.password &&
+                    userSignUp.confirmPassword &&
+                    userSignUp.displayName
+                  ) {
+                    userSignUp.password === userSignUp.confirmPassword
+                      ? signUp()
+                      : ToastAndroid.showWithGravity(
+                          'Confirm password not match',
+                          ToastAndroid.SHORT,
+                          ToastAndroid.CENTER,
+                        );
+                  } else
+                    ToastAndroid.showWithGravity(
+                      'Please fill in all information',
                       ToastAndroid.SHORT,
                       ToastAndroid.CENTER,
                     );
-              } else
-                ToastAndroid.showWithGravity(
-                  'Please fill in all information',
-                  ToastAndroid.SHORT,
-                  ToastAndroid.CENTER,
-                );
-              // signUp();
-            }}>
-            <Text>Sign Up</Text>
+                  // signUp();
+                }}>
+                <Text>Sign Up</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      ) : (
+        <View>
+          <Text>Login In</Text>
+          <TextInput
+            keyboardType={'phone-pad'}
+            maxLength={10}
+            placeholder="Number phone"
+            onChangeText={(text) => setUserSignIn({...userSignIn, phone: text})}
+          />
+          <TextInput
+            secureTextEntry={true}
+            maxLength={6}
+            keyboardType={'number-pad'}
+            placeholder="Password"
+            onChangeText={(text) =>
+              setUserSignIn({...userSignIn, password: text})
+            }
+          />
+          <TouchableOpacity onPress={() => signIn()}>
+            <Text>Login</Text>
           </TouchableOpacity>
         </View>
       )}
