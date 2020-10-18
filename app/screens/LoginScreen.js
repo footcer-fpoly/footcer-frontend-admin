@@ -10,6 +10,10 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import API from '../server/api';
+import {useDispatch, useSelector} from 'react-redux';
+import {SignIn} from '../redux/actions/userAction';
+import {persistStore} from 'redux-persist';
+import {store} from '../redux/store';
 
 export default function LoginScreen({navigation}) {
   const [phone, setPhone] = useState();
@@ -18,6 +22,15 @@ export default function LoginScreen({navigation}) {
   const [isHandleSentCode, setIsHandleSentCode] = useState(false);
   const [isHandleVerifyCode, setIsHandleVerifyCode] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state?.userReducer);
+  console.log('LoginScreen', token);
+  useEffect(() => {
+    persistStore(store, null, () => {
+      const token = store.getState().userReducer.token;
+      console.log('LoginScreen -> token', token);
+    });
+  }, []);
   const [userSignUp, setUserSignUp] = useState({
     phone: '',
     image: 'http://footcer.tk:4000/static/user/avatar.png',
@@ -72,34 +85,6 @@ export default function LoginScreen({navigation}) {
             ToastAndroid.CENTER,
           );
           setIsSignIn(true);
-        } else {
-          ToastAndroid.showWithGravity(
-            'Sign up failed',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
-          setIsHandleSentCode(false);
-        }
-      })
-      .catch((onError) => {
-        setIsHandleSentCode(false);
-        console.log(onError);
-      });
-  };
-  const signIn = () => {
-    return API.post('/users/sign-in-phone', {
-      phone: userSignIn.phone,
-      password: userSignIn.password,
-    })
-      .then(({data}) => {
-        if (data.code === 200) {
-          setIsHandleSentCode(true);
-          ToastAndroid.showWithGravity(
-            'Sign up successfully',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
-          navigation.replace('Dashboard');
         } else {
           ToastAndroid.showWithGravity(
             'Sign up failed',
@@ -244,7 +229,7 @@ export default function LoginScreen({navigation}) {
         </View>
       ) : (
         <View>
-          <Text>Login In</Text>
+          <Text>Sign In</Text>
           <TextInput
             keyboardType={'phone-pad'}
             maxLength={10}
@@ -260,7 +245,10 @@ export default function LoginScreen({navigation}) {
               setUserSignIn({...userSignIn, password: text})
             }
           />
-          <TouchableOpacity onPress={() => signIn()}>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(SignIn(userSignIn.phone, userSignIn.password));
+            }}>
             <Text>Login</Text>
           </TouchableOpacity>
         </View>
