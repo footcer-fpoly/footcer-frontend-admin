@@ -13,6 +13,7 @@ import LoginScreen from './screens/LoginScreen';
 import SplashScreen from './screens/SplashScreen';
 import ProfileDetailScreen from './screens/ProfileDetailScreen';
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
+import SignUp from './screens/SignUp';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -115,6 +116,7 @@ export default class AppNavigation extends Component {
             name="ChangePassword"
             component={ChangePasswordScreen}
           />
+          <Stack.Screen name="SignUp" component={SignUp} />
         </Stack.Navigator>
       </NavigationContainer>
     );

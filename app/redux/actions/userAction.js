@@ -2,8 +2,7 @@ import Axios from 'axios';
 import API from '../../server/api';
 import {REDUX} from '../store/types';
 
-export const SignIn = (phone, password) => {
-  console.log('SignIn -> phone, password', phone, password);
+export const SignIn = (phone, password, onSuccess = () => {}) => {
   return (dispatch, store) => {
     return API.post('/users/sign-in-phone', {
       phone: phone,
@@ -16,6 +15,7 @@ export const SignIn = (phone, password) => {
         dispatch({type: REDUX.UPDATE_USER_DATA, payload: obj});
         dispatch({type: REDUX.UPDATE_USER_TOKEN, payload: obj.token});
         dispatch({type: REDUX.LOGGED_IN});
+        onSuccess();
       })
       .catch((onError) => {
         console.log('SignIn -> onError', onError);

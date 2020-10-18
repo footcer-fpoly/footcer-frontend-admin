@@ -12,7 +12,7 @@ import {colorGrayBackground, colorWhite} from '../theme/Color';
 import Head from '../components/ProfileScreenComponents/Head';
 import Profile from '../components/ProfileScreenComponents/Profile';
 import About from '../components/ProfileScreenComponents/About';
-export default function ProfileScreen(props) {
+export default function ProfileScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -22,7 +22,7 @@ export default function ProfileScreen(props) {
             name="Trần Phương Ly"
             urlAvatar="https://img.namvietmedia.vn/voh/thumbnail/2018/12/20/VOHPhuongLy1_20181220165049.jpg"
           />
-          <Profile />
+          <Profile navigation={navigation} />
           <About />
         </View>
       </ScrollView>

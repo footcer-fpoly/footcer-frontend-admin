@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useDispatch} from 'react-redux';
+import {REDUX} from '../../redux/store/types';
 import {colorDarkBlue, colorOrange} from '../../theme/Color';
-import {useNavigation} from '@react-navigation/native';
 
-export default function Profile() {
-  const navigation = useNavigation();
+export default function Profile({navigation}) {
+  const dispatch = useDispatch();
   return (
     <View style={styles.profileContainer}>
       <Text style={styles.txtTitle}>TÀI KHOẢN</Text>
@@ -17,7 +18,12 @@ export default function Profile() {
         <Image source={require('../../assets/Icon/edit.png')} />
         <Text style={styles.txt}>Chỉnh sửa tài khoản</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.row}>
+      <TouchableOpacity
+        style={styles.row}
+        onPress={() => {
+          dispatch({type: REDUX.CLEAR_USER_DATA});
+          navigation.navigate('Login');
+        }}>
         <Image source={require('../../assets/Icon/signup.png')} />
         <Text style={styles.txt}>Đăng xuất</Text>
       </TouchableOpacity>

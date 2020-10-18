@@ -6,7 +6,7 @@ const initialState = {
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case REDUX.CLEAR_DATA: {
+    case REDUX.CLEAR_USER_DATA: {
       return initialState;
     }
     case REDUX.LOGGED_IN: {
