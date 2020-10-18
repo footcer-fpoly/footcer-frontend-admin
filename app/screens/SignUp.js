@@ -48,7 +48,9 @@ export default function SignUp({navigation}) {
       });
   };
   const handleSendCode = async () => {
-    const confirmation = await auth().signInWithPhoneNumber(`+84${phone}`);
+    const confirmation = await auth().signInWithPhoneNumber(
+      `+84${userSignUp.phone}`,
+    );
     ToastAndroid.showWithGravity(
       'Sent OTP code',
       ToastAndroid.SHORT,
@@ -91,7 +93,6 @@ export default function SignUp({navigation}) {
       role: 1,
     })
       .then(({data}) => {
-        console.log('signUp -> data', data);
         if (data.code === 200) {
           setIsHandleSentCode(true);
           ToastAndroid.showWithGravity(
@@ -99,6 +100,7 @@ export default function SignUp({navigation}) {
             ToastAndroid.SHORT,
             ToastAndroid.CENTER,
           );
+          navigation.goBack();
           setIsSignIn(true);
         } else {
           ToastAndroid.showWithGravity(
@@ -116,7 +118,6 @@ export default function SignUp({navigation}) {
   };
   //   useEffect(() => {
   //     setUserSignUp({...userSignUp, phone: phone});
-  console.log('userSignUp', userSignUp);
   //   }, [phone]);
   return (
     <SafeAreaView>

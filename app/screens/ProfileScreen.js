@@ -12,16 +12,15 @@ import {colorGrayBackground, colorWhite} from '../theme/Color';
 import Head from '../components/ProfileScreenComponents/Head';
 import Profile from '../components/ProfileScreenComponents/Profile';
 import About from '../components/ProfileScreenComponents/About';
+import {useSelector} from 'react-redux';
 export default function ProfileScreen({navigation}) {
+  const userData = useSelector((state) => state.userReducer.userData);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <HeaderProfile nameStadium="Sân bóng FPoly HCM" />
         <View style={styles.bodyContainer}>
-          <Head
-            name="Trần Phương Ly"
-            urlAvatar="https://img.namvietmedia.vn/voh/thumbnail/2018/12/20/VOHPhuongLy1_20181220165049.jpg"
-          />
+          <Head name={userData.displayName} urlAvatar={userData.avatar} />
           <Profile navigation={navigation} />
           <About />
         </View>
