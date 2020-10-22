@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import Setting from '../components/PriceScreenComponents/Setting';
 import HeaderPrice from '../components/Header';
 import Price from '../components/PriceScreenComponents/Price';
-import {colorGrayBackground, colorDarkBlue} from '../theme/Color';
+import Colors from '../theme/Colors';
 
 export default function PriceScreen() {
   return (
@@ -28,10 +28,10 @@ export default function PriceScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorGrayBackground,
+    backgroundColor: Colors.colorGrayBackground,
   },
   txtSetting: {
-    color: colorDarkBlue,
+    color: Colors.colorDarkBlue,
     fontSize: 16,
     marginVertical: 10,
     marginLeft: 15,

@@ -134,6 +134,9 @@ export default function LoginScreen({navigation}) {
         <TouchableOpacity onPress={() => checkPhone()}>
           <Text>Check phone</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+          <Text>HomeScreen</Text>
+        </TouchableOpacity>
       </View>
 
       {isHandleSentCode && (

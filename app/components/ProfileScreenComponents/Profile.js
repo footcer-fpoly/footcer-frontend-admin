@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {colorDarkBlue, colorOrange} from '../../theme/Color';
+import Colors from '../../theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
 export default function Profile() {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontSize: 20,
-    color: colorOrange,
+    color: Colors.colorOrange,
   },
   txt: {
     fontSize: 16,

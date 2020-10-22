@@ -1,10 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {
-  colorGrayBackground,
-  colorWhite,
-  colorGrayText,
-} from '../../theme/Color';
+import Colors from '../../theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
 export default function Profile(props) {
@@ -45,7 +41,7 @@ export default function Profile(props) {
 const styles = StyleSheet.create({
   title: {
     fontSize: 14,
-    color: colorGrayText,
+    color: Colors.colorGrayText,
   },
   btnChangePassword: {
     flexDirection: 'row',
@@ -62,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 0.5,
-    borderBottomColor: colorGrayText,
+    borderBottomColor: Colors.colorGrayText,
   },
   txt: {
     paddingVertical: 10,

@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import HomeScreen from './screens/HomeScreen';
+import HomeScreen from '../app/screens/Home/HomeScreen';
 import HomeDetailScreen from './screens/HomeDetailScreen';
 import PriceScreen from './screens/PriceScreen';
 import NotificationScreen from './screens/NotificationScreen';

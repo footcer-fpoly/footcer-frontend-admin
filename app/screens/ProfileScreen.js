@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import HeaderProfile from '../components/Header';
-import {colorGrayBackground, colorWhite} from '../theme/Color';
+import Colors from '../theme/Colors';
 import Head from '../components/ProfileScreenComponents/Head';
 import Profile from '../components/ProfileScreenComponents/Profile';
 import About from '../components/ProfileScreenComponents/About';
@@ -32,6 +32,6 @@ export default function ProfileScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
   },
 });

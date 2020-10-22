@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Table, Row, Rows} from 'react-native-table-component';
-import {colorWhite, colorGrayText} from '../../theme/Color';
+import Colors from '../../theme/Colors';
 
 export default function Price() {
   const tableHead = ['Khung giờ', 'Sân 5', 'Sân 7'];
@@ -27,19 +27,19 @@ export default function Price() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
   },
   textHead: {
     textAlign: 'center',
     fontSize: 15,
     paddingVertical: 10,
-    color: colorGrayText,
+    color: Colors.colorGrayText,
   },
   textData: {
     textAlign: 'center',
     fontSize: 15,
     paddingVertical: 20,
-    color: colorGrayText,
+    color: Colors.colorGrayText,
   },
   table: {
     marginTop: 0,

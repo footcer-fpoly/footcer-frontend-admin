@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Header from '../components/HeaderBack';
-import {colorGrayBackground, colorWhite, colorGrayText} from '../theme/Color';
+import Colors from '../theme/Colors';
 import HeadAvatar from '../components/ProfileDetailScreenComponents/HeadAvatar';
 import Profile from '../components/ProfileDetailScreenComponents/Profile';
 export default function ProfileDetailScreen() {
@@ -37,11 +37,11 @@ export default function ProfileDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
   },
   bodyContainer: {
     marginTop: 10,
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
     paddingHorizontal: 10,
     marginBottom: -1,
   },
