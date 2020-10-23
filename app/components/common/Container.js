@@ -48,6 +48,27 @@ const Container = (props) => {
             ) : null
           }
         >
+        <View
+            style={{
+              flex: 1,
+            }}
+          >
+            {!props.hideBackground ? (
+              <View
+                style={{
+                  transform: [
+                    {
+                      translateY: -(props.headerHeight
+                        ? props.headerHeight + statusBarHeight
+                        : 0),
+                    },
+                  ],
+                }}
+              >
+              </View>
+            ) : null}
+            <View style={{...props.containerStyle}}>{props.children}</View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
       {props.footer ? props.footer : null}
@@ -67,6 +88,8 @@ Container.propTypes = {
   ]),
   headerHeight: PropTypes.number,
   keyboardAvoidingView: PropTypes.bool,
+  hideBackground: PropTypes.bool,
+  containerStyle: PropTypes.object,
   keyboardShouldPersistTaps: PropTypes.bool,
   notScroll: PropTypes.bool,
 };

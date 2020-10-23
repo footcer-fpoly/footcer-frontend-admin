@@ -4,6 +4,8 @@ export default {
   greyShadow:'#AAAAAA',
   colorGreen: '#0AB134',
   colorWhite:'#fff',
+  colorViewAll:'#898989',
+  borderGreen:'#2ECC71',
   colorBlue: '#1549FF',
   colorDarkBlue: '#001C7E',
   colorOrange: '#FF5E0B',
