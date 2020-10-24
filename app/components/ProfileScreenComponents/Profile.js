@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {useDispatch} from 'react-redux';
 import {REDUX} from '../../redux/store/types';
-import {colorDarkBlue, colorOrange} from '../../theme/Color';
 import Colors from '../../theme/Colors';
 import {useNavigation} from '@react-navigation/native';
 
