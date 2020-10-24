@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {colorDarkBlue, colorOrange} from '../../theme/Color';
+import Colors from '../../theme/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Profile() {
@@ -8,19 +8,19 @@ export default function Profile() {
     <View style={styles.profileContainer}>
       <Text style={styles.txtTitle}>THÔNG TIN</Text>
       <TouchableOpacity style={styles.row}>
-        <Icon name="info-circle" size={30} color={colorDarkBlue} />
+        <Icon name="info-circle" size={30} color={Colors.colorDarkBlue} />
         <Text style={styles.txt}>Chỉnh sửa tài khoản</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.row}>
-        <Icon name="shield-alt" size={30} color={colorDarkBlue} />
+        <Icon name="shield-alt" size={30} color={Colors.colorDarkBlue} />
         <Text style={styles.txt}>Chính sách bảo mật</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.row}>
-        <Icon name="rocketchat" size={30} color={colorDarkBlue} />
+        <Icon name="rocketchat" size={30} color={Colors.colorDarkBlue} />
         <Text style={styles.txt}>Đánh giá ứng dụng</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.row}>
-        <Icon name="question-circle" size={30} color={colorDarkBlue} />
+        <Icon name="question-circle" size={30} color={Colors.colorDarkBlue} />
         <Text style={styles.txt}>Hổ trợ & góp ý</Text>
       </TouchableOpacity>
     </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   txtTitle: {
     fontSize: 20,
-    color: colorOrange,
+    color: Colors.colorOrange,
   },
   txt: {
     fontSize: 16,

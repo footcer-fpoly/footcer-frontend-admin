@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {colorWhite, colorGreen} from '../theme/Color';
+import Colors from '../theme/Colors';
 
 export default function Header(props) {
   return (
@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
     paddingVertical: 20,
-    backgroundColor: colorGreen,
+    backgroundColor: Colors.colorGreen,
   },
   title: {
     fontSize: 18,
-    color: colorWhite,
+    color: Colors.colorWhite,
   },
 });

@@ -1,13 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {
-  colorWhite,
-  colorGrayText,
-  colorBlue,
-  colorGreen,
-  colorOrange,
-  colorDarkBlue,
-} from '../../theme/Color';
+import Colors from '../../theme/Colors';
 
 export default function Setting(props) {
   return (
@@ -39,7 +32,7 @@ export default function Setting(props) {
 
 const styles = StyleSheet.create({
   settingsContainer: {
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
     paddingHorizontal: 20,
     paddingBottom: 15,
     paddingTop: 10,
@@ -51,25 +44,25 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   txt: {
-    color: colorGrayText,
+    color: Colors.colorGrayText,
     fontSize: 16,
   },
   txtTimeSlot: {
-    color: colorBlue,
+    color: Colors.colorBlue,
     fontSize: 16,
   },
   txtDate: {
     fontSize: 16,
   },
   txtPrice: {
-    color: colorGreen,
+    color: Colors.colorGreen,
     fontSize: 16,
   },
   btnContainer: {
     alignItems: 'center',
   },
   btnSetting: {
-    backgroundColor: colorOrange,
+    backgroundColor: Colors.colorOrange,
     alignItems: 'center',
     borderRadius: 7,
   },
@@ -77,6 +70,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     fontSize: 17,
-    color: colorWhite,
+    color: Colors.colorWhite,
   },
 });

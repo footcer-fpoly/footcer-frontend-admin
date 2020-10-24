@@ -51,6 +51,9 @@ export default function LoginScreen({navigation}) {
           }}>
           <Text>Sign Up</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+          <Text>HomeScreen</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

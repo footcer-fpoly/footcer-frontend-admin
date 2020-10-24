@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, SafeAreaView, TextInput} from 'react-native';
-import {colorWhite, colorGrayText} from '../theme/Color';
+import Colors from '../theme/Colors';
 import Header from '../components/HeaderBack';
 
 export default function ChangePasswordScreen(props) {
@@ -43,7 +43,7 @@ export default function ChangePasswordScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorWhite,
+    backgroundColor: Colors.colorWhite,
   },
   bodyContainer: {
     marginTop: 10,
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: colorGrayText,
+    color: Colors.colorGrayText,
   },
   subTitle: {
     borderBottomWidth: 0.5,
-    borderBottomColor: colorGrayText,
+    borderBottomColor: Colors.colorGrayText,
   },
   txt: {
     fontSize: 15,

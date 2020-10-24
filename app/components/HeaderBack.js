@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {colorGreen} from '../theme/Color';
+import Colors from '../theme/Colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    backgroundColor: colorGreen,
+    backgroundColor: Colors.colorGreen,
   },
   titleHeader: {
     fontSize: 16,
