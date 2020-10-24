@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import Slider from "react-native-hook-image-slider"
 import Container from '../../components/common/Container'
 import StatusBarMain from '../../components/common/StatusBarMain'
+import ItemStadium from '../../components/Home/ItemStadium'
 import Colors from '../../theme/Colors';
 import ConfigStyle from '../../theme/ConfigStyle';
 
@@ -47,6 +48,13 @@ export default function HomeScreen(props) {
           <Text style={styles.textDiscount}>Khuyến mãi của bạn</Text>
           <Text style={styles.textViewAll}>Xem tất cả</Text>
         </View>
+        <FlatList 
+          data={[1,2,3,4]}
+          renderItem = {({item,index}) => <ItemStadium data={item} />}
+          keyExtractor = {item => item.toString()}
+          numColumns={2}
+          columnWrapperStyle={{justifyContent:'space-between'}}
+        />
       </View>
     </Container>
   )
@@ -72,7 +80,8 @@ const styles = StyleSheet.create({
   containerPromotion: {
     justifyContent:'space-between', 
     flexDirection:'row', 
-    alignItems:'center'
+    alignItems:'center',
+    marginBottom:20,
   }, 
   textDiscount:{
     fontSize:ConfigStyle.font16, 

@@ -10,6 +10,7 @@ export default {
   font16: 16,
   font20: 20,
   font25: 25,
+  font11:11,
   bold: 'bold',
   uppercase: 'uppercase',
   RF: {

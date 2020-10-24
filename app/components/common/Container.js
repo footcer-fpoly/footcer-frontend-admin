@@ -101,6 +101,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#EDEDED',
   },
 });
