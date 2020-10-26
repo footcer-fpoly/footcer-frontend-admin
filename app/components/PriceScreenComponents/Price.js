@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Table, Row, Rows} from 'react-native-table-component';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Table, Row, Rows } from 'react-native-table-component';
 import Colors from '../../theme/Colors';
 
 export default function Price() {
@@ -17,7 +17,7 @@ export default function Price() {
     <View style={styles.container}>
       <Table
         style={styles.table}
-        borderStyle={{borderWidth: 1, borderColor: colorGrayText}}>
+        borderStyle={{ borderWidth: 1, borderColor: Colors.colorGrayText }}>
         <Row data={tableHead} textStyle={styles.textHead} />
         <Rows data={tableData} textStyle={styles.textData} />
       </Table>

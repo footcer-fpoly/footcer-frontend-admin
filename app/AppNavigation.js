@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from '../app/screens/Home/HomeScreen';
 import HomeDetailScreen from './screens/HomeDetailScreen';
@@ -13,7 +12,11 @@ import LoginScreen from './screens/LoginScreen';
 import SplashScreen from './screens/SplashScreen';
 import ProfileDetailScreen from './screens/ProfileDetailScreen';
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
-import SignUp from './screens/SignUp';
+import OTPScreen from './screens/OTPScreen';
+import PasswordScreen from './screens/PasswordScreen';
+import UpdatePasswordScreen from './screens/UpdatePasswordScreen';
+import UpdateStadium from './screens/UpdateStadium';
+import Spinner from './components/Spinner';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,7 +28,7 @@ class HomeStack extends Component {
         <Stack.Screen
           name="Dashboard"
           component={HomeScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="HomeDetails" component={HomeDetailScreen} />
       </Stack.Navigator>
@@ -39,7 +42,7 @@ class PriceStack extends Component {
         <Stack.Screen
           name="Price"
           component={PriceScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     );
@@ -52,7 +55,7 @@ class NotificationStack extends Component {
         <Stack.Screen
           name="Notification"
           component={NotificationScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     );
@@ -61,7 +64,7 @@ class NotificationStack extends Component {
 class UserStack extends Component {
   render() {
     return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Infor" component={ProfileScreen} />
       </Stack.Navigator>
     );
@@ -73,8 +76,8 @@ class BottomNavigation extends Component {
     return (
       <Tab.Navigator
         initialRouteName="Home"
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
             if (route.name === 'Home') {
@@ -107,7 +110,8 @@ export default class AppNavigation extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Dashboard" component={BottomNavigation} />
@@ -116,8 +120,14 @@ export default class AppNavigation extends Component {
             name="ChangePassword"
             component={ChangePasswordScreen}
           />
-          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="OTPScreen" component={OTPScreen} />
+          <Stack.Screen name="PasswordScreen" component={PasswordScreen} />
+          <Stack.Screen
+            name="UpdatePasswordScreen"
+            component={UpdatePasswordScreen}
+          />
         </Stack.Navigator>
+        <Spinner />
       </NavigationContainer>
     );
   }

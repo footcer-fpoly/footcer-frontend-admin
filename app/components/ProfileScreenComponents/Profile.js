@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useDispatch} from 'react-redux';
-import {REDUX} from '../../redux/store/types';
+import { useDispatch } from 'react-redux';
+import { REDUX } from '../../redux/store/types';
 import Colors from '../../theme/Colors';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Profile({navigation}) {
+export default function Profile({ navigation }) {
   const dispatch = useDispatch();
   return (
     <View style={styles.profileContainer}>
@@ -22,7 +22,7 @@ export default function Profile({navigation}) {
       <TouchableOpacity
         style={styles.row}
         onPress={() => {
-          dispatch({type: REDUX.CLEAR_USER_DATA});
+          dispatch({ type: REDUX.CLEAR_USER_DATA });
           navigation.navigate('Login');
         }}>
         <Image source={require('../../assets/Icon/signup.png')} />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,9 +8,9 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import {Text} from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import {getStatusBarHeight} from '../../utils/ScaleAdaptor';
+import { getStatusBarHeight } from '../../utils/ScaleAdaptor';
 import Styles from '../../theme/MainStyles';
 import ImageUtils from '../../utils/images.util';
 import ConfigStyle from '../../theme/ConfigStyle';
@@ -30,17 +30,14 @@ const StatusBarMain = (props) => {
   }, []);
 
   return (
-    <View
-      style={[styles.supperWrapper]}
-    >
+    <View style={[styles.supperWrapper]}>
       <View
         style={[
           styles.headerWrapper,
           props.headerHeight
-            ? {height: props.headerHeight + statusBarHeight}
+            ? { height: props.headerHeight + statusBarHeight }
             : {},
-        ]}
-      >
+        ]}>
         <View
           style={{
             ...styles.container,
@@ -52,36 +49,39 @@ const StatusBarMain = (props) => {
               (Platform.OS === 'ios'
                 ? getStatusBarHeight(true)
                 : StatusBar.currentHeight),
-          }}
-        >
+          }}>
           <View
             style={{
               ...styles.contentBar,
               ...props.contentBarStyles,
               marginBottom: Platform.OS === 'android' ? statusBarHeight / 2 : 0,
-            }}
-          >
+            }}>
             {/* action left */}
             {props.textLeft || props.arrowBack ? (
-              <View style={{...styles.holdAction}}>
+              <View style={{ ...styles.holdAction }}>
                 {props.textLeft ? (
                   <TouchableOpacity onPress={() => props.actionLeft}>
                     <Text style={styles.textAction}>{props.textLeft}</Text>
                   </TouchableOpacity>
-                ) : <View style={{...styles.holdAction}}/>}
+                ) : (
+                  <View style={{ ...styles.holdAction }} />
+                )}
                 {props.arrowBack ? (
                   <TouchableOpacity
                     onPress={() => props.navigation.goBack()}
-                    style={styles.wrapArrowLeft}
-                  >
+                    style={styles.wrapArrowLeft}>
                     <Image
                       style={styles.iconArrowLeft}
                       source={ImageUtils.iconArrowLeft}
                     />
                   </TouchableOpacity>
-                ) : <View style={{...styles.holdAction}}/>}
+                ) : (
+                  <View style={{ ...styles.holdAction }} />
+                )}
               </View>
-            ) : <View style={{...styles.holdAction}}/>}
+            ) : (
+              <View style={{ ...styles.holdAction }} />
+            )}
             {/* content */}
             <View style={styles.mainContent}>
               {props.title ? (
@@ -90,15 +90,14 @@ const StatusBarMain = (props) => {
                     style={[
                       Styles.title1RS,
                       styles.title,
-                      props.tabLabels ? {marginBottom: 8} : {},
-                    ]}
-                  >
+                      props.tabLabels ? { marginBottom: 8 } : {},
+                    ]}>
                     {props.title}
                   </Text>
                 </View>
               ) : null}
             </View>
-            <View style={{...styles.holdAction}}/>
+            <View style={{ ...styles.holdAction }} />
           </View>
         </View>
       </View>
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   headerWrapper: {
     backgroundColor: Colors.whiteColor,
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#000',
-    fontFamily:'Roboto-Medium',
+    fontFamily: 'Roboto-Medium',
   },
   wrapTitle: {
     flexDirection: 'row',

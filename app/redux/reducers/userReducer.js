@@ -1,8 +1,9 @@
-import {REDUX} from '../store/types';
+import { REDUX } from '../store/types';
 const initialState = {
   loggedIn: false,
   userData: {},
   token: '',
+  listStadium: {},
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -25,6 +26,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    }
+    case REDUX.UPDATE_STADIUM: {
+      return {
+        ...state,
+        listStadium: action.payload,
       };
     }
     default: {

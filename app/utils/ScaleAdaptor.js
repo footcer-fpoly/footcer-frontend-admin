@@ -1,4 +1,4 @@
-import {Dimensions, Platform, StatusBar} from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
 
 export function isIphoneX() {
   const dimen = Dimensions.get('window');
@@ -55,3 +55,27 @@ export function getHeaderStream(safe) {
     ios: ifIphoneX(safe ? 55 : 55, null),
   });
 }
+//! TODO: check lại do modal của android
+const { width, height } = Dimensions.get('screen');
+const WIDTH = width;
+const HEIGHT = height;
+const IS_ANDROID = Platform.OS === 'android';
+const IS_IOS = Platform.OS === 'ios';
+const IS_IPAD = IS_ANDROID ? width / height < 1.6 : Platform.isPad;
+// Use iPhone6 as base size which is 375 x 667
+const baseWidth = 398;
+const baseHeight = 736;
+const WIDTH_SCALE = width / baseWidth;
+const HEIGHT_SCALE = height / baseHeight;
+
+export {
+  WIDTH,
+  HEIGHT,
+  IS_ANDROID,
+  IS_IOS,
+  IS_IPAD,
+  baseWidth,
+  baseHeight,
+  WIDTH_SCALE,
+  HEIGHT_SCALE,
+};

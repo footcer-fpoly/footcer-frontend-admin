@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../theme/Colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ItemHeader(props) {
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ export default function ItemHeader(props) {
         <Icon style={styles.iconHeader} name="chevron-left" size={21} />
       </TouchableOpacity>
       <Text style={styles.titleHeader}>{props.titleHeader}</Text>
-      <View style={{width: 21}} />
+      <View style={{ width: 21 }} />
     </View>
   );
 }

@@ -1,6 +1,3 @@
-import {Platform} from 'react-native';
-import {getStatusBarHeight} from '../utils/ScaleAdaptor';
-
 export default {
   // Font style
   font10: 10,
@@ -10,7 +7,8 @@ export default {
   font16: 16,
   font20: 20,
   font25: 25,
-  font11:11,
+  font11: 11,
+  font18: 18,
   bold: 'bold',
   uppercase: 'uppercase',
   RF: {
