@@ -111,7 +111,6 @@ export default class AppNavigation extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Dashboard" component={BottomNavigation} />
@@ -126,6 +125,7 @@ export default class AppNavigation extends Component {
             name="UpdatePasswordScreen"
             component={UpdatePasswordScreen}
           />
+          <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
         </Stack.Navigator>
         <Spinner />
       </NavigationContainer>

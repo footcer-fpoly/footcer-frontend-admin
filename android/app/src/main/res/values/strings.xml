@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">footceradmin</string>
+	<string name="app_name">
+		footceradmin
+	</string>
+	<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+		AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q
+	</string>
 </resources>

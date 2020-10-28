@@ -29,6 +29,8 @@ class Spinner extends React.PureComponent {
     if (Spinner?.instance?.state?.visible) {
       return (
         <Modal
+          animationInTiming={100}
+          animationOutTiming={100}
           isVisible={Spinner?.instance?.state?.visible}
           style={{
             margin: 0,

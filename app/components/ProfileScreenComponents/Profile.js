@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, PermissionsAndroid } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Profile({ navigation }) {
   const dispatch = useDispatch();
+
   return (
     <View style={styles.profileContainer}>
       <Text style={styles.txtTitle}>TÀI KHOẢN</Text>
@@ -16,7 +17,7 @@ export default function Profile({ navigation }) {
         onPress={() => {
           navigation.navigate('ProfileDetail');
         }}>
-        <Image source={require('../../assets/Icon/edit.png')} />
+        <Image source={require('../../assets/icon/edit.png')} />
         <Text style={styles.txt}>Chỉnh sửa tài khoản</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -25,7 +26,7 @@ export default function Profile({ navigation }) {
           dispatch({ type: REDUX.CLEAR_USER_DATA });
           navigation.navigate('Login');
         }}>
-        <Image source={require('../../assets/Icon/signup.png')} />
+        <Image source={require('../../assets/icon/signup.png')} />
         <Text style={styles.txt}>Đăng xuất</Text>
       </TouchableOpacity>
     </View>

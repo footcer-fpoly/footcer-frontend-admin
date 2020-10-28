@@ -40,7 +40,6 @@ export default function SplashScreen({ route, navigation }) {
       : persistStore(store, null, () => {
           const isSignIn = store.getState().userReducer.loggedIn;
           const listStadium = store.getState().userReducer.listStadium;
-          console.log('SplashScreen -> listStadium', listStadium);
           isSignIn
             ? listStadium?.latitude === -1 && listStadium?.longitude === -1
               ? navigation.replace('UpdateStadium')
