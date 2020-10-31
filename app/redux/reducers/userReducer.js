@@ -4,6 +4,7 @@ const initialState = {
   userData: {},
   token: '',
   listStadium: {},
+  listPosition: { latitude: -1, longitude: -1 },
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,6 +33,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         listStadium: action.payload,
+      };
+    }
+    case REDUX.UPDATE_POSITION: {
+      return {
+        ...state,
+        listPosition: action.payload,
       };
     }
     default: {

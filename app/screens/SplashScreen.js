@@ -28,8 +28,9 @@ export default function SplashScreen({ route, navigation }) {
       ? API.get('stadium/info')
           .then(({ data }) => {
             const obj = data?.data;
+            console.log('SplashScreen -> obj.latitude', obj?.latitude);
             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
-            obj.latitude === -1 && obj.longitude === -1
+            obj?.latitude === -1 && obj?.longitude === -1
               ? navigation.replace('UpdateStadium')
               : navigation.replace('Dashboard');
           })

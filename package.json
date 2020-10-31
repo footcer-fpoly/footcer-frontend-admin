@@ -22,7 +22,8 @@
     "build:apk": "npx jetify && cd android && ./gradlew assembleRelease",
     "build:aab": "npx jetify && cd android && ./gradlew bundleRelease",
     "clean:android": "cd android && ./gradlew clean && cd ../",
-    "clean:ios": "cd ios && xcodebuild clean && cd ../"
+    "clean:ios": "cd ios && xcodebuild clean && cd ../",
+    "adb": "adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -33,7 +34,6 @@
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
     "axios": "^0.20.0",
-    "patch-package": "^6.2.2",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-elements": "^3.0.0-alpha.1",
@@ -44,10 +44,7 @@
     "react-native-indicators": "^0.17.0",
     "react-native-maps": "https://github.com/xDemon200/react-native-maps",
     "react-native-modal": "^11.5.6",
-    "react-native-reanimated": "^1.10.1",
-    "react-native-safe-area-context": "^3.1.1",
     "react-native-screens": "^2.9.0",
-    "react-native-table-component": "^1.2.1",
     "react-native-vector-icons": "^7.0.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",

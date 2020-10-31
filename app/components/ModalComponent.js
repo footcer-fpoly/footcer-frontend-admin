@@ -70,21 +70,23 @@ const ModalComponent = (props, ref) => {
                   : 'Huỷ'.toUpperCase()}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={props.onPress}>
-              <Text style={{ color: Colors.colorGreen }}>
-                {props.agree
-                  ? props.agree.toUpperCase()
-                  : 'Đồng ý'.toUpperCase()}
-              </Text>
-            </TouchableOpacity>
+            {!props.isHideAgree && (
+              <TouchableOpacity onPress={props.onPress}>
+                <Text style={{ color: Colors.colorGreen }}>
+                  {props.agree
+                    ? props.agree.toUpperCase()
+                    : 'Đồng ý'.toUpperCase()}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
     );
   };
-
   return (
     <Modal
+      propagateSwipe={props?.propagateSwipe ? props?.propagateSwipe : false}
       isVisible={visible}
       onBackdropPress={props.disableBackdrop ? () => null : hide}
       onBackButtonPress={hide}
