@@ -32,6 +32,8 @@ import Spinner from '../components/Spinner';
 import vietnam from '../assets/json/vietnam.json';
 import ModalComponent from '../components/ModalComponent';
 import { REDUX } from '../redux/store/types';
+import ImagePicker from 'react-native-image-picker';
+import { convertStrings } from '../utils/convertStrings';
 
 export default function UpdateStadium({ route, navigation }) {
   const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
@@ -46,12 +48,41 @@ export default function UpdateStadium({ route, navigation }) {
   const modalCity = useRef();
   const modalWard = useRef();
   const modalDistrict = useRef();
-  const [vietnamData, setVietnamData] = useState([]);
   const [isPermission, setIsPermission] = useState(false);
   const dispatch = useDispatch();
   const reduxPosition = useSelector(
     (state) => state?.userReducer?.listPosition,
   );
+  const [source, setSource] = useState({});
+  const selectFile = async () => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose Photo from Custom Option',
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        console.log(response.customButton);
+      } else {
+        let source = response;
+        console.log('selectFile -> source', source);
+      }
+    });
+  };
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -66,8 +97,28 @@ export default function UpdateStadium({ route, navigation }) {
       setIsPermission(false);
     }
   };
+  const requestStoragePermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        // setIsPermission(true);
+        console.log('You can use the camera');
+      } else {
+        // setIsPermission(false);
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.log('requestStoragePermission -> err', err);
+      // setIsPermission(false);
+    }
+  };
   const GetPosition = async () => {
     await requestLocationPermission();
+    reduxPosition?.latitude !== -1 &&
+      reduxPosition?.longitude !== -1 &&
+      Spinner.show();
     Geolocation.getCurrentPosition(
       (position) => {
         dispatch({ type: REDUX.UPDATE_POSITION, payload: position?.coords });
@@ -85,53 +136,23 @@ export default function UpdateStadium({ route, navigation }) {
         )
         .then(({ data }) => {
           const splitAddress = data?.results[0]?.formatted_address?.split(',');
-          const dataAddress = vietnamData.filter(
+          const dataAddress = vietnam.data?.filter(
             (a) =>
-              a?.name_with_type
+              convertStrings(a?.name)
                 ?.toLowerCase()
                 ?.trim()
                 .indexOf(
-                  splitAddress[splitAddress?.length - 2]?.toLowerCase()?.trim(),
+                  convertStrings(splitAddress[splitAddress?.length - 2])
+                    ?.toLowerCase()
+                    ?.trim(),
                 ) !== -1,
-          );
-          const obj = {};
-          dataAddress.map((k) =>
-            Object.keys(k).forEach((a) => (obj[a] = k[a])),
           );
           setAddress({
             ...address,
-            data: obj,
-            city: obj.name_with_type,
-            district: Object.values(obj?.quan_huyen).filter(
-              (a) =>
-                a?.name
-                  .trim()
-                  .toLowerCase()
-                  .indexOf(
-                    splitAddress[splitAddress?.length - 3].trim().toLowerCase(),
-                  ) !== -1,
-            )[0]?.name_with_type,
-            ward: Object.values(
-              Object.values(obj?.quan_huyen).filter(
-                (a) =>
-                  a?.name
-                    .trim()
-                    .toLowerCase()
-                    .indexOf(
-                      splitAddress[splitAddress?.length - 3]
-                        .trim()
-                        .toLowerCase(),
-                    ) !== -1,
-              )[0]?.xa_phuong,
-            ).filter(
-              (a) =>
-                a?.name
-                  .trim()
-                  .toLowerCase()
-                  .indexOf(
-                    splitAddress[splitAddress?.length - 4].trim().toLowerCase(),
-                  ) !== -1,
-            )[0].name_with_type,
+            data: dataAddress,
+            city: dataAddress[0].name,
+            district: splitAddress[splitAddress?.length - 3],
+            ward: splitAddress[splitAddress?.length - 4],
             fullAddress: splitAddress
               .splice(0, splitAddress?.length - 1)
               .toString(),
@@ -149,13 +170,6 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
-  useEffect(() => {
-    setVietnamData(
-      Object.values(vietnam).sort(function (a, b) {
-        return a.name_with_type.localeCompare(b.name_with_type);
-      }),
-    );
-  }, []);
 
   return (
     <ImageBackground
@@ -304,7 +318,11 @@ export default function UpdateStadium({ route, navigation }) {
                 borderRadius: 6 * HEIGHT_SCALE,
                 overflow: 'hidden',
                 padding: 10 * HEIGHT_SCALE,
-              }}></View>
+              }}>
+              <TouchableOpacity onPress={selectFile} style={{}}>
+                <Text style={{}}>Select File</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -315,33 +333,36 @@ export default function UpdateStadium({ route, navigation }) {
         propagateSwipe={true}>
         <View style={{ height: HEIGHT * 0.8 }}>
           <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {vietnamData.map((data) => {
-              return (
-                <TouchableOpacity
-                  key={data.code}
-                  style={{
-                    borderBottomWidth: 1 * WIDTH_SCALE,
-                    borderBottomColor: Colors.colorGrayBackground,
-                    paddingVertical: 10 * HEIGHT_SCALE,
-                  }}
-                  onPress={() => {
-                    setAddress({
-                      ...address,
-                      data: data,
-                      city: data.name_with_type,
-                      district: Object.values(data?.quan_huyen)[0]
-                        .name_with_type,
-                      ward: Object.values(
-                        Object.values(data?.quan_huyen)[0].xa_phuong,
-                      )[0].name_with_type,
-                      fullAddress: '',
-                    });
-                    modalCity.current.hide();
-                  }}>
-                  <Text>{data.name_with_type}</Text>
-                </TouchableOpacity>
-              );
-            })}
+            {vietnam.data
+              .sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+              })
+              .map((data) => {
+                return (
+                  <TouchableOpacity
+                    key={data.level1_id}
+                    style={{
+                      borderBottomWidth: 1 * WIDTH_SCALE,
+                      borderBottomColor: Colors.colorGrayBackground,
+                      paddingVertical: 10 * HEIGHT_SCALE,
+                    }}
+                    onPress={() => {
+                      setAddress({
+                        ...address,
+                        data: data,
+                        city: data.name,
+                        district: Object?.values(data?.level2s)[0].name,
+                        ward: Object?.values(
+                          Object?.values(data?.level2s)[0].level3s,
+                        )[0].name,
+                        fullAddress: '',
+                      });
+                      modalCity.current.hide();
+                    }}>
+                    <Text>{data.name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
           </ScrollView>
         </View>
       </ModalComponent>
@@ -352,15 +373,15 @@ export default function UpdateStadium({ route, navigation }) {
         propagateSwipe={true}>
         <View style={{ height: HEIGHT * 0.8 }}>
           <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {address?.data?.quan_huyen &&
-              Object.values(address?.data?.quan_huyen)
+            {address?.data[0]?.level2s &&
+              address?.data[0]?.level2s
                 .sort(function (a, b) {
                   return a.name.localeCompare(b.name);
                 })
                 .map((data) => {
                   return (
                     <TouchableOpacity
-                      key={data.code}
+                      key={data.level2_id}
                       style={{
                         borderBottomWidth: 1 * WIDTH_SCALE,
                         borderBottomColor: Colors.colorGrayBackground,
@@ -369,14 +390,13 @@ export default function UpdateStadium({ route, navigation }) {
                       onPress={() => {
                         setAddress({
                           ...address,
-                          district: data.name_with_type,
-                          ward: Object.values(data?.xa_phuong)[0]
-                            .name_with_type,
+                          district: data.name,
+                          ward: Object?.values(data?.level3s)[0].name,
                           fullAddress: '',
                         });
                         modalDistrict.current.hide();
                       }}>
-                      <Text>{data.name_with_type}</Text>
+                      <Text>{data.name}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -390,33 +410,40 @@ export default function UpdateStadium({ route, navigation }) {
         propagateSwipe={true}>
         <View style={{ height: HEIGHT * 0.8 }}>
           <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {address?.data?.quan_huyen &&
-              address?.district &&
-              Object.values(
-                Object.values(address?.data?.quan_huyen).filter(
-                  (a) => a?.name_with_type.indexOf(address?.district) !== -1,
-                )[0]?.xa_phuong,
-              ).map((data) => {
-                return (
-                  <TouchableOpacity
-                    key={data.code}
-                    style={{
-                      borderBottomWidth: 1 * WIDTH_SCALE,
-                      borderBottomColor: Colors.colorGrayBackground,
-                      paddingVertical: 10 * HEIGHT_SCALE,
-                    }}
-                    onPress={() => {
-                      setAddress({
-                        ...address,
-                        ward: data.name_with_type,
-                        fullAddress: '',
-                      });
-                      modalWard.current.hide();
-                    }}>
-                    <Text>{data.name_with_type}</Text>
-                  </TouchableOpacity>
-                );
-              })}
+            {address?.data[0]?.level2s &&
+              address?.data[0]?.level2s
+                ?.filter(
+                  (a) =>
+                    a?.name
+                      ?.trim()
+                      ?.toLowerCase()
+                      ?.indexOf(address?.district?.trim()?.toLowerCase()) !==
+                    -1,
+                )[0]
+                ?.level3s.sort(function (a, b) {
+                  return a.name.localeCompare(b.name);
+                })
+                .map((data) => {
+                  return (
+                    <TouchableOpacity
+                      key={data.level3_id}
+                      style={{
+                        borderBottomWidth: 1 * WIDTH_SCALE,
+                        borderBottomColor: Colors.colorGrayBackground,
+                        paddingVertical: 10 * HEIGHT_SCALE,
+                      }}
+                      onPress={() => {
+                        setAddress({
+                          ...address,
+                          ward: data.name,
+                          fullAddress: '',
+                        });
+                        modalWard.current.hide();
+                      }}>
+                      <Text>{data.name}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
           </ScrollView>
         </View>
       </ModalComponent>

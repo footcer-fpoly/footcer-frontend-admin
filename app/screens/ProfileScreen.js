@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   Text,
   SafeAreaView,
@@ -12,9 +12,9 @@ import Colors from '../theme/Colors';
 import Head from '../components/ProfileScreenComponents/Head';
 import Profile from '../components/ProfileScreenComponents/Profile';
 import About from '../components/ProfileScreenComponents/About';
-import {useSelector} from 'react-redux';
-export default function ProfileScreen({navigation}) {
-  const userData = useSelector((state) => state.userReducer.userData);
+import { useSelector } from 'react-redux';
+export default function ProfileScreen({ navigation }) {
+  const userData = useSelector((state) => state?.userReducer?.userData);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
