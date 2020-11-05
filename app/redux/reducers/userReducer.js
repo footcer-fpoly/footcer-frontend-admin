@@ -4,7 +4,7 @@ const initialState = {
   userData: {},
   token: '',
   listStadium: {},
-  listPosition: { latitude: -1, longitude: -1 },
+  listPosition: { lat: -1, lng: -1 },
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {

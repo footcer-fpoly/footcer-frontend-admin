@@ -16,6 +16,7 @@ import OTPScreen from './screens/OTPScreen';
 import PasswordScreen from './screens/PasswordScreen';
 import UpdatePasswordScreen from './screens/UpdatePasswordScreen';
 import UpdateStadium from './screens/UpdateStadium';
+import InfoStadium from './screens/InfoStadium';
 import Spinner from './components/Spinner';
 
 const Stack = createStackNavigator();
@@ -40,8 +41,8 @@ class PriceStack extends Component {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Price"
-          component={PriceScreen}
+          name="Stadium"
+          component={InfoStadium}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
@@ -126,6 +127,8 @@ export default class AppNavigation extends Component {
             component={UpdatePasswordScreen}
           />
           <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
+          <Stack.Screen name="InfoStadium" component={InfoStadium} />
+          <Stack.Screen name="PriceScreen" component={PriceScreen} />
         </Stack.Navigator>
         <Spinner />
       </NavigationContainer>

@@ -17,6 +17,7 @@ import API from '../server/api';
 import { Message } from '../components/Message';
 import { useDispatch } from 'react-redux';
 import { REDUX } from '../redux/store/types';
+import Axios from 'axios';
 
 export default function SplashScreen({ route, navigation }) {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export default function SplashScreen({ route, navigation }) {
       ? API.get('stadium/info')
           .then(({ data }) => {
             const obj = data?.data;
-            console.log('SplashScreen -> obj.latitude', obj?.latitude);
+            console.log('SplashScreen -> obj.latitude', obj);
             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
             obj?.latitude === -1 && obj?.longitude === -1
               ? navigation.replace('UpdateStadium')
@@ -41,11 +42,14 @@ export default function SplashScreen({ route, navigation }) {
       : persistStore(store, null, () => {
           const isSignIn = store.getState().userReducer.loggedIn;
           const listStadium = store.getState().userReducer.listStadium;
+          const token = store.getState().userReducer.token;
           isSignIn
-            ? listStadium?.latitude === -1 && listStadium?.longitude === -1
+            ? listStadium?.lat === -1 && listStadium?.lng === -1
               ? navigation.replace('UpdateStadium')
               : navigation.replace('Dashboard')
             : navigation.replace('Login');
+          Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          API.defaults.headers.common.Authorization = `Bearer ${token}`;
         });
   }, []);
   return (

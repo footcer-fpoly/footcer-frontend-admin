@@ -13,7 +13,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SignIn } from '../redux/actions/userAction';
 import IMAGE from '../utils/images.util';
-import colors from '../theme/Colors';
 import fonts from '../theme/ConfigStyle';
 import {
   HEIGHT,
@@ -34,6 +33,8 @@ import ModalComponent from '../components/ModalComponent';
 import { REDUX } from '../redux/store/types';
 import ImagePicker from 'react-native-image-picker';
 import { convertStrings } from '../utils/convertStrings';
+import AutoHeightImage from 'react-native-auto-height-image';
+import { SkypeIndicator } from 'react-native-indicators';
 
 export default function UpdateStadium({ route, navigation }) {
   const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
@@ -43,8 +44,12 @@ export default function UpdateStadium({ route, navigation }) {
     ward: '',
     address: '',
     fullAddress: '',
+    latitude: '',
+    longitude: '',
     data: {},
   });
+  const [source, setSource] = useState();
+  const [nameStadium, setNameStadium] = useState();
   const modalCity = useRef();
   const modalWard = useRef();
   const modalDistrict = useRef();
@@ -53,23 +58,14 @@ export default function UpdateStadium({ route, navigation }) {
   const reduxPosition = useSelector(
     (state) => state?.userReducer?.listPosition,
   );
-  const [source, setSource] = useState({});
   const selectFile = async () => {
     var options = {
-      title: 'Select Image',
-      customButtons: [
-        {
-          name: 'customOptionKey',
-          title: 'Choose Photo from Custom Option',
-        },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
     };
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+    ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -78,8 +74,7 @@ export default function UpdateStadium({ route, navigation }) {
         console.log('User tapped custom button: ', response.customButton);
         console.log(response.customButton);
       } else {
-        let source = response;
-        console.log('selectFile -> source', source);
+        setSource(response);
       }
     });
   };
@@ -97,31 +92,16 @@ export default function UpdateStadium({ route, navigation }) {
       setIsPermission(false);
     }
   };
-  const requestStoragePermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // setIsPermission(true);
-        console.log('You can use the camera');
-      } else {
-        // setIsPermission(false);
-        console.log('Camera permission denied');
-      }
-    } catch (err) {
-      console.log('requestStoragePermission -> err', err);
-      // setIsPermission(false);
-    }
-  };
   const GetPosition = async () => {
     await requestLocationPermission();
-    reduxPosition?.latitude !== -1 &&
-      reduxPosition?.longitude !== -1 &&
-      Spinner.show();
+    reduxPosition?.lat !== -1 && reduxPosition?.lng !== -1 && Spinner.show();
     Geolocation.getCurrentPosition(
       (position) => {
-        dispatch({ type: REDUX.UPDATE_POSITION, payload: position?.coords });
+        const newPosition = {
+          lat: position?.coords?.latitude,
+          lng: position?.coords?.longitude,
+        };
+        dispatch({ type: REDUX.UPDATE_POSITION, payload: newPosition });
       },
       (error) => {
         console.log('code:', error.code, 'message:', error.message);
@@ -147,6 +127,10 @@ export default function UpdateStadium({ route, navigation }) {
                     ?.trim(),
                 ) !== -1,
           );
+          dispatch({
+            type: REDUX.UPDATE_POSITION,
+            payload: data.results[0]?.geometry?.location,
+          });
           setAddress({
             ...address,
             data: dataAddress,
@@ -170,7 +154,49 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
+  const apiUpdateStadium = async () => {
+    Spinner.show();
+    const formData = new FormData();
+    formData.append('folder', 'stadium');
+    formData.append('stadiumName', nameStadium);
+    formData.append('address', address.fullAddress);
+    formData.append('ward', address.ward);
+    formData.append('district', address.district);
+    formData.append('city', address.city);
+    formData.append('files', {
+      type: source?.type,
+      size: source?.fileSize,
+      uri: `file://${source?.path}`,
+      name: source?.fileName,
+    });
+    formData.append('latitude', reduxPosition?.lat);
+    formData.append('longitude', reduxPosition?.lng);
 
+    if (
+      nameStadium &&
+      address?.fullAddress &&
+      address?.ward &&
+      address?.district &&
+      address?.city &&
+      source &&
+      reduxPosition?.lat &&
+      reduxPosition?.lng
+    ) {
+      await API.put('/stadium/update', formData)
+        .then(({ data }) => {
+          data?.code === 200
+            ? (navigation.replace('Dashboard'), Message('Cập nhật thành công!'))
+            : Message('Lỗi, vui lòng thử lại');
+          console.log('apiUpdateStadium -> data', data);
+          Spinner.hide();
+        })
+        .catch((onError) => {
+          console.log('apiUpdateStadium -> onError', onError);
+          Message('Lỗi, vui lòng thử lại');
+          Spinner.hide();
+        });
+    } else Message('Vui lòng nhập đầy đủ thông tin!');
+  };
   return (
     <ImageBackground
       source={IMAGE.background}
@@ -187,8 +213,16 @@ export default function UpdateStadium({ route, navigation }) {
           </Text>
         }
       />
-      <View style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
-        <ScrollView style={{ padding: 10 * WIDTH_SCALE }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: Colors.whiteColor,
+        }}>
+        <ScrollView
+          style={{
+            padding: 10 * WIDTH_SCALE,
+          }}
+          showsVerticalScrollIndicator={true}>
           <View>
             <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
               Vị trí sân của bạn trên bản đồ:
@@ -202,8 +236,8 @@ export default function UpdateStadium({ route, navigation }) {
                 height: 250 * HEIGHT_SCALE,
               }}>
               {isPermission &&
-              reduxPosition?.latitude !== -1 &&
-              reduxPosition?.longitude !== -1 ? (
+              reduxPosition?.lat !== -1 &&
+              reduxPosition?.lng !== -1 ? (
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
@@ -231,8 +265,8 @@ export default function UpdateStadium({ route, navigation }) {
                       // margin: 1,
                     }}
                     initialRegion={{
-                      latitude: reduxPosition?.latitude,
-                      longitude: reduxPosition?.longitude,
+                      latitude: reduxPosition?.lat || 0,
+                      longitude: reduxPosition?.lng || 0,
                       latitudeDelta: 0.002,
                       longitudeDelta: 0.002,
                     }}
@@ -304,13 +338,17 @@ export default function UpdateStadium({ route, navigation }) {
                   borderRadius: 6 * HEIGHT_SCALE,
                 }}
                 multiline
+                onChangeText={(text) =>
+                  setAddress({ ...address, fullAddress: text })
+                }
               />
             </View>
           </View>
-          <View style={{ marginTop: 20 * HEIGHT_SCALE }}>
+          <View style={{ marginVertical: 20 * HEIGHT_SCALE }}>
             <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
               Thông tin bổ sung:
             </Text>
+
             <View
               style={{
                 borderWidth: 1 * HEIGHT_SCALE,
@@ -319,13 +357,87 @@ export default function UpdateStadium({ route, navigation }) {
                 overflow: 'hidden',
                 padding: 10 * HEIGHT_SCALE,
               }}>
-              <TouchableOpacity onPress={selectFile} style={{}}>
-                <Text style={{}}>Select File</Text>
+              <View
+                style={{
+                  marginTop: 10 * HEIGHT_SCALE,
+                }}>
+                <Text style={{ flex: 1 }}>Nhập tên sân(*):</Text>
+                <TextInput
+                  placeholder="Sân bóng Sài Gòn 1975"
+                  style={{
+                    marginTop: 5 * HEIGHT_SCALE,
+                    paddingHorizontal: 10 * WIDTH_SCALE,
+                    borderWidth: 1 * HEIGHT_SCALE,
+                    borderColor: Colors.colorGrayBackground,
+                    borderRadius: 6 * HEIGHT_SCALE,
+                  }}
+                  onChangeText={(text) => setNameStadium(text)}
+                />
+              </View>
+              <Text style={{ flex: 1 }}>Chọn ảnh sân(*):</Text>
+              <TouchableOpacity
+                onPress={selectFile}
+                style={{
+                  flex: 1,
+                  backgroundColor: Colors.colorGrayBackground,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 5 * HEIGHT_SCALE,
+                  borderRadius: 6 * HEIGHT_SCALE,
+                }}>
+                {source ? (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: 60 * WIDTH_SCALE,
+                    }}>
+                    <SkypeIndicator
+                      style={{ alignSelf: 'center', position: 'absolute' }}
+                      color={Colors.borderGreen}
+                      size={50 * WIDTH_SCALE}
+                    />
+                    <AutoHeightImage
+                      width={0.9 * WIDTH}
+                      source={{ uri: source?.uri }}
+                      style={{ borderRadius: 6 * HEIGHT_SCALE }}
+                    />
+                  </View>
+                ) : (
+                  <Text
+                    style={{
+                      paddingVertical: 25 * HEIGHT_SCALE,
+                    }}>
+                    Nhấn để chọn ảnh
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
+          <TouchableOpacity
+            onPress={apiUpdateStadium}
+            style={{
+              alignItems: 'center',
+              backgroundColor: Colors.colorGreen,
+              // marginHorizontal: 20 * WIDTH_SCALE,
+              borderRadius: 14 * HEIGHT_SCALE,
+              width: WIDTH,
+              alignSelf: 'center',
+              marginBottom: 20 * HEIGHT_SCALE,
+            }}>
+            <Text
+              style={{
+                paddingVertical: 14 * HEIGHT_SCALE,
+                color: 'white',
+                fontSize: fonts.font16,
+                fontWeight: fonts.bold,
+              }}>
+              Cập Nhật Sân
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
+
       <ModalComponent
         isHideAgree
         ref={modalCity}

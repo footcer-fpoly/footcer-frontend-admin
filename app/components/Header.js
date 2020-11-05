@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
-import fonts from '../theme/ConfigStyle';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { HEIGHT_SCALE } from '../utils/ScaleAdaptor';
 const Header = ({
   left,
@@ -34,7 +27,7 @@ const Header = ({
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 44 * HEIGHT_SCALE,
+    height: 60 * HEIGHT_SCALE,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',

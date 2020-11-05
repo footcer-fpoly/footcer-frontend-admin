@@ -34,8 +34,8 @@ export default function PasswordScreen({ route, navigation }) {
               navigation.replace('Splash', { isCheckStadium: true });
             }),
           )
-        : Message('Mật khẩu phải 6 số')
-      : Message('Mật khẩu phải là số');
+        : (Message('Mật khẩu phải 6 số'), Spinner.hide())
+      : (Message('Vui lòng nhập mật khẩu'), Spinner.hide());
   };
   return (
     <ImageBackground
