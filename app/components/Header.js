@@ -27,7 +27,7 @@ const Header = ({
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 60 * HEIGHT_SCALE,
+    height: 46 * HEIGHT_SCALE,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
