@@ -10,6 +10,7 @@ export default {
   colorDarkBlue: '#001C7E',
   colorOrange: '#FF5E0B',
   touchSale:'#FF5E0B',
+  textGreen:'#0AB134',
   colorRed: '#FF0000',
   colorGrayBackground: '#EDEDED',
   colorGrayText: '#676767',

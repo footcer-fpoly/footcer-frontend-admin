@@ -1,14 +1,16 @@
 import React from 'react'
-import { 
-    View, 
-    Text, 
-    Image, 
-    TouchableOpacity, 
-    StyleSheet 
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    StyleSheet,
+    Dimensions
 } from 'react-native'
 import Colors from '../../theme/Colors'
 import ConfigStyle from '../../theme/ConfigStyle'
 
+const width = Dimensions.get('window').width
 export default function ItemStadium(props) {
 
     const data = {
@@ -21,9 +23,14 @@ export default function ItemStadium(props) {
     return (
         <View style={styles.container}>
             <View>
-                <Image 
-                source={require('../../assets/images/stadium.jpg')} 
-                style={{width:181, height:130, borderTopLeftRadius:7, borderTopRightRadius:7}}
+                <Image
+                source={require('../../assets/images/stadium.jpg')}
+                style={{
+                  width:width*0.44, height:130,
+                  borderTopLeftRadius:7,
+                  borderTopRightRadius:7,
+                  resizeMode:'cover'
+                }}
                 />
                 <TouchableOpacity style={styles.touchSale}>
                     <Text style={styles.textSale}>{data.deal}</Text>
@@ -41,10 +48,17 @@ export default function ItemStadium(props) {
 const styles = StyleSheet.create({
     container:{
         backgroundColor:Colors.whiteColor,
-        width:181,
+        width:width*0.44,
         borderRadius:7,
-        borderWidth:1,
-        borderColor:Colors.colorGrayText,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
         paddingBottom:15,
         marginBottom:16,
     },
@@ -60,25 +74,25 @@ const styles = StyleSheet.create({
     textSale: {
         color:Colors.whiteColor,
         fontSize:ConfigStyle.font12,
-        fontFamily:'Roboto-Regular'
+        fontFamily:'Times'
     },
     textInfor: {
         marginTop:7,
         marginLeft:8,
-    }, 
+    },
     typeOfStadium:{
-        fontSize:ConfigStyle.font10,
-        fontFamily:'Roboto-Regular',
+        fontSize:ConfigStyle.font12,
+        fontFamily:'Times',
         color:Colors.colorGrayText
     },
     nameOfStadium:{
-        fontSize:ConfigStyle.font12,
-        fontFamily:'Roboto-Regular',
+        fontSize:ConfigStyle.font14,
+        fontFamily:'Times-Bold',
         color:Colors.blackColor,
     },
     addressOfStadium:{
-        fontSize:ConfigStyle.font11,
-        fontFamily:'Roboto-Regular',
+        fontSize:ConfigStyle.font12,
+        fontFamily:'Times',
         color:Colors.colorGrayText,
     }
 })

@@ -17,7 +17,7 @@ export default function Price() {
     <View style={styles.container}>
       <Table
         style={styles.table}
-        borderStyle={{borderWidth: 1, borderColor: colorGrayText}}>
+        borderStyle={{borderWidth: 1, borderColor: Colors.colorGrayText}}>
         <Row data={tableHead} textStyle={styles.textHead} />
         <Rows data={tableData} textStyle={styles.textData} />
       </Table>

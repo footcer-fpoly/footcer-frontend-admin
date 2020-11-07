@@ -70,12 +70,13 @@ const styles = StyleSheet.create({
     borderWidth:1, 
     paddingVertical:10, 
     alignItems:'center', 
-    borderColor:Colors.borderGreen
+    borderColor:Colors.borderGreen,
+    backgroundColor:Colors.whiteColor
   },
   textPress: {
     color:Colors.borderGreen, 
     fontSize:ConfigStyle.font16, 
-    fontFamily:'Roboto-Regular',
+    fontFamily:'Times',
   },
   containerPromotion: {
     justifyContent:'space-between', 
@@ -85,10 +86,11 @@ const styles = StyleSheet.create({
   }, 
   textDiscount:{
     fontSize:ConfigStyle.font16, 
-    fontFamily:'Roboto-Medium'
+    fontFamily:'Times-Bold'
   },
   textViewAll:{
     fontSize:ConfigStyle.font14, 
-    fontFamily:'Roboto-Medium', color:Colors.colorViewAll
+    fontFamily:'Times-Bold', 
+    color:Colors.colorViewAll
   }
 })
