@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import IMAGE from '../utils/images.util';
 import fonts from '../theme/ConfigStyle';
@@ -23,14 +24,18 @@ import { REDUX } from '../redux/store/types';
 import { Message } from '../components/Message';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Swipeout from 'react-native-swipeout';
-import Moment from 'moment';
 
 export default function InfoStadium({ navigation }) {
   const [dataStadium, setDataStadium] = useState();
-  console.log('InfoStadium -> dataStadium', dataStadium?.stadium_collage);
+  const dispatch = useDispatch();
+  const listStadium = useSelector((state) => state.userReducer.listStadium);
+  useEffect(() => {
+    setDataStadium(listStadium);
+  }, []);
   useEffect(() => {
     API.get('stadium/info')
       .then(({ data }) => {
+        dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
         data?.code === 200
           ? setDataStadium(data?.data)
           : Message('Lỗi lấy dữ liệu');
@@ -54,7 +59,6 @@ export default function InfoStadium({ navigation }) {
         backgroundColor: Colors.colorRed,
       },
     ];
-    console.log('renderItem -> item', item);
     const startTime = new Date(Number(item?.startTime)).toUTCString();
     const endTime = new Date(Number(item?.endTime)).toUTCString();
 
@@ -73,9 +77,10 @@ export default function InfoStadium({ navigation }) {
             }}>
             <Text>{item?.stadiumCollageName}</Text>
 
-            <Text>{`${Moment(startTime).format('HH:mm')} - ${Moment(
-              endTime,
-            ).format('HH:mm')}`}</Text>
+            <Text>{`${startTime.substr(17, 5)} - ${endTime.substr(
+              17,
+              5,
+            )}`}</Text>
           </View>
         </Swipeout>
       </View>
@@ -100,7 +105,6 @@ export default function InfoStadium({ navigation }) {
           <View
             style={{
               position: 'absolute',
-              top: 0,
               width: WIDTH,
               backgroundColor: '#00000060',
               height: PARALLAX_HEADER_HEIGHT,
@@ -116,12 +120,34 @@ export default function InfoStadium({ navigation }) {
           <Text numberOfLines={1} style={styles.sectionTitleText}>
             {dataStadium?.address}
           </Text>
+          {dataStadium?.verify === '0' ? (
+            <Text
+              style={{
+                color: '#ff0000',
+                position: 'absolute',
+                top: 30 * HEIGHT_SCALE,
+                right: 0,
+              }}>
+              Chưa xác thực
+            </Text>
+          ) : (
+            <Text
+              style={{
+                color: Colors.colorGreen,
+                position: 'absolute',
+                top: 30 * HEIGHT_SCALE,
+                right: 0,
+              }}>
+              Đã xác thực
+            </Text>
+          )}
         </View>
       )}
       renderStickyHeader={() => (
         <Header
           style={{
             backgroundColor: Colors.colorGreen,
+            height: 70 * HEIGHT_SCALE,
           }}
           center={
             <Text
@@ -133,6 +159,23 @@ export default function InfoStadium({ navigation }) {
               }}>
               {dataStadium?.stadiumName}
             </Text>
+          }
+          right={
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('CreateCollage', {
+                  id: dataStadium.stadiumId,
+                })
+              }>
+              <Text
+                numberOfLines={1}
+                style={{
+                  fontSize: fonts.font14,
+                  color: Colors.whiteColor,
+                }}>
+                Thêm
+              </Text>
+            </TouchableOpacity>
           }
         />
       )}>

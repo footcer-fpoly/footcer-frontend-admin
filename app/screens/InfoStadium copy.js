@@ -33,29 +33,10 @@ export default function InfoStadium({ navigation }) {
     <ImageBackground
       source={IMAGE.background}
       style={{ width: WIDTH, height: HEIGHT, flex: 1 }}>
-      {/* <Header
-        center={
-          <Text
-            style={{
-              fontSize: fonts.font18,
-              fontWeight: fonts.bold,
-              color: Colors.whiteColor,
-            }}>
-            Cập nhật thông tin sân
-          </Text>
-        }
-      />
-      <View style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
-        <View>
-          <Image
-            resizeMode="cover"
-            style={{ height: 200 * HEIGHT_SCALE, width: WIDTH }}
-            source={{ uri: dataStadium?.image }}
-          /> */}
       <ParallaxScrollView
         showsVerticalScrollIndicator={false}
         headerBackgroundColor={Colors.colorDarkBlue}
-        stickyHeaderHeight={70 * HEIGHT_SCALE}
+        stickyHeaderHeight={48 * HEIGHT_SCALE}
         parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
         backgroundSpeed={10}
         renderBackground={() => (

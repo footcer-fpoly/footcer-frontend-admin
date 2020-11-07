@@ -44,7 +44,7 @@ export default function SplashScreen({ route, navigation }) {
           const listStadium = store.getState().userReducer.listStadium;
           const token = store.getState().userReducer.token;
           isSignIn
-            ? listStadium?.lat === -1 && listStadium?.lng === -1
+            ? listStadium?.latitude === -1 && listStadium?.longitude === -1
               ? navigation.replace('UpdateStadium')
               : navigation.replace('Dashboard')
             : navigation.replace('Login');

@@ -17,6 +17,7 @@ import PasswordScreen from './screens/PasswordScreen';
 import UpdatePasswordScreen from './screens/UpdatePasswordScreen';
 import UpdateStadium from './screens/UpdateStadium';
 import InfoStadium from './screens/InfoStadium';
+import CreateCollage from './screens/CreateCollage';
 import Spinner from './components/Spinner';
 
 const Stack = createStackNavigator();
@@ -129,6 +130,7 @@ export default class AppNavigation extends Component {
           <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
           <Stack.Screen name="InfoStadium" component={InfoStadium} />
           <Stack.Screen name="PriceScreen" component={PriceScreen} />
+          <Stack.Screen name="CreateCollage" component={CreateCollage} />
         </Stack.Navigator>
         <Spinner />
       </NavigationContainer>

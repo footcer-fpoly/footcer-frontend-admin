@@ -195,7 +195,10 @@ export default function UpdateStadium({ route, navigation }) {
           Message('Lỗi, vui lòng thử lại');
           Spinner.hide();
         });
-    } else Message('Vui lòng nhập đầy đủ thông tin!');
+    } else {
+      Message('Vui lòng nhập đầy đủ thông tin!');
+      Spinner.hide();
+    }
   };
   return (
     <ImageBackground
@@ -262,7 +265,7 @@ export default function UpdateStadium({ route, navigation }) {
                       flex: 1,
                       ...StyleSheet.absoluteFillObject,
                       zIndex: -1,
-                      // margin: 1,
+                      margin: 1,
                     }}
                     initialRegion={{
                       latitude: reduxPosition?.lat || 0,

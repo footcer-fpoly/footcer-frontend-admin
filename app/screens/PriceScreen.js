@@ -1,27 +1,42 @@
 import React from 'react';
-import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import Setting from '../components/PriceScreenComponents/Setting';
 import HeaderPrice from '../components/Header';
 import Price from '../components/PriceScreenComponents/Price';
 import Colors from '../theme/Colors';
+import Header from '../components/Header';
+import fonts from '../theme/ConfigStyle';
+import API from '../server/api';
 
-export default function PriceScreen() {
+export default function PriceScreen({ route, navigation }) {
+  // useEffect(() => {
+  //   API.
+  // })
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderPrice nameStadium="Sân bóng FPoly HCM" />
-      <ScrollView>
-        <View style={styles.bodyContainer}>
-          <Setting
-            timeSlot="Sân bóng FPoly"
-            date="26-9-2020"
-            typeStadium="Sân cỏ nhân tạo"
-            price="150000"
-          />
-          <Text style={styles.txtSetting}>Thiết lập của bạn</Text>
-          <Price />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+      <Header
+        center={
+          <Text
+            style={{
+              fontSize: fonts.font18,
+              fontWeight: fonts.bold,
+              color: Colors.whiteColor,
+            }}>
+            Cập nhật thông tin sân
+          </Text>
+        }
+      />
+      <View style={styles.bodyContainer}>
+        <Setting
+          timeSlot="Sân bóng FPoly"
+          date="26-9-2020"
+          typeStadium="Sân cỏ nhân tạo"
+          price="150000"
+        />
+        <Text style={styles.txtSetting}>Thiết lập của bạn</Text>
+        <Price />
+      </View>
+    </View>
   );
 }
 

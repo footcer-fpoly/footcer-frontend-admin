@@ -38,6 +38,7 @@
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-auto-height-image": "^3.2.3",
+    "react-native-date-picker": "^3.2.5",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-flash-message": "^0.1.16",
     "react-native-geolocation-service": "^5.0.0",

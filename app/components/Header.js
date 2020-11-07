@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { HEIGHT_SCALE } from '../utils/ScaleAdaptor';
+import Colors from '../theme/Colors';
+import { HEIGHT_SCALE, WIDTH_SCALE } from '../utils/ScaleAdaptor';
 const Header = ({
   left,
   center,
@@ -11,7 +12,7 @@ const Header = ({
   barStyle,
 }) => {
   return (
-    <View style={style}>
+    <View style={[{ backgroundColor: Colors.colorGreen }, style]}>
       <StatusBar barStyle={barStyle} />
       <View style={styles.statusbar} />
       <View style={styles.container}>
@@ -27,11 +28,12 @@ const Header = ({
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 46 * HEIGHT_SCALE,
+    height: 48 * HEIGHT_SCALE,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     backgroundColor: 'transparent',
     alignItems: 'stretch',
+    paddingHorizontal: 10 * WIDTH_SCALE,
   },
   statusbar: {
     height: Platform.select({
