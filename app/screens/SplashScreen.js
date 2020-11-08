@@ -26,7 +26,7 @@ export default function SplashScreen({ route, navigation }) {
     : false;
   useEffect(() => {
     isCheckStadium
-      ? API.get('stadium/info')
+      ? API.get('/stadium/info')
           .then(({ data }) => {
             const obj = data?.data;
             console.log('SplashScreen -> obj.latitude', obj);

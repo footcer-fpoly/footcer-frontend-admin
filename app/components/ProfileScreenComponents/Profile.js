@@ -24,7 +24,7 @@ export default function Profile({ navigation }) {
         style={styles.row}
         onPress={() => {
           dispatch({ type: REDUX.CLEAR_USER_DATA });
-          navigation.navigate('Login');
+          navigation.replace('Login');
         }}>
         <Image source={require('../../assets/icon/signup.png')} />
         <Text style={styles.txt}>Đăng xuất</Text>

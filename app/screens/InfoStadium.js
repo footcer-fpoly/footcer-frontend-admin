@@ -33,7 +33,7 @@ export default function InfoStadium({ navigation }) {
     setDataStadium(listStadium);
   }, []);
   useEffect(() => {
-    API.get('stadium/info')
+    API.get('/stadium/info')
       .then(({ data }) => {
         dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
         data?.code === 200
@@ -42,7 +42,7 @@ export default function InfoStadium({ navigation }) {
       })
       .catch((onError) => {
         console.log('InfoStadium -> onError', onError.message);
-        Message('Vui lòng kiểm tra thông tin đăng nhập');
+        Message('Lỗi');
       });
   }, []);
   const renderItem = (props) => {
@@ -51,8 +51,7 @@ export default function InfoStadium({ navigation }) {
       {
         text: `Chi tiết`,
         backgroundColor: Colors.colorGreen,
-        onPress: () =>
-          navigation.navigate('PriceScreen', { id: item?.stadiumCollageId }),
+        onPress: () => navigation.navigate('PriceScreen', { item: item }),
       },
       {
         text: 'Xoá',
@@ -179,10 +178,12 @@ export default function InfoStadium({ navigation }) {
           }
         />
       )}>
-      <FlatList
-        data={dataStadium?.stadium_collage || []}
-        renderItem={renderItem}
-      />
+      <View style={{ marginTop: 10 * HEIGHT_SCALE }}>
+        <FlatList
+          data={dataStadium?.stadium_collage || []}
+          renderItem={renderItem}
+        />
+      </View>
     </ParallaxScrollView>
   );
 }

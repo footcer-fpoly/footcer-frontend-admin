@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Colors from '../../theme/Colors';
 
 export default function Head(props) {
   return (
     <View style={styles.headContainer}>
       <View style={styles.avatarContainer}>
-        <Image style={styles.avatar} source={{uri: props.urlAvatar}} />
+        <Image style={styles.avatar} source={{ uri: props.urlAvatar }} />
       </View>
       <Text style={styles.txtName}>{props.name}</Text>
     </View>

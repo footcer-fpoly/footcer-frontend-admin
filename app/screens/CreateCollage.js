@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  StyleSheet,
+  ScrollView,
 } from 'react-native';
 import IMAGE from '../utils/images.util';
 import fonts from '../theme/ConfigStyle';
@@ -29,6 +29,7 @@ export default function InfoStadium({ navigation, route }) {
   const [nameColage, setNameColage] = useState('');
   const [playTime, setPlayTime] = useState('1800000');
   const [people, setPeople] = useState('5');
+  const [price, setPrice] = useState();
   const [checkTimePlay, setCheckTimePlay] = useState({
     op30: true,
     op60: false,
@@ -73,18 +74,9 @@ export default function InfoStadium({ navigation, route }) {
   };
   const startTimeRef = useRef();
   const endTimeRef = useRef();
-  console.log(
-    'createCollage -> route?.params?.id',
-    route?.params?.id,
-    nameColage,
-    people,
-    new Date(startTime).getTime(),
-    new Date(endTime).getTime(),
-    playTime,
-  );
   const createCollage = () => {
     Spinner.show();
-    if (nameColage) {
+    if (nameColage && price) {
       if (new Date(startTime).getTime() < new Date(endTime).getTime()) {
         API.post('/stadium/add-collage', {
           stadiumCollageName: nameColage,
@@ -93,6 +85,7 @@ export default function InfoStadium({ navigation, route }) {
           endTime: new Date(endTime).getTime().toString(),
           playTime: playTime,
           stadiumId: route?.params?.id,
+          defaultPrice: Number(price),
         })
           .then(({ data }) => {
             const obj = data?.data;
@@ -108,8 +101,14 @@ export default function InfoStadium({ navigation, route }) {
             console.log(onError.message);
             Spinner.hide();
           });
-      } else Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
-    } else Message('Vui lòng nhập tên sân con');
+      } else {
+        Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
+        Spinner.hide();
+      }
+    } else {
+      Message('Vui lòng nhập đầy đủ thông tin');
+      Spinner.hide();
+    }
   };
   return (
     <View>
@@ -125,276 +124,315 @@ export default function InfoStadium({ navigation, route }) {
           </Text>
         }
       />
-      <View
-        style={{
-          margin: 10 * WIDTH_SCALE,
-        }}>
-        <Text
-          style={{
-            fontWeight: fonts.bold,
-            left: 10 * WIDTH_SCALE,
-          }}>
-          Tên sân con:
-        </Text>
+      <ScrollView>
         <View
           style={{
-            overflow: 'hidden',
-            borderWidth: 1 * HEIGHT_SCALE,
-            borderColor: Colors.borderGreen,
-            borderRadius: 6 * HEIGHT_SCALE,
+            margin: 10 * WIDTH_SCALE,
           }}>
-          <TextInput
-            placeholder="Sân 1, Sân trái, Sân lớn, Sân si,...."
+          <Text
             style={{
-              paddingHorizontal: 10 * WIDTH_SCALE,
+              fontWeight: fonts.bold,
+              left: 10 * WIDTH_SCALE,
+            }}>
+            Tên sân con:
+          </Text>
+          <View
+            style={{
+              overflow: 'hidden',
               borderWidth: 1 * HEIGHT_SCALE,
-              borderColor: Colors.colorGrayBackground,
+              borderColor: Colors.borderGreen,
               borderRadius: 6 * HEIGHT_SCALE,
-            }}
-            multiline
-            onChangeText={setNameColage}
-          />
+            }}>
+            <TextInput
+              placeholder="Sân 1, Sân trái, Sân lớn, Sân si,...."
+              style={{
+                paddingHorizontal: 10 * WIDTH_SCALE,
+                borderWidth: 1 * HEIGHT_SCALE,
+                borderColor: Colors.colorGrayBackground,
+                borderRadius: 6 * HEIGHT_SCALE,
+              }}
+              multiline
+              onChangeText={setNameColage}
+            />
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          margin: 10 * WIDTH_SCALE,
-        }}>
-        <Text
-          style={{
-            fontWeight: fonts.bold,
-            left: 10 * WIDTH_SCALE,
-          }}>
-          Chọn thời gian:
-        </Text>
         <View
           style={{
-            overflow: 'hidden',
-            borderWidth: 1 * HEIGHT_SCALE,
-            borderColor: Colors.borderGreen,
-            borderRadius: 6 * HEIGHT_SCALE,
-            padding: 10 * WIDTH_SCALE,
+            margin: 10 * WIDTH_SCALE,
           }}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={() => startTimeRef.current.show()}>
-                <Text style={{}}>Giờ bắt đầu: {startTime.substr(17, 5)}</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity onPress={() => endTimeRef.current.show()}>
-                <Text>Giờ kết thúc: {endTime.substr(17, 5)}</Text>
-              </TouchableOpacity>
+          <Text
+            style={{
+              fontWeight: fonts.bold,
+              left: 10 * WIDTH_SCALE,
+            }}>
+            Chọn thời gian:
+          </Text>
+          <View
+            style={{
+              overflow: 'hidden',
+              borderWidth: 1 * HEIGHT_SCALE,
+              borderColor: Colors.borderGreen,
+              borderRadius: 6 * HEIGHT_SCALE,
+              padding: 10 * WIDTH_SCALE,
+            }}>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => startTimeRef.current.show()}>
+                  <Text style={{}}>Giờ bắt đầu: {startTime.substr(17, 5)}</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => endTimeRef.current.show()}>
+                  <Text>Giờ kết thúc: {endTime.substr(17, 5)}</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View
-        style={{
-          margin: 10 * WIDTH_SCALE,
-        }}>
-        <Text
-          style={{
-            fontWeight: fonts.bold,
-            left: 10 * WIDTH_SCALE,
-          }}>
-          Thời gian chơi:
-        </Text>
         <View
           style={{
-            overflow: 'hidden',
-            borderWidth: 1 * HEIGHT_SCALE,
-            borderColor: Colors.borderGreen,
-            borderRadius: 6 * HEIGHT_SCALE,
-            flexDirection: 'row',
-            padding: 10 * WIDTH_SCALE,
+            margin: 10 * WIDTH_SCALE,
           }}>
-          <TouchableOpacity
-            onPress={() => TimePlayCheck('op30')}
+          <Text
             style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkTimePlay.op30
-                ? 2 * WIDTH_SCALE
-                : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
-              padding: 10 * WIDTH_SCALE,
-              borderColor: checkTimePlay.op30
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
+              fontWeight: fonts.bold,
+              left: 10 * WIDTH_SCALE,
             }}>
-            <Text
-              style={{
-                fontWeight: checkTimePlay.op30 ? fonts.bold : null,
-                color: checkTimePlay.op30 ? '#000' : Colors.colorGrayText,
-              }}>
-              30 Phút
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => TimePlayCheck('op60')}
+            Chọn giá:
+          </Text>
+          <View
             style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkTimePlay.op60
-                ? 2 * WIDTH_SCALE
-                : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
-              padding: 10 * WIDTH_SCALE,
-              borderColor: checkTimePlay.op60
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
+              overflow: 'hidden',
+              borderWidth: 1 * HEIGHT_SCALE,
+              borderColor: Colors.borderGreen,
+              borderRadius: 6 * HEIGHT_SCALE,
             }}>
-            <Text
+            <TextInput
+              placeholder="50000,...."
               style={{
-                fontWeight: checkTimePlay.op60 ? fonts.bold : null,
-                color: checkTimePlay.op60 ? '#000' : Colors.colorGrayText,
-              }}>
-              60 Phút
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => TimePlayCheck('op90')}
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkTimePlay.op90
-                ? 2 * WIDTH_SCALE
-                : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
-              padding: 10 * WIDTH_SCALE,
-              borderColor: checkTimePlay.op90
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
-            }}>
-            <Text
-              style={{
-                fontWeight: checkTimePlay.op90 ? fonts.bold : null,
-                color: checkTimePlay.op90 ? '#000' : Colors.colorGrayText,
-              }}>
-              90 Phút
-            </Text>
-          </TouchableOpacity>
+                paddingHorizontal: 10 * WIDTH_SCALE,
+                borderWidth: 1 * HEIGHT_SCALE,
+                borderColor: Colors.colorGrayBackground,
+                borderRadius: 6 * HEIGHT_SCALE,
+              }}
+              keyboardType="number-pad"
+              onChangeText={setPrice}
+            />
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          margin: 10 * WIDTH_SCALE,
-        }}>
-        <Text
-          style={{
-            fontWeight: fonts.bold,
-            left: 10 * WIDTH_SCALE,
-          }}>
-          Số người chơi:
-        </Text>
         <View
           style={{
-            overflow: 'hidden',
-            borderWidth: 1 * HEIGHT_SCALE,
-            borderColor: Colors.borderGreen,
-            borderRadius: 6 * HEIGHT_SCALE,
-            flexDirection: 'row',
-            padding: 10 * WIDTH_SCALE,
+            margin: 10 * WIDTH_SCALE,
           }}>
-          <TouchableOpacity
-            onPress={() => PeopleCheck('op5')}
+          <Text
             style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkPeople.op5 ? 2 * WIDTH_SCALE : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
-              padding: 10 * WIDTH_SCALE,
-              borderColor: checkPeople.op5
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
+              fontWeight: fonts.bold,
+              left: 10 * WIDTH_SCALE,
             }}>
-            <Text
-              style={{
-                fontWeight: checkPeople.op5 ? fonts.bold : null,
-                color: checkPeople.op5 ? '#000' : Colors.colorGrayText,
-              }}>
-              5 người
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => PeopleCheck('op7')}
+            Thời gian chơi:
+          </Text>
+          <View
             style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkPeople.op7 ? 2 * WIDTH_SCALE : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
+              overflow: 'hidden',
+              borderWidth: 1 * HEIGHT_SCALE,
+              borderColor: Colors.borderGreen,
+              borderRadius: 6 * HEIGHT_SCALE,
+              flexDirection: 'row',
               padding: 10 * WIDTH_SCALE,
-              borderColor: checkPeople.op7
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
             }}>
-            <Text
+            <TouchableOpacity
+              onPress={() => TimePlayCheck('op30')}
               style={{
-                fontWeight: checkPeople.op7 ? fonts.bold : null,
-                color: checkPeople.op7 ? '#000' : Colors.colorGrayText,
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkTimePlay.op30
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkTimePlay.op30
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
               }}>
-              7 người
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => PeopleCheck('op9')}
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              borderRadius: 8 * WIDTH_SCALE,
-              borderWidth: checkPeople.op9 ? 2 * WIDTH_SCALE : 1 * WIDTH_SCALE,
-              marginHorizontal: 5 * WIDTH_SCALE,
-              padding: 10 * WIDTH_SCALE,
-              borderColor: checkPeople.op9
-                ? Colors.borderGreen
-                : Colors.colorGrayText,
-            }}>
-            <Text
+              <Text
+                style={{
+                  fontWeight: checkTimePlay.op30 ? fonts.bold : null,
+                  color: checkTimePlay.op30 ? '#000' : Colors.colorGrayText,
+                }}>
+                30 Phút
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => TimePlayCheck('op60')}
               style={{
-                fontWeight: checkPeople.op9 ? fonts.bold : null,
-                color: checkPeople.op9 ? '#000' : Colors.colorGrayText,
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkTimePlay.op60
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkTimePlay.op60
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
               }}>
-              9 người
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontWeight: checkTimePlay.op60 ? fonts.bold : null,
+                  color: checkTimePlay.op60 ? '#000' : Colors.colorGrayText,
+                }}>
+                60 Phút
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => TimePlayCheck('op90')}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkTimePlay.op90
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkTimePlay.op90
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
+              }}>
+              <Text
+                style={{
+                  fontWeight: checkTimePlay.op90 ? fonts.bold : null,
+                  color: checkTimePlay.op90 ? '#000' : Colors.colorGrayText,
+                }}>
+                90 Phút
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <TouchableOpacity
-        onPress={createCollage}
-        style={{
-          alignItems: 'center',
-          backgroundColor: Colors.colorGreen,
-          // marginHorizontal: 20 * WIDTH_SCALE,
-          borderRadius: 14 * HEIGHT_SCALE,
-          width: WIDTH * 0.9,
-          alignSelf: 'center',
-        }}>
-        <Text
+        <View
           style={{
-            paddingVertical: 14 * HEIGHT_SCALE,
-            color: 'white',
-            fontSize: fonts.font16,
-            fontWeight: fonts.bold,
+            margin: 10 * WIDTH_SCALE,
           }}>
-          Tạo sân con
-        </Text>
-      </TouchableOpacity>
-      <ModalTimeComponent
-        ref={startTimeRef}
-        title="Chọn giờ bắt đầu"
-        time={setStartTime}
-      />
-      <ModalTimeComponent
-        ref={endTimeRef}
-        title="Chọn giờ kết thúc"
-        time={setEndTime}
-      />
+          <Text
+            style={{
+              fontWeight: fonts.bold,
+              left: 10 * WIDTH_SCALE,
+            }}>
+            Số người chơi:
+          </Text>
+          <View
+            style={{
+              overflow: 'hidden',
+              borderWidth: 1 * HEIGHT_SCALE,
+              borderColor: Colors.borderGreen,
+              borderRadius: 6 * HEIGHT_SCALE,
+              flexDirection: 'row',
+              padding: 10 * WIDTH_SCALE,
+            }}>
+            <TouchableOpacity
+              onPress={() => PeopleCheck('op5')}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkPeople.op5
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkPeople.op5
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
+              }}>
+              <Text
+                style={{
+                  fontWeight: checkPeople.op5 ? fonts.bold : null,
+                  color: checkPeople.op5 ? '#000' : Colors.colorGrayText,
+                }}>
+                5 người
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => PeopleCheck('op7')}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkPeople.op7
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkPeople.op7
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
+              }}>
+              <Text
+                style={{
+                  fontWeight: checkPeople.op7 ? fonts.bold : null,
+                  color: checkPeople.op7 ? '#000' : Colors.colorGrayText,
+                }}>
+                7 người
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => PeopleCheck('op9')}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                borderRadius: 8 * WIDTH_SCALE,
+                borderWidth: checkPeople.op9
+                  ? 2 * WIDTH_SCALE
+                  : 1 * WIDTH_SCALE,
+                marginHorizontal: 5 * WIDTH_SCALE,
+                padding: 10 * WIDTH_SCALE,
+                borderColor: checkPeople.op9
+                  ? Colors.borderGreen
+                  : Colors.colorGrayText,
+              }}>
+              <Text
+                style={{
+                  fontWeight: checkPeople.op9 ? fonts.bold : null,
+                  color: checkPeople.op9 ? '#000' : Colors.colorGrayText,
+                }}>
+                9 người
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity
+          onPress={createCollage}
+          style={{
+            alignItems: 'center',
+            backgroundColor: Colors.colorGreen,
+            // marginHorizontal: 20 * WIDTH_SCALE,
+            borderRadius: 14 * HEIGHT_SCALE,
+            width: WIDTH * 0.9,
+            alignSelf: 'center',
+          }}>
+          <Text
+            style={{
+              paddingVertical: 14 * HEIGHT_SCALE,
+              color: 'white',
+              fontSize: fonts.font16,
+              fontWeight: fonts.bold,
+            }}>
+            Tạo sân con
+          </Text>
+        </TouchableOpacity>
+        <ModalTimeComponent
+          ref={startTimeRef}
+          title="Chọn giờ bắt đầu"
+          time={setStartTime}
+        />
+        <ModalTimeComponent
+          ref={endTimeRef}
+          title="Chọn giờ kết thúc"
+          time={setEndTime}
+        />
+      </ScrollView>
     </View>
   );
 }

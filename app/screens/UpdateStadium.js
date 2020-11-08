@@ -131,9 +131,14 @@ export default function UpdateStadium({ route, navigation }) {
             type: REDUX.UPDATE_POSITION,
             payload: data.results[0]?.geometry?.location,
           });
+          console.log(
+            'UpdateStadium -> Object.values(dataAddress)',
+            Object.values(dataAddress),
+          );
+
           setAddress({
             ...address,
-            data: dataAddress,
+            data: Object.values(dataAddress),
             city: dataAddress[0].name,
             district: splitAddress[splitAddress?.length - 3],
             ward: splitAddress[splitAddress?.length - 4],
@@ -216,287 +221,248 @@ export default function UpdateStadium({ route, navigation }) {
           </Text>
         }
       />
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: Colors.whiteColor,
-        }}>
-        <ScrollView
+      <ScrollView>
+        <View
           style={{
-            padding: 10 * WIDTH_SCALE,
-          }}
-          showsVerticalScrollIndicator={true}>
-          <View>
-            <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
-              Vị trí sân của bạn trên bản đồ:
-            </Text>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.borderGreen,
-                borderRadius: 6 * HEIGHT_SCALE,
-                height: 250 * HEIGHT_SCALE,
-              }}>
-              {isPermission &&
-              reduxPosition?.lat !== -1 &&
-              reduxPosition?.lng !== -1 ? (
-                <View style={{ flex: 1 }}>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      marginTop: -30 * WIDTH_SCALE,
-                      marginLeft: -10 * WIDTH_SCALE,
-                    }}>
-                    <Image
-                      source={IMAGE.marker}
-                      resizeMode="contain"
+            flex: 1,
+            backgroundColor: Colors.whiteColor,
+          }}>
+          <ScrollView
+            style={{
+              padding: 10 * WIDTH_SCALE,
+            }}
+            showsVerticalScrollIndicator={true}>
+            <View>
+              <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
+                Vị trí sân của bạn trên bản đồ:
+              </Text>
+              <View
+                style={{
+                  overflow: 'hidden',
+                  borderWidth: 1 * HEIGHT_SCALE,
+                  borderColor: Colors.borderGreen,
+                  borderRadius: 6 * HEIGHT_SCALE,
+                  height: 250 * HEIGHT_SCALE,
+                }}>
+                {isPermission &&
+                reduxPosition?.lat !== -1 &&
+                reduxPosition?.lng !== -1 ? (
+                  <View style={{ flex: 1 }}>
+                    <View
                       style={{
-                        height: 30 * WIDTH_SCALE,
-                        width: 20 * WIDTH_SCALE,
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: -30 * WIDTH_SCALE,
+                        marginLeft: -10 * WIDTH_SCALE,
+                      }}>
+                      <Image
+                        source={IMAGE.marker}
+                        resizeMode="contain"
+                        style={{
+                          height: 30 * WIDTH_SCALE,
+                          width: 20 * WIDTH_SCALE,
+                        }}
+                      />
+                    </View>
+                    <MapView
+                      provider={PROVIDER_GOOGLE}
+                      style={{
+                        flex: 1,
+                        ...StyleSheet.absoluteFillObject,
+                        zIndex: -1,
+                        margin: 1,
+                      }}
+                      initialRegion={{
+                        latitude: reduxPosition?.lat || 0,
+                        longitude: reduxPosition?.lng || 0,
+                        latitudeDelta: 0.002,
+                        longitudeDelta: 0.002,
+                      }}
+                      showsUserLocation
+                      showsMyLocationButton
+                      onRegionChangeComplete={(event) => {
+                        Spinner.show();
+                        GetAddress(event);
                       }}
                     />
                   </View>
-                  <MapView
-                    provider={PROVIDER_GOOGLE}
+                ) : (
+                  <TouchableOpacity
+                    onPress={GetPosition}
                     style={{
                       flex: 1,
-                      ...StyleSheet.absoluteFillObject,
-                      zIndex: -1,
-                      margin: 1,
-                    }}
-                    initialRegion={{
-                      latitude: reduxPosition?.lat || 0,
-                      longitude: reduxPosition?.lng || 0,
-                      latitudeDelta: 0.002,
-                      longitudeDelta: 0.002,
-                    }}
-                    showsUserLocation
-                    showsMyLocationButton
-                    onRegionChangeComplete={(event) => {
-                      Spinner.show();
-                      GetAddress(event);
-                    }}
-                  />
-                </View>
-              ) : (
-                <TouchableOpacity
-                  onPress={GetPosition}
-                  style={{
-                    flex: 1,
-                    backgroundColor: Colors.colorGrayBackground,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={{ color: 'black' }}>
-                    Nhấn để chọn vị trí trên bản đồ
-                  </Text>
-                </TouchableOpacity>
-              )}
+                      backgroundColor: Colors.colorGrayBackground,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{ color: 'black' }}>
+                      Nhấn để chọn vị trí trên bản đồ
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
-          <View style={{ marginTop: 20 * HEIGHT_SCALE }}>
-            <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
-              Thiết lập địa chỉ:
-            </Text>
-            <View
-              style={{
-                borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.borderGreen,
-                borderRadius: 6 * HEIGHT_SCALE,
-                overflow: 'hidden',
-                padding: 10 * HEIGHT_SCALE,
-              }}>
-              {textLocation({
-                title: 'Tỉnh/Thành Phố(*)',
-                value: address.city,
-                onPress: () => modalCity.current.show(),
-              })}
-              {textLocation({
-                title: 'Quận/Huyện(*)',
-                value: address?.district,
-                onPress: () =>
-                  address.city
-                    ? modalDistrict.current.show()
-                    : Message('Vui lòng chọn tỉnh'),
-              })}
-              {textLocation({
-                title: 'Xã/Phường(*)',
-                disableLine: true,
-                value: address.ward,
-                onPress: () =>
-                  address?.city
-                    ? modalWard.current.show()
-                    : Message('Vui lòng chọn tỉnh'),
-              })}
-              <TextInput
-                value={address.fullAddress}
-                placeholder="Nhập địa chỉ sân chi tiết..."
-                style={{
-                  paddingHorizontal: 10 * WIDTH_SCALE,
-                  borderWidth: 1 * HEIGHT_SCALE,
-                  borderColor: Colors.colorGrayBackground,
-                  borderRadius: 6 * HEIGHT_SCALE,
-                }}
-                multiline
-                onChangeText={(text) =>
-                  setAddress({ ...address, fullAddress: text })
-                }
-              />
-            </View>
-          </View>
-          <View style={{ marginVertical: 20 * HEIGHT_SCALE }}>
-            <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
-              Thông tin bổ sung:
-            </Text>
-
-            <View
-              style={{
-                borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.borderGreen,
-                borderRadius: 6 * HEIGHT_SCALE,
-                overflow: 'hidden',
-                padding: 10 * HEIGHT_SCALE,
-              }}>
+            <View style={{ marginTop: 20 * HEIGHT_SCALE }}>
+              <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
+                Thiết lập địa chỉ:
+              </Text>
               <View
                 style={{
-                  marginTop: 10 * HEIGHT_SCALE,
+                  borderWidth: 1 * HEIGHT_SCALE,
+                  borderColor: Colors.borderGreen,
+                  borderRadius: 6 * HEIGHT_SCALE,
+                  overflow: 'hidden',
+                  padding: 10 * HEIGHT_SCALE,
                 }}>
-                <Text style={{ flex: 1 }}>Nhập tên sân(*):</Text>
+                {textLocation({
+                  title: 'Tỉnh/Thành Phố(*)',
+                  value: address.city,
+                  onPress: () => modalCity.current.show(),
+                })}
+                {textLocation({
+                  title: 'Quận/Huyện(*)',
+                  value: address?.district,
+                  onPress: () =>
+                    address.city
+                      ? modalDistrict.current.show()
+                      : Message('Vui lòng chọn tỉnh'),
+                })}
+                {textLocation({
+                  title: 'Xã/Phường(*)',
+                  disableLine: true,
+                  value: address.ward,
+                  onPress: () =>
+                    address?.city
+                      ? modalWard.current.show()
+                      : Message('Vui lòng chọn tỉnh'),
+                })}
                 <TextInput
-                  placeholder="Sân bóng Sài Gòn 1975"
+                  value={address.fullAddress}
+                  placeholder="Nhập địa chỉ sân chi tiết..."
                   style={{
-                    marginTop: 5 * HEIGHT_SCALE,
                     paddingHorizontal: 10 * WIDTH_SCALE,
                     borderWidth: 1 * HEIGHT_SCALE,
                     borderColor: Colors.colorGrayBackground,
                     borderRadius: 6 * HEIGHT_SCALE,
                   }}
-                  onChangeText={(text) => setNameStadium(text)}
+                  multiline
+                  onChangeText={(text) =>
+                    setAddress({ ...address, fullAddress: text })
+                  }
                 />
               </View>
-              <Text style={{ flex: 1 }}>Chọn ảnh sân(*):</Text>
-              <TouchableOpacity
-                onPress={selectFile}
-                style={{
-                  flex: 1,
-                  backgroundColor: Colors.colorGrayBackground,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 5 * HEIGHT_SCALE,
-                  borderRadius: 6 * HEIGHT_SCALE,
-                }}>
-                {source ? (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: 60 * WIDTH_SCALE,
-                    }}>
-                    <SkypeIndicator
-                      style={{ alignSelf: 'center', position: 'absolute' }}
-                      color={Colors.borderGreen}
-                      size={50 * WIDTH_SCALE}
-                    />
-                    <AutoHeightImage
-                      width={0.9 * WIDTH}
-                      source={{ uri: source?.uri }}
-                      style={{ borderRadius: 6 * HEIGHT_SCALE }}
-                    />
-                  </View>
-                ) : (
-                  <Text
-                    style={{
-                      paddingVertical: 25 * HEIGHT_SCALE,
-                    }}>
-                    Nhấn để chọn ảnh
-                  </Text>
-                )}
-              </TouchableOpacity>
             </View>
-          </View>
-          <TouchableOpacity
-            onPress={apiUpdateStadium}
-            style={{
-              alignItems: 'center',
-              backgroundColor: Colors.colorGreen,
-              // marginHorizontal: 20 * WIDTH_SCALE,
-              borderRadius: 14 * HEIGHT_SCALE,
-              width: WIDTH,
-              alignSelf: 'center',
-              marginBottom: 20 * HEIGHT_SCALE,
-            }}>
-            <Text
-              style={{
-                paddingVertical: 14 * HEIGHT_SCALE,
-                color: 'white',
-                fontSize: fonts.font16,
-                fontWeight: fonts.bold,
-              }}>
-              Cập Nhật Sân
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+            <View style={{ marginVertical: 20 * HEIGHT_SCALE }}>
+              <Text style={{ fontWeight: fonts.bold, left: 10 * WIDTH_SCALE }}>
+                Thông tin bổ sung:
+              </Text>
 
-      <ModalComponent
-        isHideAgree
-        ref={modalCity}
-        title="Chọn Tỉnh/Thành Phố"
-        propagateSwipe={true}>
-        <View style={{ height: HEIGHT * 0.8 }}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {vietnam.data
-              .sort(function (a, b) {
-                return a.name.localeCompare(b.name);
-              })
-              .map((data) => {
-                return (
-                  <TouchableOpacity
-                    key={data.level1_id}
+              <View
+                style={{
+                  borderWidth: 1 * HEIGHT_SCALE,
+                  borderColor: Colors.borderGreen,
+                  borderRadius: 6 * HEIGHT_SCALE,
+                  overflow: 'hidden',
+                  padding: 10 * HEIGHT_SCALE,
+                }}>
+                <View
+                  style={{
+                    marginTop: 10 * HEIGHT_SCALE,
+                  }}>
+                  <Text style={{ flex: 1 }}>Nhập tên sân(*):</Text>
+                  <TextInput
+                    placeholder="Sân bóng Sài Gòn 1975"
                     style={{
-                      borderBottomWidth: 1 * WIDTH_SCALE,
-                      borderBottomColor: Colors.colorGrayBackground,
-                      paddingVertical: 10 * HEIGHT_SCALE,
+                      marginTop: 5 * HEIGHT_SCALE,
+                      paddingHorizontal: 10 * WIDTH_SCALE,
+                      borderWidth: 1 * HEIGHT_SCALE,
+                      borderColor: Colors.colorGrayBackground,
+                      borderRadius: 6 * HEIGHT_SCALE,
                     }}
-                    onPress={() => {
-                      setAddress({
-                        ...address,
-                        data: data,
-                        city: data.name,
-                        district: Object?.values(data?.level2s)[0].name,
-                        ward: Object?.values(
-                          Object?.values(data?.level2s)[0].level3s,
-                        )[0].name,
-                        fullAddress: '',
-                      });
-                      modalCity.current.hide();
-                    }}>
-                    <Text>{data.name}</Text>
-                  </TouchableOpacity>
-                );
-              })}
+                    onChangeText={(text) => setNameStadium(text)}
+                  />
+                </View>
+                <Text style={{ flex: 1 }}>Chọn ảnh sân(*):</Text>
+                <TouchableOpacity
+                  onPress={selectFile}
+                  style={{
+                    flex: 1,
+                    backgroundColor: Colors.colorGrayBackground,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 5 * HEIGHT_SCALE,
+                    borderRadius: 6 * HEIGHT_SCALE,
+                  }}>
+                  {source ? (
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: 60 * WIDTH_SCALE,
+                      }}>
+                      <SkypeIndicator
+                        style={{ alignSelf: 'center', position: 'absolute' }}
+                        color={Colors.borderGreen}
+                        size={50 * WIDTH_SCALE}
+                      />
+                      <AutoHeightImage
+                        width={0.9 * WIDTH}
+                        source={{ uri: source?.uri }}
+                        style={{ borderRadius: 6 * HEIGHT_SCALE }}
+                      />
+                    </View>
+                  ) : (
+                    <Text
+                      style={{
+                        paddingVertical: 25 * HEIGHT_SCALE,
+                      }}>
+                      Nhấn để chọn ảnh
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={apiUpdateStadium}
+              style={{
+                alignItems: 'center',
+                backgroundColor: Colors.colorGreen,
+                // marginHorizontal: 20 * WIDTH_SCALE,
+                borderRadius: 14 * HEIGHT_SCALE,
+                width: WIDTH,
+                alignSelf: 'center',
+                marginBottom: 20 * HEIGHT_SCALE,
+              }}>
+              <Text
+                style={{
+                  paddingVertical: 14 * HEIGHT_SCALE,
+                  color: 'white',
+                  fontSize: fonts.font16,
+                  fontWeight: fonts.bold,
+                }}>
+                Cập Nhật Sân
+              </Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
-      </ModalComponent>
-      <ModalComponent
-        isHideAgree
-        ref={modalDistrict}
-        title="Chọn Quận/Huyện"
-        propagateSwipe={true}>
-        <View style={{ height: HEIGHT * 0.8 }}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {address?.data[0]?.level2s &&
-              address?.data[0]?.level2s
+        <ModalComponent
+          isHideAgree
+          ref={modalCity}
+          title="Chọn Tỉnh/Thành Phố"
+          propagateSwipe={true}>
+          <View style={{ height: HEIGHT * 0.8 }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ flex: 1 }}>
+              {vietnam.data
                 .sort(function (a, b) {
                   return a.name.localeCompare(b.name);
                 })
                 .map((data) => {
                   return (
                     <TouchableOpacity
-                      key={data.level2_id}
+                      key={data.level1_id}
                       style={{
                         borderBottomWidth: 1 * WIDTH_SCALE,
                         borderBottomColor: Colors.colorGrayBackground,
@@ -505,63 +471,109 @@ export default function UpdateStadium({ route, navigation }) {
                       onPress={() => {
                         setAddress({
                           ...address,
-                          district: data.name,
-                          ward: Object?.values(data?.level3s)[0].name,
+                          data: [data],
+                          city: data.name,
+                          district: Object?.values(data?.level2s)[0].name,
+                          ward: Object?.values(
+                            Object?.values(data?.level2s)[0].level3s,
+                          )[0].name,
                           fullAddress: '',
                         });
-                        modalDistrict.current.hide();
+                        modalCity.current.hide();
                       }}>
                       <Text>{data.name}</Text>
                     </TouchableOpacity>
                   );
                 })}
-          </ScrollView>
-        </View>
-      </ModalComponent>
-      <ModalComponent
-        isHideAgree
-        ref={modalWard}
-        title="Chọn Xã/Phường"
-        propagateSwipe={true}>
-        <View style={{ height: HEIGHT * 0.8 }}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            {address?.data[0]?.level2s &&
-              address?.data[0]?.level2s
-                ?.filter(
-                  (a) =>
-                    a?.name
-                      ?.trim()
-                      ?.toLowerCase()
-                      ?.indexOf(address?.district?.trim()?.toLowerCase()) !==
-                    -1,
-                )[0]
-                ?.level3s.sort(function (a, b) {
-                  return a.name.localeCompare(b.name);
-                })
-                .map((data) => {
-                  return (
-                    <TouchableOpacity
-                      key={data.level3_id}
-                      style={{
-                        borderBottomWidth: 1 * WIDTH_SCALE,
-                        borderBottomColor: Colors.colorGrayBackground,
-                        paddingVertical: 10 * HEIGHT_SCALE,
-                      }}
-                      onPress={() => {
-                        setAddress({
-                          ...address,
-                          ward: data.name,
-                          fullAddress: '',
-                        });
-                        modalWard.current.hide();
-                      }}>
-                      <Text>{data.name}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
-          </ScrollView>
-        </View>
-      </ModalComponent>
+            </ScrollView>
+          </View>
+        </ModalComponent>
+        <ModalComponent
+          isHideAgree
+          ref={modalDistrict}
+          title="Chọn Quận/Huyện"
+          propagateSwipe={true}>
+          <View style={{ height: HEIGHT * 0.8 }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ flex: 1 }}>
+              {address?.data[0]?.level2s &&
+                address?.data[0]?.level2s
+                  .sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                  })
+                  .map((data) => {
+                    return (
+                      <TouchableOpacity
+                        key={data.level2_id}
+                        style={{
+                          borderBottomWidth: 1 * WIDTH_SCALE,
+                          borderBottomColor: Colors.colorGrayBackground,
+                          paddingVertical: 10 * HEIGHT_SCALE,
+                        }}
+                        onPress={() => {
+                          setAddress({
+                            ...address,
+                            district: data.name,
+                            ward: Object?.values(data?.level3s)[0].name,
+                            fullAddress: '',
+                          });
+                          modalDistrict.current.hide();
+                        }}>
+                        <Text>{data.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+            </ScrollView>
+          </View>
+        </ModalComponent>
+        <ModalComponent
+          isHideAgree
+          ref={modalWard}
+          title="Chọn Xã/Phường"
+          propagateSwipe={true}>
+          <View style={{ height: HEIGHT * 0.8 }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ flex: 1 }}>
+              {address?.data[0]?.level2s &&
+                address?.data[0]?.level2s
+                  ?.filter(
+                    (a) =>
+                      a?.name
+                        ?.trim()
+                        ?.toLowerCase()
+                        ?.indexOf(address?.district?.trim()?.toLowerCase()) !==
+                      -1,
+                  )[0]
+                  ?.level3s.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                  })
+                  .map((data) => {
+                    return (
+                      <TouchableOpacity
+                        key={data.level3_id}
+                        style={{
+                          borderBottomWidth: 1 * WIDTH_SCALE,
+                          borderBottomColor: Colors.colorGrayBackground,
+                          paddingVertical: 10 * HEIGHT_SCALE,
+                        }}
+                        onPress={() => {
+                          setAddress({
+                            ...address,
+                            ward: data.name,
+                            fullAddress: '',
+                          });
+                          modalWard.current.hide();
+                        }}>
+                        <Text>{data.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+            </ScrollView>
+          </View>
+        </ModalComponent>
+      </ScrollView>
     </ImageBackground>
   );
 
