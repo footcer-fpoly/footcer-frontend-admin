@@ -11,6 +11,7 @@ export default {
   font18: 18,
   font20: 20,
   font25: 25,
+  font24:24,
   font11:11,
   bold: 'bold',
   uppercase: 'uppercase',
