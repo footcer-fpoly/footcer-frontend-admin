@@ -97,7 +97,6 @@ export default function InfoStadium({ navigation }) {
     Spinner.show();
     API.delete(`/stadium/delete_collage/${id}`)
       .then(({ data }) => {
-        console.log('editCollage -> data', data);
         if (data.code === 200) {
           getCollage();
           ref.current.hide();
