@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -24,15 +24,16 @@ import { REDUX } from '../redux/store/types';
 import { Message } from '../components/Message';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Swipeout from 'react-native-swipeout';
+import ModalComponentX from '../components/ModalComponentX';
+import { formatNumber } from '../components/MoneyFormat';
+import Spinner from '../components/Spinner';
 
 export default function InfoStadium({ navigation }) {
   const [dataStadium, setDataStadium] = useState();
+  const ref = useRef();
   const dispatch = useDispatch();
-  const listStadium = useSelector((state) => state.userReducer.listStadium);
-  useEffect(() => {
-    setDataStadium(listStadium);
-  }, []);
-  useEffect(() => {
+  const [index, setIndex] = useState();
+  const getCollage = () => {
     API.get('/stadium/info')
       .then(({ data }) => {
         dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
@@ -44,6 +45,9 @@ export default function InfoStadium({ navigation }) {
         console.log('InfoStadium -> onError', onError.message);
         Message('Lỗi');
       });
+  };
+  useEffect(() => {
+    getCollage();
   }, []);
   const renderItem = (props) => {
     const { item, index } = props;
@@ -56,11 +60,11 @@ export default function InfoStadium({ navigation }) {
       {
         text: 'Xoá',
         backgroundColor: Colors.colorRed,
+        onPress: () => deleteCollage(item?.stadiumCollageId),
       },
     ];
     const startTime = new Date(Number(item?.startTime)).toUTCString();
     const endTime = new Date(Number(item?.endTime)).toUTCString();
-
     return (
       <View
         style={{
@@ -68,7 +72,11 @@ export default function InfoStadium({ navigation }) {
           borderBottomColor: Colors.colorGrayBackground,
         }}>
         <Swipeout right={swipeoutBtns} showsButtons backgroundColor="white">
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              setIndex(index);
+              ref.current.show();
+            }}
             style={{
               padding: 20 * HEIGHT_SCALE,
               flexDirection: 'row',
@@ -80,112 +88,259 @@ export default function InfoStadium({ navigation }) {
               17,
               5,
             )}`}</Text>
-          </View>
+          </TouchableOpacity>
         </Swipeout>
       </View>
     );
   };
+  const deleteCollage = (id) => {
+    Spinner.show();
+    API.delete(`/stadium/delete_collage/${id}`)
+      .then(({ data }) => {
+        console.log('editCollage -> data', data);
+        if (data.code === 200) {
+          getCollage();
+          ref.current.hide();
+          Spinner.hide();
+          Message('Xoá sân con thành công');
+        } else {
+          Spinner.hide();
+          Message('Xoá sân con thất bại');
+        }
+      })
+      .catch((onError) => {
+        console.log(onError.message);
+        Spinner.hide();
+      });
+  };
   return (
-    <ParallaxScrollView
-      showsVerticalScrollIndicator={false}
-      headerBackgroundColor={Colors.colorDarkBlue}
-      stickyHeaderHeight={70 * HEIGHT_SCALE}
-      parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
-      backgroundSpeed={10}
-      renderBackground={() => (
-        <View key="background">
-          <Image
-            source={{
-              uri: dataStadium?.image,
-              width: WIDTH,
-              height: PARALLAX_HEADER_HEIGHT,
-            }}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              width: WIDTH,
-              backgroundColor: '#00000060',
-              height: PARALLAX_HEADER_HEIGHT,
-            }}
-          />
-        </View>
-      )}
-      renderForeground={() => (
-        <View key="parallax-header" style={styles.parallaxHeader}>
-          <Text numberOfLines={1} style={styles.sectionSpeakerText}>
-            {dataStadium?.stadiumName}
-          </Text>
-          <Text numberOfLines={1} style={styles.sectionTitleText}>
-            {dataStadium?.address}
-          </Text>
-          {dataStadium?.verify === '0' ? (
-            <Text
+    <>
+      <ParallaxScrollView
+        showsVerticalScrollIndicator={false}
+        headerBackgroundColor={Colors.colorDarkBlue}
+        stickyHeaderHeight={70 * HEIGHT_SCALE}
+        parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+        backgroundSpeed={10}
+        renderBackground={() => (
+          <View key="background">
+            <Image
+              source={{
+                uri: dataStadium?.image,
+                width: WIDTH,
+                height: PARALLAX_HEADER_HEIGHT,
+              }}
+            />
+            <View
               style={{
-                color: '#ff0000',
                 position: 'absolute',
-                top: 30 * HEIGHT_SCALE,
-                right: 0,
-              }}>
-              Chưa xác thực
-            </Text>
-          ) : (
-            <Text
-              style={{
-                color: Colors.colorGreen,
-                position: 'absolute',
-                top: 30 * HEIGHT_SCALE,
-                right: 0,
-              }}>
-              Đã xác thực
-            </Text>
-          )}
-        </View>
-      )}
-      renderStickyHeader={() => (
-        <Header
-          style={{
-            backgroundColor: Colors.colorGreen,
-            height: 70 * HEIGHT_SCALE,
-          }}
-          center={
-            <Text
-              numberOfLines={1}
-              style={{
-                fontSize: fonts.font18,
-                fontWeight: fonts.bold,
-                color: Colors.whiteColor,
-              }}>
+                width: WIDTH,
+                backgroundColor: '#00000060',
+                height: PARALLAX_HEADER_HEIGHT,
+              }}
+            />
+          </View>
+        )}
+        renderForeground={() => (
+          <View key="parallax-header" style={styles.parallaxHeader}>
+            <Text numberOfLines={1} style={styles.sectionSpeakerText}>
               {dataStadium?.stadiumName}
             </Text>
-          }
-          right={
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('CreateCollage', {
-                  id: dataStadium.stadiumId,
-                })
-              }>
+            <Text numberOfLines={1} style={styles.sectionTitleText}>
+              {dataStadium?.address}
+            </Text>
+            {dataStadium?.verify === '0' ? (
+              <Text
+                style={{
+                  color: '#ff0000',
+                  position: 'absolute',
+                  top: 30 * HEIGHT_SCALE,
+                  right: 0,
+                }}>
+                Chưa xác thực
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: Colors.colorGreen,
+                  position: 'absolute',
+                  top: 30 * HEIGHT_SCALE,
+                  right: 0,
+                }}>
+                Đã xác thực
+              </Text>
+            )}
+          </View>
+        )}
+        renderStickyHeader={() => (
+          <Header
+            style={{
+              backgroundColor: Colors.colorGreen,
+              height: 70 * HEIGHT_SCALE,
+            }}
+            center={
               <Text
                 numberOfLines={1}
                 style={{
-                  fontSize: fonts.font14,
+                  fontSize: fonts.font18,
+                  fontWeight: fonts.bold,
                   color: Colors.whiteColor,
                 }}>
-                Thêm
+                {dataStadium?.stadiumName}
               </Text>
-            </TouchableOpacity>
-          }
-        />
-      )}>
-      <View style={{ marginTop: 10 * HEIGHT_SCALE }}>
-        <FlatList
-          data={dataStadium?.stadium_collage || []}
-          renderItem={renderItem}
-        />
-      </View>
-    </ParallaxScrollView>
+            }
+            right={
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('CreateCollage', {
+                    id: dataStadium.stadiumId,
+                  })
+                }>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    fontSize: fonts.font14,
+                    color: Colors.whiteColor,
+                  }}>
+                  Thêm
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+        )}>
+        <View style={{ marginTop: 10 * HEIGHT_SCALE }}>
+          <FlatList
+            data={dataStadium?.stadium_collage || []}
+            renderItem={renderItem}
+          />
+        </View>
+      </ParallaxScrollView>
+      <ModalComponentX
+        isHideAgree
+        ref={ref}
+        title="Thông tin sân con"
+        onPress={() => {
+          ref.current.hide();
+          // navigation.navigate('OTPScreen', { phone: phone });
+        }}>
+        {viewModal({
+          title: 'Sân con: ',
+          content: dataStadium?.stadium_collage[index]?.stadiumCollageName,
+        })}
+        {viewModal({
+          title: 'Thời gian: ',
+          content: `${new Date(
+            Number(dataStadium?.stadium_collage[index]?.startTime),
+          )
+            .toUTCString()
+            .substr(17, 5)} - ${new Date(
+            Number(dataStadium?.stadium_collage[index]?.endTime),
+          )
+            .toUTCString()
+            .substr(17, 5)}`,
+        })}
+        {viewModal({
+          title: 'Thời gian chơi: ',
+          content: `${
+            dataStadium?.stadium_collage[index]?.playTime === '1800000'
+              ? '30'
+              : dataStadium?.stadium_collage[index]?.playTime === '3600000'
+              ? '60'
+              : '90'
+          } phút`,
+        })}
+        {viewModal({
+          title: 'Số người: ',
+          content: dataStadium?.stadium_collage[index]?.amountPeople,
+        })}
+        <View style={{ flexDirection: 'row', marginTop: 5 * HEIGHT_SCALE }}>
+          <TouchableOpacity
+            onPress={() => {
+              deleteCollage(
+                dataStadium?.stadium_collage[index]?.stadiumCollageId,
+              );
+            }}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              backgroundColor: Colors.colorRed,
+              marginRight: 5 * WIDTH_SCALE,
+              padding: 6 * WIDTH_SCALE,
+              paddingVertical: 10 * WIDTH_SCALE,
+              borderRadius: 8 * WIDTH_SCALE,
+            }}>
+            <Text style={{ color: Colors.whiteColor }}>Xoá</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              ref.current.hide();
+              navigation.navigate('CreateCollage', {
+                data: dataStadium?.stadium_collage[index],
+              });
+            }}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              backgroundColor: Colors.colorOrange,
+              marginLeft: 5 * WIDTH_SCALE,
+              padding: 6 * WIDTH_SCALE,
+              paddingVertical: 10 * WIDTH_SCALE,
+              borderRadius: 8 * WIDTH_SCALE,
+            }}>
+            <Text style={{ color: Colors.whiteColor }}>Chỉnh sửa</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            ref.current.hide();
+            navigation.navigate('PriceScreen', {
+              item: dataStadium?.stadium_collage[index],
+            });
+          }}
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: Colors.borderGreen,
+            marginLeft: 5 * WIDTH_SCALE,
+            padding: 6 * WIDTH_SCALE,
+            paddingVertical: 10 * WIDTH_SCALE,
+            borderRadius: 8 * WIDTH_SCALE,
+            marginTop: 10 * HEIGHT_SCALE,
+          }}>
+          <Text style={{ color: Colors.whiteColor }}>Xem chi tiết giá</Text>
+        </TouchableOpacity>
+      </ModalComponentX>
+    </>
   );
+
+  function viewModal({ title, content }) {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 5 * HEIGHT_SCALE,
+        }}>
+        <Text
+          style={{
+            fontSize: fonts.font16,
+            color: Colors.blackColor,
+            flex: 1,
+          }}>
+          {title}
+        </Text>
+        <Text
+          style={{
+            fontWeight: fonts.bold,
+            fontSize: fonts.font16,
+            color: Colors.colorGrayText,
+            flex: 1,
+            textAlign: 'right',
+          }}>
+          {content}
+        </Text>
+      </View>
+    );
+  }
 }
 const PARALLAX_HEADER_HEIGHT = 250 * HEIGHT_SCALE;
 

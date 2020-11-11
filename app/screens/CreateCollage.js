@@ -24,6 +24,8 @@ import ModalTimeComponent from '../components/ModalTimeComponent';
 import Spinner from '../components/Spinner';
 
 export default function InfoStadium({ navigation, route }) {
+  const { data, id } = route?.params;
+  console.log('InfoStadium -> data', data);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [nameColage, setNameColage] = useState('');
@@ -81,10 +83,10 @@ export default function InfoStadium({ navigation, route }) {
         API.post('/stadium/add-collage', {
           stadiumCollageName: nameColage,
           amountPeople: people,
-          startTime: new Date(startTime).getTime().toString(),
-          endTime: new Date(endTime).getTime().toString(),
+          startTime: new Date(startTime)?.getTime()?.toString(),
+          endTime: new Date(endTime)?.getTime()?.toString(),
           playTime: playTime,
-          stadiumId: route?.params?.id,
+          stadiumId: id,
           defaultPrice: Number(price),
         })
           .then(({ data }) => {
@@ -110,6 +112,65 @@ export default function InfoStadium({ navigation, route }) {
       Spinner.hide();
     }
   };
+  const editCollage = () => {
+    Spinner.show();
+    if (nameColage) {
+      if (new Date(startTime).getTime() < new Date(endTime).getTime()) {
+        API.put('/stadium/update-collage', {
+          stadiumCollageName: nameColage,
+          amountPeople: people,
+          startTime: new Date(startTime)?.getTime()?.toString(),
+          endTime: new Date(endTime)?.getTime()?.toString(),
+          playTime: playTime,
+          stadiumCollageId: data?.stadiumCollageId,
+        })
+          .then(({ data }) => {
+            console.log('editCollage -> data', data);
+            if (data.code === 200) {
+              Spinner.hide();
+              navigation.replace('InfoStadium');
+            } else {
+              Spinner.hide();
+              Message('Chỉnh sửa sân con thất bại');
+            }
+          })
+          .catch((onError) => {
+            console.log(onError.message);
+            Spinner.hide();
+          });
+      } else {
+        Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
+        Spinner.hide();
+      }
+    } else {
+      Message('Vui lòng nhập đầy đủ thông tin');
+      Spinner.hide();
+    }
+  };
+  const setDefault = () => {
+    data && setNameColage(data?.stadiumCollageName);
+    data && setStartTime(new Date(Number(data?.startTime))?.toUTCString());
+    data && setEndTime(new Date(Number(data?.endTime))?.toUTCString());
+    data && setPlayTime(data?.playTime);
+    data && setPeople(data?.amountPeople);
+    TimePlayCheck(
+      data?.playTime === '1800000'
+        ? 'op30'
+        : data?.playTime === '3600000'
+        ? 'op60'
+        : 'op90',
+    );
+    PeopleCheck(
+      data?.amountPeople === '5'
+        ? 'op5'
+        : data?.amountPeople === '7'
+        ? 'op7'
+        : 'op9',
+    );
+  };
+  useEffect(() => {
+    data && setDefault();
+  }, []);
   return (
     <View>
       <Header
@@ -120,7 +181,7 @@ export default function InfoStadium({ navigation, route }) {
               fontWeight: fonts.bold,
               color: Colors.whiteColor,
             }}>
-            Tạo sân con
+            {data ? 'Chỉnh sửa sân con' : 'Tạo sân con'}
           </Text>
         }
       />
@@ -144,6 +205,7 @@ export default function InfoStadium({ navigation, route }) {
               borderRadius: 6 * HEIGHT_SCALE,
             }}>
             <TextInput
+              value={nameColage}
               placeholder="Sân 1, Sân trái, Sân lớn, Sân si,...."
               style={{
                 paddingHorizontal: 10 * WIDTH_SCALE,
@@ -189,37 +251,39 @@ export default function InfoStadium({ navigation, route }) {
             </View>
           </View>
         </View>
-        <View
-          style={{
-            margin: 10 * WIDTH_SCALE,
-          }}>
-          <Text
-            style={{
-              fontWeight: fonts.bold,
-              left: 10 * WIDTH_SCALE,
-            }}>
-            Chọn giá:
-          </Text>
+        {!data && (
           <View
             style={{
-              overflow: 'hidden',
-              borderWidth: 1 * HEIGHT_SCALE,
-              borderColor: Colors.borderGreen,
-              borderRadius: 6 * HEIGHT_SCALE,
+              margin: 10 * WIDTH_SCALE,
             }}>
-            <TextInput
-              placeholder="50000,...."
+            <Text
               style={{
-                paddingHorizontal: 10 * WIDTH_SCALE,
+                fontWeight: fonts.bold,
+                left: 10 * WIDTH_SCALE,
+              }}>
+              Chọn giá:
+            </Text>
+            <View
+              style={{
+                overflow: 'hidden',
                 borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.colorGrayBackground,
+                borderColor: Colors.borderGreen,
                 borderRadius: 6 * HEIGHT_SCALE,
-              }}
-              keyboardType="number-pad"
-              onChangeText={setPrice}
-            />
+              }}>
+              <TextInput
+                placeholder="50000,...."
+                style={{
+                  paddingHorizontal: 10 * WIDTH_SCALE,
+                  borderWidth: 1 * HEIGHT_SCALE,
+                  borderColor: Colors.colorGrayBackground,
+                  borderRadius: 6 * HEIGHT_SCALE,
+                }}
+                keyboardType="number-pad"
+                onChangeText={setPrice}
+              />
+            </View>
           </View>
-        </View>
+        )}
         <View
           style={{
             margin: 10 * WIDTH_SCALE,
@@ -320,7 +384,7 @@ export default function InfoStadium({ navigation, route }) {
               fontWeight: fonts.bold,
               left: 10 * WIDTH_SCALE,
             }}>
-            Số người chơi:
+            Số người:
           </Text>
           <View
             style={{
@@ -403,7 +467,7 @@ export default function InfoStadium({ navigation, route }) {
           </View>
         </View>
         <TouchableOpacity
-          onPress={createCollage}
+          onPress={data ? editCollage : createCollage}
           style={{
             alignItems: 'center',
             backgroundColor: Colors.colorGreen,
@@ -419,18 +483,20 @@ export default function InfoStadium({ navigation, route }) {
               fontSize: fonts.font16,
               fontWeight: fonts.bold,
             }}>
-            Tạo sân con
+            {data ? 'Chỉnh sửa sân con' : 'Tạo sân con'}
           </Text>
         </TouchableOpacity>
         <ModalTimeComponent
           ref={startTimeRef}
           title="Chọn giờ bắt đầu"
           time={setStartTime}
+          timeDefault={startTime}
         />
         <ModalTimeComponent
           ref={endTimeRef}
           title="Chọn giờ kết thúc"
           time={setEndTime}
+          timeDefault={endTime}
         />
       </ScrollView>
     </View>

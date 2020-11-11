@@ -43,6 +43,7 @@ export default function SplashScreen({ route, navigation }) {
           const isSignIn = store.getState().userReducer.loggedIn;
           const listStadium = store.getState().userReducer.listStadium;
           const token = store.getState().userReducer.token;
+          console.log('SplashScreen -> token', token);
           isSignIn
             ? listStadium?.latitude === -1 && listStadium?.longitude === -1
               ? navigation.replace('UpdateStadium')

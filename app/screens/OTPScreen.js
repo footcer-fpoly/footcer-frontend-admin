@@ -37,12 +37,17 @@ export default function OTPScreen({ route, navigation }) {
   const pin4ref = useRef(null);
   const pin5ref = useRef(null);
   const pin6ref = useRef(null);
+  const [timer, setTimer] = useState(0);
   const handleSendCode = async () => {
     try {
-      const confirmation = await auth().signInWithPhoneNumber(`+84${phone}`);
+      const confirmation = await auth().signInWithPhoneNumber(
+        `+84${phone}`,
+        true,
+      );
       Message('Đã gửi mã xác thực');
       Spinner.hide();
       setConfirmResult(confirmation);
+      setTimer(59);
     } catch (error) {
       Message('Lỗi gửi mã xác thực');
       Spinner.hide();
@@ -81,6 +86,13 @@ export default function OTPScreen({ route, navigation }) {
       }
     }
   };
+  useEffect(() => {
+    if (timer > 0) {
+      setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+    }
+  }, [timer]);
   return (
     <ImageBackground
       source={IMAGE.background}
@@ -185,12 +197,25 @@ export default function OTPScreen({ route, navigation }) {
             }
             value={pin6}
             style={styles.inputOTP}
+            returnKeyType="done"
+            onSubmitEditing={handleVerifyCode}
           />
         </View>
+        {timer === 0 ? (
+          <TouchableOpacity onPress={handleSendCode}>
+            <Text style={{ fontSize: fonts.font14 }} t>
+              Gửi lại
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={{ color: colors.colorGrayText, fontSize: fonts.font14 }}>
+            Gửi lại sau: {timer}
+          </Text>
+        )}
         <TouchableOpacity
           style={{
             backgroundColor: colors.colorGreen,
-            marginTop: 20 * HEIGHT_SCALE,
+            marginTop: 10 * HEIGHT_SCALE,
             borderRadius: 10 * HEIGHT_SCALE,
             paddingVertical: 15 * HEIGHT_SCALE,
             paddingHorizontal: 40 * WIDTH_SCALE,

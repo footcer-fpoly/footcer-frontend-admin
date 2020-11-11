@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SignIn } from '../redux/actions/userAction';
@@ -33,6 +34,11 @@ export default function UpdatePasswordScreen({ route, navigation }) {
     displayName: '',
     role: 1,
   });
+  const [isCheck, setIsCheck] = useState({
+    name: true,
+    password: true,
+    confirmPassword: true,
+  });
   const dispatch = useDispatch();
   const inputCell = (props) => {
     return (
@@ -45,28 +51,51 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           }}>
           {props.title}
         </Text>
-        <TextInput
+        <View
           style={{
-            borderColor: colors.borderGreen,
+            borderColor: props?.isCheck ? colors.colorGreen : colors.colorRed,
+
             borderWidth: 1 * HEIGHT_SCALE,
             width: 0.8 * WIDTH,
-            marginTop: 10 * HEIGHT_SCALE,
             borderRadius: 10 * HEIGHT_SCALE,
-            fontSize: fonts.font16,
             paddingHorizontal: 20 * WIDTH_SCALE,
-          }}
-          secureTextEntry={
-            props?.secureTextEntry ? props?.secureTextEntry : false
-          }
-          maxLength={props?.maxLength ? props.maxLength : null}
-          keyboardType={props?.keyboardType ? props?.keyboardType : null}
-          onChangeText={props.onChangeText}
-        />
+            marginTop: 20 * HEIGHT_SCALE,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={props?.image ? props?.image : IMAGE.username}
+            style={{
+              height: 20 * WIDTH_SCALE,
+              width: 20 * WIDTH_SCALE,
+              marginRight: 10 * WIDTH_SCALE,
+            }}
+          />
+          <TextInput
+            style={{
+              fontSize: fonts.font16,
+              width: '100%',
+            }}
+            secureTextEntry={
+              props?.secureTextEntry ? props?.secureTextEntry : false
+            }
+            maxLength={props?.maxLength ? props.maxLength : null}
+            keyboardType={props?.keyboardType ? props?.keyboardType : null}
+            onChangeText={props.onChangeText}
+            returnKeyType={props.isDone ? 'done' : null}
+            onSubmitEditing={props.isDone ? checkValidate : null}
+          />
+        </View>
       </View>
     );
   };
   const signUp = () => {
-    Spinner.show();
+    setIsCheck({
+      ...isCheck,
+      name: true,
+      password: true,
+      confirmPassword: true,
+    });
     return API.post('/users/sign-up-phone', {
       phone: userSignUp.phone,
       password: userSignUp.password,
@@ -93,6 +122,39 @@ export default function UpdatePasswordScreen({ route, navigation }) {
         console.log(onError);
         Spinner.hide();
       });
+  };
+  const checkValidate = () => {
+    Spinner.show();
+    userSignUp.displayName
+      ? userSignUp.password
+        ? userSignUp.confirmPassword
+          ? userSignUp.password === userSignUp.confirmPassword
+            ? signUp()
+            : (Message('Nhập lại mật khẩu không đúng'), Spinner.hide())
+          : (Message('Vui lòng nhập lại mật khẩu'),
+            setIsCheck({
+              ...isCheck,
+              name: true,
+              password: true,
+              confirmPassword: false,
+            }),
+            Spinner.hide())
+        : (Message('Vui lòng nhập mật khẩu'),
+          setIsCheck({
+            ...isCheck,
+            name: true,
+            password: false,
+            confirmPassword: false,
+          }),
+          Spinner.hide())
+      : (Message('Vui lòng nhập tên tài khoản'),
+        setIsCheck({
+          ...isCheck,
+          name: false,
+          password: false,
+          confirmPassword: false,
+        }),
+        Spinner.hide());
   };
   return (
     <ImageBackground
@@ -130,25 +192,32 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           alignItems: 'center',
         }}>
         {inputCell({
+          image: IMAGE.username,
           title: 'Nhập họ và tên:',
           onChangeText: (text) =>
             setUserSignUp({ ...userSignUp, displayName: text?.trim() }),
+          isCheck: isCheck.name,
         })}
         {inputCell({
-          title: 'Nhập mật khẩu:',
+          image: IMAGE.password,
+          title: 'Nhập lại mật khẩu:',
           onChangeText: (text) =>
             setUserSignUp({ ...userSignUp, password: text?.trim() }),
           maxLength: 6,
           secureTextEntry: true,
           keyboardType: 'number-pad',
+          isCheck: isCheck.password,
         })}
         {inputCell({
-          title: 'Nhập mật khẩu:',
+          image: IMAGE.password,
+          title: 'Nhập lại mật khẩu:',
           onChangeText: (text) =>
             setUserSignUp({ ...userSignUp, confirmPassword: text?.trim() }),
           maxLength: 6,
           secureTextEntry: true,
           keyboardType: 'number-pad',
+          isDone: true,
+          isCheck: isCheck.confirmPassword,
         })}
         <TouchableOpacity
           style={{
@@ -159,17 +228,7 @@ export default function UpdatePasswordScreen({ route, navigation }) {
             paddingHorizontal: 40 * WIDTH_SCALE,
             alignItems: 'center',
           }}
-          onPress={() => {
-            if (
-              userSignUp.password &&
-              userSignUp.confirmPassword &&
-              userSignUp.displayName
-            ) {
-              userSignUp.password === userSignUp.confirmPassword
-                ? signUp()
-                : Message('Nhập lại mật khẩu không đúng');
-            } else Message('Vui lòng nhập đầy đủ thông tin');
-          }}>
+          onPress={checkValidate}>
           <Text
             style={{
               color: colors.colorWhite,

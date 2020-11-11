@@ -100,10 +100,6 @@ export default function PriceScreen({ route, navigation }) {
               {dataCollage?.amountPeople} người
             </Text>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.txt}>Giá tiền</Text>
-            <Text style={styles.txtPrice}>{dataCollage?.defaultPrice}</Text>
-          </View>
           <View style={styles.btnContainer}>
             <TouchableOpacity style={styles.btnSetting}>
               <Text style={styles.txtSettingg}>Chỉnh sửa</Text>

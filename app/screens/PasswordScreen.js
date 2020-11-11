@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SignIn } from '../redux/actions/userAction';
@@ -25,7 +26,9 @@ export default function PasswordScreen({ route, navigation }) {
   const phone = route?.params?.phone;
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
+  const [isCheck, setIsCheck] = useState(true);
   const onLogIn = () => {
+    Spinner.show();
     Number.isInteger(parseInt(password))
       ? password.length === 6
         ? dispatch(
@@ -34,8 +37,8 @@ export default function PasswordScreen({ route, navigation }) {
               navigation.replace('Splash', { isCheckStadium: true });
             }),
           )
-        : (Message('Mật khẩu phải 6 số'), Spinner.hide())
-      : (Message('Vui lòng nhập mật khẩu'), Spinner.hide());
+        : (Message('Mật khẩu phải 6 số'), Spinner.hide(), setIsCheck(false))
+      : (Message('Vui lòng nhập mật khẩu'), Spinner.hide(), setIsCheck(false));
   };
   return (
     <ImageBackground
@@ -43,26 +46,45 @@ export default function PasswordScreen({ route, navigation }) {
       style={{ width: WIDTH, height: HEIGHT }}>
       <View
         style={{
-          marginHorizontal: 20 * WIDTH_SCALE,
           flex: 0.3,
           justifyContent: 'center',
+          marginHorizontal: 20 * WIDTH_SCALE,
         }}>
-        <Text
+        <View
           style={{
-            color: colors.colorWhite,
-            fontSize: fonts.font25,
-            fontWeight: fonts.bold,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}>
-          Đăng Nhập
-        </Text>
-        <Text
-          style={{
-            color: colors.colorWhite,
-            fontSize: fonts.font16,
-            top: 20 * HEIGHT_SCALE,
-          }}>
-          Xin chào bạn!
-        </Text>
+          <Image
+            source={IMAGE.logo}
+            style={{
+              height: 100 * WIDTH_SCALE,
+              width: 100 * WIDTH_SCALE,
+              marginRight: 10 * WIDTH_SCALE,
+            }}
+          />
+          <View
+            style={{
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                color: colors.colorWhite,
+                fontSize: fonts.font25,
+                fontWeight: fonts.bold,
+              }}>
+              Đăng Nhập
+            </Text>
+            <Text
+              style={{
+                color: colors.colorWhite,
+                fontSize: fonts.font16,
+                marginTop: 10 * HEIGHT_SCALE,
+              }}>
+              Xin chào bạn!
+            </Text>
+          </View>
+        </View>
       </View>
       <View
         style={{
@@ -81,37 +103,62 @@ export default function PasswordScreen({ route, navigation }) {
             }}>
             Nhập mật khẩu:
           </Text>
-
-          <TextInput
+          <View
             style={{
-              borderColor: colors.borderGreen,
+              borderColor: isCheck ? colors.colorGreen : colors.colorRed,
               borderWidth: 1 * HEIGHT_SCALE,
               width: 0.8 * WIDTH,
-              marginTop: 20 * HEIGHT_SCALE,
               borderRadius: 10 * HEIGHT_SCALE,
-              fontSize: fonts.font16,
               paddingHorizontal: 20 * WIDTH_SCALE,
-            }}
-            secureTextEntry={true}
-            autoFocus
-            keyboardType={'number-pad'}
-            maxLength={6}
-            onChangeText={(text) => setPassword(text)}
-          />
+              marginTop: 20 * HEIGHT_SCALE,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={IMAGE.password}
+              style={{
+                height: 20 * WIDTH_SCALE,
+                width: 20 * WIDTH_SCALE,
+                marginRight: 10 * WIDTH_SCALE,
+              }}
+            />
+            <TextInput
+              style={{
+                fontSize: fonts.font16,
+                width: '100%',
+              }}
+              secureTextEntry={true}
+              autoFocus
+              keyboardType={'number-pad'}
+              maxLength={6}
+              onChangeText={setPassword}
+              returnKeyType="done"
+              onSubmitEditing={onLogIn}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ marginVertical: 10 * HEIGHT_SCALE }}>
+            <Text
+              style={{
+                fontSize: fonts.font14,
+                color: colors.colorGrayText,
+                textAlign: 'right',
+              }}>
+              Đổi số điện khác
+            </Text>
+          </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           style={{
             backgroundColor: colors.colorGreen,
-            marginTop: 20 * HEIGHT_SCALE,
             borderRadius: 10 * HEIGHT_SCALE,
             paddingVertical: 15 * HEIGHT_SCALE,
             paddingHorizontal: 40 * WIDTH_SCALE,
             alignItems: 'center',
           }}
-          onPress={() => {
-            Spinner.show();
-            onLogIn();
-          }}>
+          onPress={onLogIn}>
           <Text
             style={{
               color: colors.colorWhite,

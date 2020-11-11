@@ -21,9 +21,11 @@ export const SignIn = (phone, password, onSuccess = () => {}) => {
           onSuccess();
         } else {
           Message('Bạn không phải là chủ sân');
+          Spinner.hide();
         }
       })
       .catch((onError) => {
+        Spinner.hide();
         console.log('SignIn -> onError', onError);
         Message('Vui lòng kiểm tra thông tin đăng nhập');
       });

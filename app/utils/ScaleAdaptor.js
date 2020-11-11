@@ -61,12 +61,12 @@ const WIDTH = width;
 const HEIGHT = height;
 const IS_ANDROID = Platform.OS === 'android';
 const IS_IOS = Platform.OS === 'ios';
-const IS_IPAD = IS_ANDROID ? width / height < 1.6 : Platform.isPad;
+const IS_IPAD = IS_ANDROID ? WIDTH / height < 1.6 : Platform.isPad;
 // Use iPhone6 as base size which is 375 x 667
 const baseWidth = 398;
 const baseHeight = 736;
-const WIDTH_SCALE = width / baseWidth;
-const HEIGHT_SCALE = height / baseHeight;
+const WIDTH_SCALE = WIDTH / baseWidth;
+const HEIGHT_SCALE = HEIGHT / baseHeight;
 
 export {
   WIDTH,
