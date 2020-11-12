@@ -50,8 +50,8 @@ export default function HomeScreen(props) {
         </View>
         <FlatList 
           data={[1,2,3,4]}
-          renderItem = {({item,index}) => <ItemStadium data={item} />}
-          keyExtractor = {item => item.toString()}
+          renderItem = {({item,index}) => <ItemStadium data={item} navigation={props.navigation} />}
+          keyExtractor = {(item,index) => index.toString()}
           numColumns={2}
           columnWrapperStyle={{justifyContent:'space-between'}}
         />

@@ -14,6 +14,7 @@ const width = Dimensions.get('window').width
 export default function ItemStadium(props) {
 
     const data = {
+        id:0,
         deal:'-40%',
         typeStadium: 'Sân 5',
         nameStadium:'Sân bóng đá Chảo Lửa',
@@ -21,7 +22,10 @@ export default function ItemStadium(props) {
     }
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity 
+        style={styles.container}
+        onPress={() => props.navigation.navigate('StadiumDetailScreen')}
+        >
             <View>
                 <Image
                 source={require('../../assets/images/stadium.jpg')}
@@ -41,7 +45,7 @@ export default function ItemStadium(props) {
                 <Text style={styles.nameOfStadium}>{data.nameStadium}</Text>
                 <Text style={styles.addressOfStadium}>{data.address}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

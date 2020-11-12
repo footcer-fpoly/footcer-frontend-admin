@@ -50,6 +50,24 @@ export default function User(props) {
                     <Feather name="chevron-right" size={25} color="grey"/>
                 </View>
             </View>
+            <View style={{marginVertical:22}}>
+                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Feather name="list" size={25} color="#15C0FF"/>
+                        <Text style={{marginLeft:32}}>Sản phẩm - Dịch vụ</Text>
+                    </View>
+                    <Feather name="chevron-right" size={25} color="grey"/>
+                </View>
+            </View>
+            <View>
+                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Feather name="list" size={25} color="#15C0FF"/>
+                        <Text style={{marginLeft:32}}>Thiết lập sân</Text>
+                    </View>
+                    <Feather name="chevron-right" size={25} color="grey"/>
+                </View>
+            </View>
         </View>
     )
 }
