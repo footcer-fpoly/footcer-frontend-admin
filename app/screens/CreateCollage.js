@@ -240,12 +240,12 @@ export default function InfoStadium({ navigation, route }) {
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => startTimeRef.current.show()}>
-                  <Text style={{}}>Giờ bắt đầu: {startTime.substr(17, 5)}</Text>
+                  <Text style={{}}>Giờ mở cửa: {startTime.substr(17, 5)}</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => endTimeRef.current.show()}>
-                  <Text>Giờ kết thúc: {endTime.substr(17, 5)}</Text>
+                  <Text>Giờ đóng cửa: {endTime.substr(17, 5)}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -488,13 +488,13 @@ export default function InfoStadium({ navigation, route }) {
         </TouchableOpacity>
         <ModalTimeComponent
           ref={startTimeRef}
-          title="Chọn giờ bắt đầu"
+          title="Chọn giờ mở cửa"
           time={setStartTime}
           timeDefault={startTime}
         />
         <ModalTimeComponent
           ref={endTimeRef}
-          title="Chọn giờ kết thúc"
+          title="Chọn giờ đóng cửa"
           time={setEndTime}
           timeDefault={endTime}
         />

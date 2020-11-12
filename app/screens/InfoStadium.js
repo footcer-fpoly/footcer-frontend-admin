@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import IMAGE from '../utils/images.util';
 import fonts from '../theme/ConfigStyle';
@@ -27,6 +28,7 @@ import Swipeout from 'react-native-swipeout';
 import ModalComponentX from '../components/ModalComponentX';
 import { formatNumber } from '../components/MoneyFormat';
 import Spinner from '../components/Spinner';
+import StarRating from 'react-native-star-rating';
 
 export default function InfoStadium({ navigation }) {
   const [dataStadium, setDataStadium] = useState();
@@ -36,10 +38,10 @@ export default function InfoStadium({ navigation }) {
   const getCollage = () => {
     API.get('/stadium/info')
       .then(({ data }) => {
-        dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
-        data?.code === 200
-          ? setDataStadium(data?.data)
-          : Message('Lỗi lấy dữ liệu');
+        if (data?.code === 200) {
+          dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
+          setDataStadium(data?.data);
+        } else Message('Lỗi lấy dữ liệu');
       })
       .catch((onError) => {
         console.log('InfoStadium -> onError', onError.message);
@@ -144,16 +146,10 @@ export default function InfoStadium({ navigation }) {
             <Text numberOfLines={1} style={styles.sectionSpeakerText}>
               {dataStadium?.stadiumName}
             </Text>
-            <Text numberOfLines={1} style={styles.sectionTitleText}>
-              {dataStadium?.address}
-            </Text>
             {dataStadium?.verify === '0' ? (
               <Text
                 style={{
                   color: '#ff0000',
-                  position: 'absolute',
-                  top: 30 * HEIGHT_SCALE,
-                  right: 0,
                 }}>
                 Chưa xác thực
               </Text>
@@ -161,13 +157,63 @@ export default function InfoStadium({ navigation }) {
               <Text
                 style={{
                   color: Colors.colorGreen,
-                  position: 'absolute',
-                  top: 30 * HEIGHT_SCALE,
-                  right: 0,
                 }}>
                 Đã xác thực
               </Text>
             )}
+            <View
+              style={{
+                width: 80 * WIDTH_SCALE,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <StarRating
+                disabled={true}
+                maxStars={5}
+                rating={3.5}
+                fullStarColor={'yellow'}
+                starSize={15 * WIDTH_SCALE}
+              />
+              <Text
+                style={{
+                  color: Colors.colorGrayBackground,
+                  fontSize: fonts.font12,
+                  marginHorizontal: 5 * WIDTH_SCALE,
+                }}>
+                3.5
+              </Text>
+              <Text
+                style={{
+                  color: Colors.colorGrayBackground,
+                  fontSize: fonts.font12,
+                }}>
+                (12)
+              </Text>
+            </View>
+            <Text numberOfLines={1} style={styles.sectionTitleText}>
+              {dataStadium?.address}
+            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('CreateCollage', {
+                  id: dataStadium.stadiumId,
+                })
+              }
+              style={{
+                position: 'absolute',
+                top: StatusBar.currentHeight * 1.2,
+                right: 0,
+                backgroundColor: Colors.colorGreen,
+                padding: 10 * WIDTH_SCALE,
+                borderRadius: 5 * WIDTH_SCALE,
+              }}>
+              <Text
+                style={{
+                  color: Colors.whiteColor,
+                }}>
+                Thêm sân con
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
         renderStickyHeader={() => (

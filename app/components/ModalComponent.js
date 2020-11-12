@@ -32,7 +32,7 @@ const ModalComponent = (props, ref) => {
       <View
         style={{
           position: 'absolute',
-          flex: 1,
+          width: 0.8 * WIDTH,
           borderRadius: borderRadius,
         }}>
         <View
