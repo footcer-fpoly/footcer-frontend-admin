@@ -25,7 +25,6 @@ import Spinner from '../components/Spinner';
 
 export default function InfoStadium({ navigation, route }) {
   const { data, id } = route?.params;
-  console.log('InfoStadium -> data', data);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [nameColage, setNameColage] = useState('');

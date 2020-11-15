@@ -76,7 +76,6 @@ const ModalTimeComponent = (props, ref) => {
               androidVariant="iosClone"
               mode="time"
               date={time}
-              is24hourSource=""
               onDateChange={setTime}
             />
           </View>
