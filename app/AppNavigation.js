@@ -4,9 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from '../app/screens/Home/HomeScreen';
-import HomeDetailScreen from './screens/HomeDetailScreen';
 import PriceScreen from './screens/PriceScreen';
-import NotificationScreen from './screens/NotificationScreen';
+import NotificationScreen from './screens/Notification/NotificationScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -19,26 +18,26 @@ import UpdateStadium from './screens/UpdateStadium';
 import InfoStadium from './screens/InfoStadium';
 import CreateCollage from './screens/CreateCollage';
 import Spinner from './components/Spinner';
+import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-class HomeStack extends Component {
-  render() {
+const HomeStack = ({navigation}) =>{
     return (
-      <Stack.Navigator>
+      <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      >
         <Stack.Screen
           name="Dashboard"
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="HomeDetails" component={HomeDetailScreen} />
+        <Stack.Screen name="StadiumDetailScreen" component={StadiumDetailScreen} />
       </Stack.Navigator>
     );
-  }
 }
-class PriceStack extends Component {
-  render() {
+const PriceStack = ({navigation}) =>{
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -48,10 +47,8 @@ class PriceStack extends Component {
         />
       </Stack.Navigator>
     );
-  }
 }
-class NotificationStack extends Component {
-  render() {
+const NotificationStack = ({navigation}) => {
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -61,20 +58,15 @@ class NotificationStack extends Component {
         />
       </Stack.Navigator>
     );
-  }
 }
-class UserStack extends Component {
-  render() {
+const UserStack = ({navigation}) => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Infor" component={ProfileScreen} />
       </Stack.Navigator>
     );
-  }
 }
-
-class BottomNavigation extends Component {
-  render() {
+const BottomNavigation = ({navigation}) => {
     return (
       <Tab.Navigator
         initialRouteName="Home"
@@ -105,11 +97,8 @@ class BottomNavigation extends Component {
         <Tab.Screen name="Information" component={UserStack} />
       </Tab.Navigator>
     );
-  }
 }
-
-export default class AppNavigation extends Component {
-  render() {
+export default function AppNavigation(props) {
     return (
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -135,5 +124,4 @@ export default class AppNavigation extends Component {
         <Spinner />
       </NavigationContainer>
     );
-  }
 }

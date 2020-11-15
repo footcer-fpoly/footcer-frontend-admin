@@ -1,36 +1,27 @@
-import React from 'react';
-import {
-  Text,
-  SafeAreaView,
-  View,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import HeaderProfile from '../components/Header';
-import Colors from '../theme/Colors';
-import Head from '../components/ProfileScreenComponents/Head';
-import Profile from '../components/ProfileScreenComponents/Profile';
-import About from '../components/ProfileScreenComponents/About';
-import { useSelector } from 'react-redux';
-export default function ProfileScreen({ navigation }) {
-  const userData = useSelector((state) => state?.userReducer?.userData);
+import React from 'react'
+import { View, Text, SafeAreaView } from 'react-native'
+import ConfigStyle from '../theme/ConfigStyle'
+import Container from '../components/common/Container'
+import StatusBarMain from '../components/common/StatusBarMain'
+import User from '../components/ProfileComponent/User'
+import ContainerProfile from '../components/common/ContainerProfile'
+
+export default function ProfileScreen(props) {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <HeaderProfile nameStadium="Sân bóng FPoly HCM" />
-        <View style={styles.bodyContainer}>
-          <Head name={userData.displayName} urlAvatar={userData.avatar} />
-          <Profile navigation={navigation} />
-          <About />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    <ContainerProfile
+    header={
+      <StatusBarMain
+        title="Profile"
+        contentBarStyles={{justifyContent:'space-between'}}
+        navigation={props.navigation}
+        headerHeight={ConfigStyle.statusBarHeight}
+      />
+    }
+    headerHeight={ConfigStyle.statusBarHeight}
+    >
+      <View style={{flex:1}}>
+        <User/>
+      </View>
+    </ContainerProfile>
+  )
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.colorWhite,
-  },
-});

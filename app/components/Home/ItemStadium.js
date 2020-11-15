@@ -4,6 +4,7 @@ import Colors from '../../theme/Colors';
 import ConfigStyle from '../../theme/ConfigStyle';
 import { WIDTH_SCALE } from '../../utils/ScaleAdaptor';
 
+const width = Dimensions.get('window').width
 export default function ItemStadium(props) {
   const data = {
     deal: '-40%',
@@ -11,73 +12,81 @@ export default function ItemStadium(props) {
     nameStadium: 'Sân bóng đá Chảo Lửa',
     address: '30 Phan Thúc Duyện, Tân Bình',
   };
-
-  return (
-    <View style={styles.container}>
-      <View>
-        <Image
-          source={require('../../assets/images/stadium.jpg')}
-          style={{
-            width: 170 * WIDTH_SCALE,
-            height: 130,
-            borderTopLeftRadius: 7,
-            borderTopRightRadius: 7,
-          }}
-        />
-        <TouchableOpacity style={styles.touchSale}>
-          <Text style={styles.textSale}>{data.deal}</Text>
+    return (
+        <TouchableOpacity 
+        style={styles.container}
+        onPress={() => props.navigation.navigate('StadiumDetailScreen')}
+        >
+            <View>
+                <Image
+                source={require('../../assets/images/stadium.jpg')}
+                style={{
+                  width:width*0.44, height:130,
+                  borderTopLeftRadius:7,
+                  borderTopRightRadius:7,
+                  resizeMode:'cover'
+                }}
+                />
+                <TouchableOpacity style={styles.touchSale}>
+                    <Text style={styles.textSale}>{data.deal}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.textInfor}>
+                <Text style={styles.typeOfStadium}>{data.typeStadium}</Text>
+                <Text style={styles.nameOfStadium}>{data.nameStadium}</Text>
+                <Text style={styles.addressOfStadium}>{data.address}</Text>
+            </View>
         </TouchableOpacity>
-      </View>
-      <View style={styles.textInfor}>
-        <Text style={styles.typeOfStadium}>{data.typeStadium}</Text>
-        <Text style={styles.nameOfStadium}>{data.nameStadium}</Text>
-        <Text style={styles.addressOfStadium}>{data.address}</Text>
-      </View>
-    </View>
-  );
+    )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.whiteColor,
-    width: 170 * WIDTH_SCALE,
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: Colors.colorGrayText,
-    paddingBottom: 15,
-    marginBottom: 16,
-  },
-  touchSale: {
-    backgroundColor: Colors.touchSale,
-    borderTopRightRadius: 7,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-  },
-  textSale: {
-    color: Colors.whiteColor,
-    fontSize: ConfigStyle.font12,
-    fontFamily: 'Roboto-Regular',
-  },
-  textInfor: {
-    marginTop: 7,
-    marginLeft: 8,
-  },
-  typeOfStadium: {
-    fontSize: ConfigStyle.font10,
-    fontFamily: 'Roboto-Regular',
-    color: Colors.colorGrayText,
-  },
-  nameOfStadium: {
-    fontSize: ConfigStyle.font12,
-    fontFamily: 'Roboto-Regular',
-    color: Colors.blackColor,
-  },
-  addressOfStadium: {
-    fontSize: ConfigStyle.font11,
-    fontFamily: 'Roboto-Regular',
-    color: Colors.colorGrayText,
-  },
-});
+    container:{
+        backgroundColor:Colors.whiteColor,
+        width:width*0.44,
+        borderRadius:7,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+        paddingBottom:15,
+        marginBottom:16,
+    },
+    touchSale:{
+        backgroundColor:Colors.touchSale,
+        borderTopRightRadius:7,
+        position:'absolute',
+        bottom:0,
+        left:0,
+        paddingHorizontal:10,
+        paddingVertical:3,
+    },
+    textSale: {
+        color:Colors.whiteColor,
+        fontSize:ConfigStyle.font12,
+        fontFamily:'Times'
+    },
+    textInfor: {
+        marginTop:7,
+        marginLeft:8,
+    },
+    typeOfStadium:{
+        fontSize:ConfigStyle.font12,
+        fontFamily:'Times',
+        color:Colors.colorGrayText
+    },
+    nameOfStadium:{
+        fontSize:ConfigStyle.font14,
+        fontFamily:'Times-Bold',
+        color:Colors.blackColor,
+    },
+    addressOfStadium:{
+        fontSize:ConfigStyle.font12,
+        fontFamily:'Times',
+        color:Colors.colorGrayText,
+    }
+})
