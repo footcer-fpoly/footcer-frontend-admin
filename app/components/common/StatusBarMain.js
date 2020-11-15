@@ -30,7 +30,7 @@ const StatusBarMain = (props) => {
   }, []);
 
   return (
-    <View style={[styles.supperWrapper]}>
+    <View style={styles.supperWrapper}>
       <View
         style={[
           styles.headerWrapper,
