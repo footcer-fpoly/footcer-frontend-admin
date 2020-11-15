@@ -14,6 +14,6 @@ export default {
   colorGrayBackground: '#EDEDED',
   colorGrayText: '#676767',
   transparent: 'transparent',
-  textGreen:'#0AB134',
+  textGreen: '#0AB134',
   blueColor: '#15C0FF',
 };

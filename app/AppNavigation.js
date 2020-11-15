@@ -23,105 +23,103 @@ import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStack = ({navigation}) =>{
-    return (
-      <Stack.Navigator
-      screenOptions={{headerShown: false}}
-      >
-        <Stack.Screen
-          name="Dashboard"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="StadiumDetailScreen" component={StadiumDetailScreen} />
-      </Stack.Navigator>
-    );
-}
-const PriceStack = ({navigation}) =>{
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Stadium"
-          component={InfoStadium}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    );
-}
-const NotificationStack = ({navigation}) => {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Notification"
-          component={NotificationScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    );
-}
-const UserStack = ({navigation}) => {
-    return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Infor" component={ProfileScreen} />
-      </Stack.Navigator>
-    );
-}
-const BottomNavigation = ({navigation}) => {
-    return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+const HomeStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="Dashboard"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="StadiumDetailScreen"
+        component={StadiumDetailScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+const PriceStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Stadium"
+        component={InfoStadium}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+const NotificationStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+const UserStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Infor" component={ProfileScreen} />
+    </Stack.Navigator>
+  );
+};
+const BottomNavigation = ({ navigation }) => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-            if (route.name === 'Home') {
-              iconName = 'home';
-            } else if (route.name === 'Prices') {
-              iconName = 'money';
-            } else if (route.name === 'Notifications') {
-              iconName = 'bell-o';
-            } else if (route.name === 'Information') {
-              iconName = 'user-o';
-            }
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Prices') {
+            iconName = 'money';
+          } else if (route.name === 'Notifications') {
+            iconName = 'bell-o';
+          } else if (route.name === 'Information') {
+            iconName = 'user-o';
+          }
 
-            return <FontAwesome name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#0AB134',
-          inactiveTintColor: 'gray',
-        }}>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Prices" component={PriceStack} />
-        <Tab.Screen name="Notifications" component={NotificationStack} />
-        <Tab.Screen name="Information" component={UserStack} />
-      </Tab.Navigator>
-    );
-}
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#0AB134',
+        inactiveTintColor: 'gray',
+      }}>
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Prices" component={PriceStack} />
+      <Tab.Screen name="Notifications" component={NotificationStack} />
+      <Tab.Screen name="Information" component={UserStack} />
+    </Tab.Navigator>
+  );
+};
 export default function AppNavigation(props) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Dashboard" component={BottomNavigation} />
-          <Stack.Screen name="ProfileDetail" component={ProfileDetailScreen} />
-          <Stack.Screen
-            name="ChangePassword"
-            component={ChangePasswordScreen}
-          />
-          <Stack.Screen name="OTPScreen" component={OTPScreen} />
-          <Stack.Screen name="PasswordScreen" component={PasswordScreen} />
-          <Stack.Screen
-            name="UpdatePasswordScreen"
-            component={UpdatePasswordScreen}
-          />
-          <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
-          <Stack.Screen name="InfoStadium" component={InfoStadium} />
-          <Stack.Screen name="PriceScreen" component={PriceScreen} />
-          <Stack.Screen name="CreateCollage" component={CreateCollage} />
-        </Stack.Navigator>
-        <Spinner />
-      </NavigationContainer>
-    );
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Dashboard" component={BottomNavigation} />
+        <Stack.Screen name="ProfileDetail" component={ProfileDetailScreen} />
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+        <Stack.Screen name="OTPScreen" component={OTPScreen} />
+        <Stack.Screen name="PasswordScreen" component={PasswordScreen} />
+        <Stack.Screen
+          name="UpdatePasswordScreen"
+          component={UpdatePasswordScreen}
+        />
+        <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
+        <Stack.Screen name="InfoStadium" component={InfoStadium} />
+        <Stack.Screen name="PriceScreen" component={PriceScreen} />
+        <Stack.Screen name="CreateCollage" component={CreateCollage} />
+      </Stack.Navigator>
+      <Spinner />
+    </NavigationContainer>
+  );
 }

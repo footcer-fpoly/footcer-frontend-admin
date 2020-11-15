@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#000',
-    fontFamily:'Times-Bold',
+    fontFamily: 'Times-Bold',
   },
   wrapTitle: {
     flexDirection: 'row',

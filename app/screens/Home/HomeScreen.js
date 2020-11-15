@@ -50,10 +50,12 @@ export default function HomeScreen(props) {
           <Text style={styles.textDiscount}>Khuyến mãi của bạn</Text>
           <Text style={styles.textViewAll}>Xem tất cả</Text>
         </View>
-        <FlatList 
-          data={[1,2,3,4]}
-          renderItem = {({item,index}) => <ItemStadium data={item} navigation={props.navigation} />}
-          keyExtractor = {(item,index) => index.toString()}
+        <FlatList
+          data={[1, 2, 3, 4]}
+          renderItem={({ item, index }) => (
+            <ItemStadium data={item} navigation={props.navigation} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
           numColumns={2}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
         />
@@ -63,36 +65,36 @@ export default function HomeScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  slideShowContainer:{flex:1},
-  slideShowContent:{borderRadius:15, width:'100%', marginTop:13},
-  containerAds:{paddingHorizontal:18},
-  touchPress:{ marginVertical:13},
-  touchStyle:{
-    borderRadius:7, 
-    borderWidth:1, 
-    paddingVertical:10, 
-    alignItems:'center', 
-    borderColor:Colors.borderGreen,
-    backgroundColor:Colors.whiteColor
+  slideShowContainer: { flex: 1 },
+  slideShowContent: { borderRadius: 15, width: '100%', marginTop: 13 },
+  containerAds: { paddingHorizontal: 18 },
+  touchPress: { marginVertical: 13 },
+  touchStyle: {
+    borderRadius: 7,
+    borderWidth: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderColor: Colors.borderGreen,
+    backgroundColor: Colors.whiteColor,
   },
   textPress: {
-    color:Colors.borderGreen, 
-    fontSize:ConfigStyle.font16, 
-    fontFamily:'Times',
+    color: Colors.borderGreen,
+    fontSize: ConfigStyle.font16,
+    fontFamily: 'Times',
   },
   containerPromotion: {
-    justifyContent:'space-between', 
-    flexDirection:'row', 
-    alignItems:'center',
-    marginBottom:20,
-  }, 
-  textDiscount:{
-    fontSize:ConfigStyle.font16, 
-    fontFamily:'Times-Bold'
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  textViewAll:{
-    fontSize:ConfigStyle.font14, 
-    fontFamily:'Times-Bold', 
-    color:Colors.colorViewAll
-  }
-})
+  textDiscount: {
+    fontSize: ConfigStyle.font16,
+    fontFamily: 'Times-Bold',
+  },
+  textViewAll: {
+    fontSize: ConfigStyle.font14,
+    fontFamily: 'Times-Bold',
+    color: Colors.colorViewAll,
+  },
+});
