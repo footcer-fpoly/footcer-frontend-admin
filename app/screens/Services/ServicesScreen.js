@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react'
+import React, {useEffect,useState, useLayoutEffect} from 'react'
 import {
     View, 
     Text, 
@@ -16,6 +16,7 @@ import ConfigStyle from '../../theme/ConfigStyle';
 import Icon from 'react-native-vector-icons/AntDesign';
 import imagesUtil from '../../utils/images.util';
 import ImagePicker from 'react-native-image-crop-picker';
+import API from '../../server/api';
 
 
 const width = Dimensions.get('window').width;
@@ -26,22 +27,34 @@ export default function ServicesScreen(props) {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', marginHorizontal:50,borderRadius:10};
+    const [nameService,setNameService] = useState('');
+    const [priceService, setPriceService] = useState('');
+    const [images, setImages] = useState([]);
 
     const [value, onChangeText] = React.useState('');
 
-    const choosePhotoFromLibrary = () => {
+    const [dataService, setDataService] = useState({
+        name:'',
+        price:'',
+    });
+
+    const choosePhotoFromLibrary = async() => {
         ImagePicker.openPicker({
             width: 300,
             height: 400,
             cropping: true
-          }).then(image => {
-            console.log(image);
-          });
+          }).then(response => {
+            console.log(response);
+          }); 
     }
-
-    const createService = () =>{
-        
-    }
+    useEffect(() => {
+        async function createService(){
+            API.post('/service/add',{
+                name: nameService,
+                price: priceService,
+            })
+        }
+    },[]);
 
     return (
         <Container
@@ -85,16 +98,16 @@ export default function ServicesScreen(props) {
                             <Text style={styles.textUpon}>Tên dịch vụ</Text>
                             <TextInput
                                 placeholder="Tên dịch vụ"
-                                // onChangeText={text => onChangeText(text)}
-                                // value={value}
+                                onChangeText={text => onChangeText(text)}
+                                value={props.nameService}
                                 placeholderTextColor="grey"
                                 style={styles.inputText}
                             />
                             <Text style={styles.textUpon}>Giá tiền</Text>
                             <TextInput
                                 placeholder="Giá tiền"
-                                // onChangeText={text => onChangeText(text)}
-                                // value={value}
+                                onChangeText={text => onChangeText(text)}
+                                value={props.priceService}
                                 placeholderTextColor="grey"
                                 style={styles.inputText}/>
                         </View>
