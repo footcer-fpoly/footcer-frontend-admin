@@ -38,7 +38,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>app requires location access</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>app requires photo library access</string>
+	<key>NSCameraUsageDescription</key>
+	<string>app requires camera access</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>

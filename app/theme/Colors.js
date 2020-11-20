@@ -15,4 +15,5 @@ export default {
   colorGrayBackground: '#EDEDED',
   colorGrayText: '#676767',
   blueColor: '#15C0FF',
+  yellow:'#FFE30B',
 };

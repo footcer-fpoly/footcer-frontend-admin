@@ -11,8 +11,8 @@ import Colors from '../../theme/Colors'
 import ConfigStyle from '../../theme/ConfigStyle'
 
 const width = Dimensions.get('window').width
-export default function ItemStadium(props) {
 
+export default function ItemStadium(props) {
     const data = {
         id:0,
         deal:'-40%',

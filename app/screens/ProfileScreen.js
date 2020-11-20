@@ -20,7 +20,7 @@ export default function ProfileScreen(props) {
     headerHeight={ConfigStyle.statusBarHeight}
     >
       <View style={{flex:1}}>
-        <User/>
+        <User navigation={props.navigation} />
       </View>
     </ContainerProfile>
   )

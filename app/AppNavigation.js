@@ -13,6 +13,7 @@ import SplashScreen from './screens/SplashScreen';
 import ProfileDetailScreen from './screens/ProfileDetailScreen';
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
 import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
+import ServicesScreen from './screens/Services/ServicesScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +57,7 @@ const UserStack = ({navigation}) => {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Infor" component={ProfileScreen} />
+        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
       </Stack.Navigator>
     );
 }
