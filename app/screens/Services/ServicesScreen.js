@@ -15,7 +15,7 @@ import Colors from '../../theme/Colors';
 import ConfigStyle from '../../theme/ConfigStyle';
 import Icon from 'react-native-vector-icons/AntDesign';
 import imagesUtil from '../../utils/images.util';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import API from '../../server/api';
 
 
@@ -27,45 +27,63 @@ export default function ServicesScreen(props) {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', marginHorizontal:50,borderRadius:10};
+    const [source, setSource] = useState();
 
     const [dataService, setDataService] = useState({
         nameService:'',
         priceService:'',
         imageService:'',
+        stadiumId:'4e6e08e6-2b3f-11eb-a4b1-0242ac120002',
+        data:{},
     });
 
     const choosePhotoFromLibrary = async() => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-          }).then(response => {
-            console.log(response);
+        var options = {
+            storageOptions: {
+              skipBackup: true,
+              path: 'images',
+            },
+          };
+          ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+              console.log(response.customButton);
+            } else {
+              setSource(response);
+            }
           }); 
     }
-    useEffect(() => {
-        async function createService(){
-            API.post('/service/add',{
-                name: dataService.nameService,
-                price: dataService.priceService,
-                image: dataService.imageService,
-            })
-        }
 
-        async function apiCreateService(){
-            const formData = new FormData();
-            formData.append('folder','service');
-            formData.append('name','nameService');
-            formData.append('price','priceService');
-            formData.append('image','imageService');
-            formData.append('files', {
-                type: source?.type,
-                size: source?.fileSize,
-                uri: `file://${source?.path}`,
-                name: source?.fileName,
-              });
-        }
-    },[]);
+    async function createService(){
+        const formData = new FormData();
+        formData.append('folder','service');
+        formData.append('name',dataService.nameService);
+        formData.append('price',dataService.priceService);
+        formData.append('stadiumId',dataService.stadiumId);
+        formData.append('files', {
+            type: source?.type,
+            size: source?.fileSize,
+            uri: `file://${source?.path}`,
+            name: source?.fileName,
+          });
+
+          console.log('dataaaaa' , source?.type,
+          source?.fileSize,
+          source?.path,
+          source?.fileName);
+        
+        API.post('/service/add',formData).then(({ data }) => {
+            console.log('apiUpdateStadium -> data', data);
+          })
+          .catch((onError) => {
+            console.log('apiUpdateStadium -> onError', onError);
+            Message('Lỗi, vui lòng thử lại');
+          });
+    }
 
     return (
         <Container
@@ -109,16 +127,16 @@ export default function ServicesScreen(props) {
                             <Text style={styles.textUpon}>Tên dịch vụ</Text>
                             <TextInput
                                 placeholder="Tên dịch vụ"
-                                onChangeText={text => onChangeText(text)}
-                                value={props.nameService}
+                                onChangeText={(text) => setDataService({...dataService, nameService: text})}
+                                value={dataService.nameService}
                                 placeholderTextColor="grey"
                                 style={styles.inputText}
                             />
                             <Text style={styles.textUpon}>Giá tiền</Text>
                             <TextInput
                                 placeholder="Giá tiền"
-                                onChangeText={text => onChangeText(text)}
-                                value={props.priceService}
+                                onChangeText={(text) => setDataService({...dataService, priceService: text})}
+                                value={dataService.priceService}
                                 placeholderTextColor="grey"
                                 style={styles.inputText}/>
                         </View>
@@ -129,9 +147,10 @@ export default function ServicesScreen(props) {
                             onPress={choosePhotoFromLibrary}
                             >
                                 <Text style={styles.textUpon}>Chọn ảnh từ thư viện</Text>
+                                <Image resizeMode="contain" source={{uri: source?.uri}} style={{width:100,height:100}} />
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.touchUpload}>
+                        <TouchableOpacity style={styles.touchUpload} onPress={createService}>
                             <Text style={styles.textAdd}>Thêm mới</Text>
                         </TouchableOpacity>
                     </View>

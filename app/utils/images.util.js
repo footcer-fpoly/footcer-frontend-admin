@@ -1,4 +1,4 @@
 export default {
   iconArrowLeft: require('../assets/images/arrow-left.png'),
-  avatar: require('../assets/images/avatar.jpg')
+  avatar: require('../assets/images/avatar.jpg'),
 };

@@ -43,6 +43,8 @@
 	<string>app requires photo library access</string>
 	<key>NSCameraUsageDescription</key>
 	<string>app requires camera access</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>app requires micro access</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>
