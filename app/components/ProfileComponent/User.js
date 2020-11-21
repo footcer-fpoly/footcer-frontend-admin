@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Colors from '../../theme/Colors';
 import Feather from 'react-native-vector-icons/Feather';
+import ConfigStyle from '../../theme/ConfigStyle';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -32,39 +33,42 @@ export default function User(props) {
                 </TouchableOpacity>
             </View>
             <Text style={styles.account}>TÀI KHOẢN</Text>
-            <View style={{marginVertical:22}}>
-                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
+            <View style={styles.marginContainer}>
+                <View style={styles.utilities}>
+                    <TouchableOpacity style={styles.iconContainer}>
                         <Feather name="user" size={25} color="#15C0FF"/>
-                        <Text style={{marginLeft:32}}>Chỉnh sửa tài khoản</Text>
-                    </View>
+                        <Text style={styles.textContent}>Chỉnh sửa tài khoản</Text>
+                    </TouchableOpacity>
                     <Feather name="chevron-right" size={25} color="grey"/>
                 </View>
             </View>
             <View>
-                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                <View style={styles.utilities}>
+                    <TouchableOpacity style={styles.iconContainer}>
                         <Feather name="list" size={25} color="#15C0FF"/>
-                        <Text style={{marginLeft:32}}>Lịch sử đặt sân</Text>
-                    </View>
+                        <Text style={styles.textContent}>Lịch sử đặt sân</Text>
+                    </TouchableOpacity>
                     <Feather name="chevron-right" size={25} color="grey"/>
                 </View>
             </View>
-            <View style={{marginVertical:22}}>
-                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Feather name="list" size={25} color="#15C0FF"/>
-                        <Text style={{marginLeft:32}}>Sản phẩm - Dịch vụ</Text>
-                    </View>
+            <View style={styles.marginContainer}>
+                <View style={styles.utilities}>
+                    <TouchableOpacity
+                        style={styles.iconContainer}
+                        onPress={() => props.navigation.navigate('ServiceScreen')}
+                    >
+                        <Feather name="server" size={25} color="#15C0FF"/>
+                        <Text style={styles.textContent}>Sản phẩm - Dịch vụ</Text>
+                    </TouchableOpacity>
                     <Feather name="chevron-right" size={25} color="grey"/>
                 </View>
             </View>
             <View>
-                <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between'}}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Feather name="list" size={25} color="#15C0FF"/>
-                        <Text style={{marginLeft:32}}>Thiết lập sân</Text>
-                    </View>
+                <View style={styles.utilities}>
+                    <TouchableOpacity style={styles.iconContainer}>
+                        <Feather name="settings" size={25} color="#15C0FF"/>
+                        <Text style={styles.textContent}>Thiết lập sân</Text>
+                    </TouchableOpacity>
                     <Feather name="chevron-right" size={25} color="grey"/>
                 </View>
             </View>
@@ -88,10 +92,25 @@ const styles = StyleSheet.create({
         height:height*0.1, 
         borderRadius:width*0.22/2
     },
+    marginContainer: {marginVertical:22},
     account: {
         fontFamily:'Times',
         marginTop:40,
         color:Colors.colorOrange,
         fontSize:width*0.045
+    },
+    utilities: {
+        flexDirection:'row',
+        alignItems:'center', 
+        justifyContent:'space-between'
+    },
+    iconContainer: {
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    textContent:{
+        marginLeft:32,
+        fontFamily:'Times',
+        fontSize:ConfigStyle.font16
     }
 })

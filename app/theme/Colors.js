@@ -16,4 +16,5 @@ export default {
   transparent: 'transparent',
   textGreen: '#0AB134',
   blueColor: '#15C0FF',
+  yellow:'#FFE30B',
 };
