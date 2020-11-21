@@ -19,6 +19,7 @@ import InfoStadium from './screens/InfoStadium';
 import CreateCollage from './screens/CreateCollage';
 import Spinner from './components/Spinner';
 import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
+import ServicesScreen from './screens/Services/ServicesScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -122,4 +123,12 @@ export default function AppNavigation(props) {
       <Spinner />
     </NavigationContainer>
   );
+}
+const UserStack = ({navigation}) => {
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Infor" component={ProfileScreen} />
+        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+      </Stack.Navigator>
+    );
 }
