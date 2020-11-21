@@ -27,15 +27,11 @@ export default function ServicesScreen(props) {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', marginHorizontal:50,borderRadius:10};
-    const [nameService,setNameService] = useState('');
-    const [priceService, setPriceService] = useState('');
-    const [images, setImages] = useState([]);
-
-    const [value, onChangeText] = React.useState('');
 
     const [dataService, setDataService] = useState({
-        name:'',
-        price:'',
+        nameService:'',
+        priceService:'',
+        imageService:'',
     });
 
     const choosePhotoFromLibrary = async() => {
@@ -50,9 +46,24 @@ export default function ServicesScreen(props) {
     useEffect(() => {
         async function createService(){
             API.post('/service/add',{
-                name: nameService,
-                price: priceService,
+                name: dataService.nameService,
+                price: dataService.priceService,
+                image: dataService.imageService,
             })
+        }
+
+        async function apiCreateService(){
+            const formData = new FormData();
+            formData.append('folder','service');
+            formData.append('name','nameService');
+            formData.append('price','priceService');
+            formData.append('image','imageService');
+            formData.append('files', {
+                type: source?.type,
+                size: source?.fileSize,
+                uri: `file://${source?.path}`,
+                name: source?.fileName,
+              });
         }
     },[]);
 
