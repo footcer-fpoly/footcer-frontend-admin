@@ -37,20 +37,32 @@ export default function SplashScreen({ route, navigation }) {
           })
           .catch((onError) => {
             console.log('SignIn -> onError', onError);
-            Message('Vui lòng kiểm tra thông tin đăng nhập');
+            Message('Lỗi');
           })
       : persistStore(store, null, () => {
           const isSignIn = store.getState().userReducer.loggedIn;
           const listStadium = store.getState().userReducer.listStadium;
           const token = store.getState().userReducer.token;
           console.log('SplashScreen -> token', token);
+          Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          API.defaults.headers.common.Authorization = `Bearer ${token}`;
+          API.get('/stadium/info')
+            .then(({ data }) => {
+              const obj = data?.data;
+              dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+              // obj?.latitude === -1 && obj?.longitude === -1
+              //   ? navigation.replace('UpdateStadium')
+              //   : navigation.replace('Dashboard');
+            })
+            .catch((onError) => {
+              console.log('Stadium -> onError', onError);
+              Message('Lỗi');
+            });
           isSignIn
             ? listStadium?.latitude === -1 && listStadium?.longitude === -1
               ? navigation.replace('UpdateStadium')
               : navigation.replace('Dashboard')
             : navigation.replace('Login');
-          Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          API.defaults.headers.common.Authorization = `Bearer ${token}`;
         });
   }, []);
   return (
@@ -60,10 +72,11 @@ export default function SplashScreen({ route, navigation }) {
         width: WIDTH,
         height: HEIGHT,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
       }}>
       <View
         style={{
+          top: 0.25 * HEIGHT,
           position: 'absolute',
           alignItems: 'center',
           justifyContent: 'center',

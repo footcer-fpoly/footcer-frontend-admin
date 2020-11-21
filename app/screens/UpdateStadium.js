@@ -37,6 +37,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
 
 export default function UpdateStadium({ route, navigation }) {
+  const item = route?.params?.item;
   const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
   const [address, setAddress] = useState({
     city: '',
@@ -205,6 +206,29 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
+  const setDefault = () => {
+    const dataAddress = vietnam.data?.filter(
+      (a) =>
+        convertStrings(a?.name)
+          ?.toLowerCase()
+          ?.trim()
+          .indexOf(convertStrings(item?.city)?.toLowerCase()?.trim()) !== -1,
+    );
+    item &&
+      setAddress({
+        ...address,
+        fullAddress: item?.address,
+        city: item?.city,
+        district: item?.district,
+        ward: item?.ward,
+        data: Object.values(dataAddress),
+      });
+    item && setNameStadium(item?.stadiumName);
+    item && setSource({ uri: item?.image });
+  };
+  useEffect(() => {
+    item && setDefault();
+  }, []);
   return (
     <ImageBackground
       source={IMAGE.background}
@@ -372,6 +396,7 @@ export default function UpdateStadium({ route, navigation }) {
                   }}>
                   <Text style={{ flex: 1 }}>Nhập tên sân(*):</Text>
                   <TextInput
+                    value={nameStadium}
                     placeholder="Sân bóng Sài Gòn 1975"
                     style={{
                       marginTop: 5 * HEIGHT_SCALE,

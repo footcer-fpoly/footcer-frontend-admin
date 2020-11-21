@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
-  ImageBackground,
   Image,
   StyleSheet,
   FlatList,
@@ -31,6 +30,9 @@ import Spinner from '../components/Spinner';
 import StarRating from 'react-native-star-rating';
 
 export default function InfoStadium({ navigation }) {
+  const dataStadiumRedux = useSelector(
+    (state) => state?.userReducer?.listStadium,
+  );
   const [dataStadium, setDataStadium] = useState();
   const ref = useRef();
   const dispatch = useDispatch();
@@ -38,16 +40,18 @@ export default function InfoStadium({ navigation }) {
   const getCollage = () => {
     API.get('/stadium/info')
       .then(({ data }) => {
-        if (data?.code === 200) {
-          dispatch({ type: REDUX.UPDATE_STADIUM, payload: data.data });
-          setDataStadium(data?.data);
-        } else Message('Lỗi lấy dữ liệu');
+        const obj = data?.data;
+        setDataStadium(obj);
+        dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
       })
       .catch((onError) => {
-        console.log('InfoStadium -> onError', onError.message);
+        console.log('Stadium -> onError', onError.message);
         Message('Lỗi');
       });
   };
+  useEffect(() => {
+    setDataStadium(dataStadiumRedux);
+  }, [dataStadiumRedux]);
   useEffect(() => {
     getCollage();
   }, []);
@@ -146,7 +150,7 @@ export default function InfoStadium({ navigation }) {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('CreateCollage', {
-                  id: dataStadium.stadiumId,
+                  id: dataStadium?.stadiumId,
                 })
               }
               style={{
@@ -168,9 +172,25 @@ export default function InfoStadium({ navigation }) {
               </Text>
             </TouchableOpacity>
             <View>
-              <Text numberOfLines={1} style={styles.sectionSpeakerText}>
-                {dataStadium?.stadiumName}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text numberOfLines={1} style={styles.sectionSpeakerText}>
+                  {dataStadium?.stadiumName}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('UpdateStadium', { item: dataStadium })
+                  }
+                  style={{ marginHorizontal: 10 * WIDTH_SCALE }}>
+                  <Image
+                    tintColor={Colors.greyShadow}
+                    source={IMAGE.edit}
+                    style={{
+                      height: 20 * WIDTH_SCALE,
+                      width: 20 * WIDTH_SCALE,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
               {dataStadium?.verify === '0' ? (
                 <Text
                   style={{
@@ -247,7 +267,7 @@ export default function InfoStadium({ navigation }) {
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('CreateCollage', {
-                    id: dataStadium.stadiumId,
+                    id: dataStadium?.stadiumId,
                   })
                 }>
                 <Text
@@ -397,7 +417,7 @@ export default function InfoStadium({ navigation }) {
     );
   }
 }
-const PARALLAX_HEADER_HEIGHT = 250 * HEIGHT_SCALE;
+const PARALLAX_HEADER_HEIGHT = 200 * HEIGHT_SCALE;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Colors from '../../theme/Colors';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Profile(props) {
   const navigation = useNavigation();
@@ -9,13 +9,13 @@ export default function Profile(props) {
     <View>
       <Text style={styles.title}>Mật khẩu</Text>
       <View style={styles.subTitle}>
-        <Text style={{fontSize: 25, paddingVertical: 5}}>● ● ● ● ● ●</Text>
+        <Text style={{ fontSize: 25, paddingVertical: 5 }}>● ● ● ● ● ●</Text>
         <TouchableOpacity
           style={styles.btnChangePassword}
           onPress={() => {
             navigation.navigate('ChangePassword');
           }}>
-          <Text style={{color: '#fff', fontSize: 14}}>Đổi mật khẩu</Text>
+          <Text style={{ color: '#fff', fontSize: 14 }}>Đổi mật khẩu</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>Số điện thoại</Text>

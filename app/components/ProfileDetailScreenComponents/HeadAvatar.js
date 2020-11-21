@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function HeadAvatar(props) {
@@ -8,14 +8,19 @@ export default function HeadAvatar(props) {
     <View style={styles.headerContainer}>
       <View style={styles.viewRow}>
         <View>
-          <Image style={styles.imgAvatar} source={{uri: props.urlImgAvatar}} />
+          <Image
+            style={styles.imgAvatar}
+            source={{ uri: props.urlImgAvatar }}
+          />
           <TouchableOpacity style={styles.edit}>
             <Icon name={'pen'} size={12} color={'#fff'} />
           </TouchableOpacity>
         </View>
-        <View style={{paddingHorizontal: 15}}>
+        <View style={{ paddingHorizontal: 15 }}>
           <View style={styles.viewRow}>
-            <Text style={{color: '#fff', fontSize: 18}}>{props.nameUser}</Text>
+            <Text style={{ color: '#fff', fontSize: 18 }}>
+              {props.nameUser}
+            </Text>
             <View style={styles.editName}>
               <Icon name={'pen'} size={12} color={'#fff'} />
             </View>

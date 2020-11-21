@@ -6,4 +6,5 @@ export default {
   phone: require('../assets/icon/phone.png'),
   password: require('../assets/icon/password.png'),
   username: require('../assets/icon/username.png'),
+  edit: require('../assets/icon/edit.png'),
 };
