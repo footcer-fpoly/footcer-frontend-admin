@@ -24,6 +24,7 @@ import ModalTimeComponent from '../components/ModalTimeComponent';
 import Spinner from '../components/Spinner';
 
 export default function InfoStadium({ navigation, route }) {
+  const dispatch = useDispatch();
   const { data, id } = route?.params;
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -76,32 +77,53 @@ export default function InfoStadium({ navigation, route }) {
   const startTimeRef = useRef();
   const endTimeRef = useRef();
   const createCollage = () => {
+    const sTime = new Date(startTime).getTime();
+    const eTime = new Date(endTime).getTime();
+    const pTime = playTime;
+    const tTime = new Date(endTime).getTime() - new Date(startTime).getTime();
     Spinner.show();
     if (nameColage && price) {
-      if (new Date(startTime).getTime() < new Date(endTime).getTime()) {
-        API.post('/stadium/add-collage', {
-          stadiumCollageName: nameColage,
-          amountPeople: people,
-          startTime: new Date(startTime)?.getTime()?.toString(),
-          endTime: new Date(endTime)?.getTime()?.toString(),
-          playTime: playTime,
-          stadiumId: id,
-          defaultPrice: Number(price),
-        })
-          .then(({ data }) => {
-            const obj = data?.data;
-            if (data.code === 200) {
-              Spinner.hide();
-              navigation.replace('InfoStadium');
-            } else {
-              Spinner.hide();
-              Message('Tạo sân con thất bại');
-            }
+      if (sTime < eTime) {
+        if (Number(tTime) >= Number(pTime)) {
+          API.post('/stadium/add-collage', {
+            stadiumCollageName: nameColage,
+            amountPeople: people,
+            startTime: new Date(startTime)?.getTime()?.toString(),
+            endTime: new Date(endTime)?.getTime()?.toString(),
+            playTime: playTime,
+            stadiumId: id,
+            defaultPrice: Number(price),
           })
-          .catch((onError) => {
-            console.log(onError.message);
-            Spinner.hide();
-          });
+            .then(({ data }) => {
+              const obj = data?.data;
+              console.log('createCollage -> obj', obj);
+              if (data.code === 200) {
+                API.get('/stadium/info')
+                  .then(({ data }) => {
+                    const obj = data?.data;
+                    dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+                  })
+                  .catch((onError) => {
+                    console.log('Stadium -> onError', onError.message);
+                    Message('Lỗi');
+                  });
+                Spinner.hide();
+                navigation.replace('PriceScreen', {
+                  item: obj,
+                });
+              } else {
+                Spinner.hide();
+                Message('Tạo sân con thất bại');
+              }
+            })
+            .catch((onError) => {
+              console.log(onError.message);
+              Spinner.hide();
+            });
+        } else {
+          Message('Thời gian trận đấu lớn hơn giờ mở cửa');
+          Spinner.hide();
+        }
       } else {
         Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
         Spinner.hide();
@@ -112,31 +134,40 @@ export default function InfoStadium({ navigation, route }) {
     }
   };
   const editCollage = () => {
+    const sTime = new Date(startTime).getTime();
+    const eTime = new Date(endTime).getTime();
+    const pTime = new Date(playTime).getTime();
+    const tTime = new Date(endTime).getTime() - new Date(startTime).getTime();
     Spinner.show();
     if (nameColage) {
-      if (new Date(startTime).getTime() < new Date(endTime).getTime()) {
-        API.put('/stadium/update-collage', {
-          stadiumCollageName: nameColage,
-          amountPeople: people,
-          startTime: new Date(startTime)?.getTime()?.toString(),
-          endTime: new Date(endTime)?.getTime()?.toString(),
-          playTime: playTime,
-          stadiumCollageId: data?.stadiumCollageId,
-        })
-          .then(({ data }) => {
-            console.log('editCollage -> data', data);
-            if (data.code === 200) {
-              Spinner.hide();
-              navigation.replace('InfoStadium');
-            } else {
-              Spinner.hide();
-              Message('Chỉnh sửa sân con thất bại');
-            }
+      if (sTime < eTime) {
+        if (Number(tTime) >= Number(pTime)) {
+          API.put('/stadium/update-collage', {
+            stadiumCollageName: nameColage,
+            amountPeople: people,
+            startTime: new Date(startTime)?.getTime()?.toString(),
+            endTime: new Date(endTime)?.getTime()?.toString(),
+            playTime: playTime,
+            stadiumCollageId: data?.stadiumCollageId,
           })
-          .catch((onError) => {
-            console.log(onError.message);
-            Spinner.hide();
-          });
+            .then(({ data }) => {
+              console.log('editCollage -> data', data);
+              if (data.code === 200) {
+                Spinner.hide();
+                navigation.replace('InfoStadium');
+              } else {
+                Spinner.hide();
+                Message('Chỉnh sửa sân con thất bại');
+              }
+            })
+            .catch((onError) => {
+              console.log(onError.message);
+              Spinner.hide();
+            });
+        } else {
+          Message('Thời gian trận đấu lớn hơn giờ mở cửa');
+          Spinner.hide();
+        }
       } else {
         Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
         Spinner.hide();

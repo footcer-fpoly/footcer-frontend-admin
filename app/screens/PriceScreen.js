@@ -21,10 +21,13 @@ export default function PriceScreen({ route, navigation }) {
   const ref = useRef();
   const item = route?.params?.item;
   const [dataCollage, setData] = useState(item);
+  console.log('PriceScreen -> dataCollage', dataCollage);
   const [price, setPrice] = useState();
   const [index, setIndex] = useState();
   const getData = () => {
-    API.get(`/stadium/collage-details/${item.stadiumCollageId}`)
+    API.get(
+      `/stadium/collage-details/?stadiumCollageId=${item.stadiumCollageId}&date=2000-11-30`,
+    )
       .then(({ data }) => {
         const obj = data?.data;
         data?.code === 200
@@ -89,7 +92,7 @@ export default function PriceScreen({ route, navigation }) {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <Text style={styles.txtPrice}>{formatNumber(item?.price)}</Text>
+          <Text style={styles.txtPrice}>{formatNumber(item?.price)} đ</Text>
           <Text>{`${startTime.substr(17, 5)} - ${endTime.substr(17, 5)}`}</Text>
         </View>
       </TouchableOpacity>

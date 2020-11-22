@@ -6,20 +6,20 @@ import StatusBarMain from '../components/common/StatusBarMain';
 import User from '../components/ProfileComponent/User';
 import ContainerProfile from '../components/common/ContainerProfile';
 
-export default function ProfileScreen(props) {
+export default function ProfileScreen({ route, navigation }) {
   return (
     <ContainerProfile
       header={
         <StatusBarMain
           title="Profile"
           contentBarStyles={{ justifyContent: 'space-between' }}
-          navigation={props.navigation}
+          navigation={navigation}
           headerHeight={ConfigStyle.statusBarHeight}
         />
       }
       headerHeight={ConfigStyle.statusBarHeight}>
       <View style={{ flex: 1 }}>
-        <User />
+        <User navigation={navigation} />
       </View>
     </ContainerProfile>
   );

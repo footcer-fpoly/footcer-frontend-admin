@@ -20,38 +20,36 @@ import { REDUX } from '../redux/store/types';
 import Axios from 'axios';
 
 export default function SplashScreen({ route, navigation }) {
+  const isCheckStadium = route?.params?.isCheckStadium;
   const dispatch = useDispatch();
-  const isCheckStadium = route?.params?.isCheckStadium
-    ? route?.params?.isCheckStadium
-    : false;
   useEffect(() => {
-    isCheckStadium
-      ? API.get('/stadium/info')
+    persistStore(store, null, () => {
+      const isSignIn = store.getState().userReducer.loggedIn;
+      const token = store.getState().userReducer.token;
+      console.log('SplashScreen -> token', token);
+      if (isSignIn) {
+        Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        API.defaults.headers.common.Authorization = `Bearer ${token}`;
+        API.get('/stadium/info')
           .then(({ data }) => {
             const obj = data?.data;
-            console.log('SplashScreen -> obj.latitude', obj);
             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
             obj?.latitude === -1 && obj?.longitude === -1
-              ? navigation.replace('UpdateStadium')
-              : navigation.replace('Dashboard');
+              ? navigation.replace('UpdateStadium', {
+                  isCheckStadium: isCheckStadium,
+                })
+              : navigation.replace('Home');
           })
           .catch((onError) => {
-            console.log('SignIn -> onError', onError);
-            Message('Vui lòng kiểm tra thông tin đăng nhập');
-          })
-      : persistStore(store, null, () => {
-          const isSignIn = store.getState().userReducer.loggedIn;
-          const listStadium = store.getState().userReducer.listStadium;
-          const token = store.getState().userReducer.token;
-          console.log('SplashScreen -> token', token);
-          isSignIn
-            ? listStadium?.latitude === -1 && listStadium?.longitude === -1
-              ? navigation.replace('UpdateStadium')
-              : navigation.replace('Dashboard')
-            : navigation.replace('Login');
-          Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          API.defaults.headers.common.Authorization = `Bearer ${token}`;
-        });
+            console.log('Stadium -> onError', onError);
+            Message('Lỗi');
+          });
+      } else {
+        setTimeout(() => {
+          navigation.replace('Login');
+        }, 2000);
+      }
+    });
   }, []);
   return (
     <ImageBackground
@@ -60,10 +58,11 @@ export default function SplashScreen({ route, navigation }) {
         width: WIDTH,
         height: HEIGHT,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
       }}>
       <View
         style={{
+          top: 0.25 * HEIGHT,
           position: 'absolute',
           alignItems: 'center',
           justifyContent: 'center',

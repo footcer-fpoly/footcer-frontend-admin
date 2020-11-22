@@ -8,7 +8,6 @@ import {
   Image,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { SignIn } from '../redux/actions/userAction';
 import IMAGE from '../utils/images.util';
 import colors from '../theme/Colors';
 import fonts from '../theme/ConfigStyle';
@@ -127,15 +126,24 @@ export default function UpdatePasswordScreen({ route, navigation }) {
     Spinner.show();
     userSignUp.displayName
       ? userSignUp.password
-        ? userSignUp.confirmPassword
-          ? userSignUp.password === userSignUp.confirmPassword
-            ? signUp()
-            : (Message('Nhập lại mật khẩu không đúng'), Spinner.hide())
-          : (Message('Vui lòng nhập lại mật khẩu'),
+        ? userSignUp.password >= 6
+          ? userSignUp.confirmPassword
+            ? userSignUp.password === userSignUp.confirmPassword
+              ? signUp()
+              : (Message('Nhập lại mật khẩu không đúng'), Spinner.hide())
+            : (Message('Vui lòng nhập lại mật khẩu'),
+              setIsCheck({
+                ...isCheck,
+                name: true,
+                password: true,
+                confirmPassword: false,
+              }),
+              Spinner.hide())
+          : (Message('Mật khẩu phải trên 6 kí tự'),
             setIsCheck({
               ...isCheck,
-              name: true,
-              password: true,
+              name: false,
+              password: false,
               confirmPassword: false,
             }),
             Spinner.hide())
@@ -203,9 +211,7 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           title: 'Nhập lại mật khẩu:',
           onChangeText: (text) =>
             setUserSignUp({ ...userSignUp, password: text?.trim() }),
-          maxLength: 6,
           secureTextEntry: true,
-          keyboardType: 'number-pad',
           isCheck: isCheck.password,
         })}
         {inputCell({
@@ -213,9 +219,7 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           title: 'Nhập lại mật khẩu:',
           onChangeText: (text) =>
             setUserSignUp({ ...userSignUp, confirmPassword: text?.trim() }),
-          maxLength: 6,
           secureTextEntry: true,
-          keyboardType: 'number-pad',
           isDone: true,
           isCheck: isCheck.confirmPassword,
         })}

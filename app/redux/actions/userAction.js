@@ -8,7 +8,7 @@ export const SignIn = (phone, password, onSuccess = () => {}) => {
   return (dispatch, store) => {
     return API.post('/users/sign-in-phone', {
       phone: phone,
-      password: password,
+      password: password.toLowerCase(),
     })
       .then(({ data }) => {
         const obj = data?.data;

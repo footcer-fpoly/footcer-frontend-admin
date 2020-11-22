@@ -15,8 +15,10 @@ const ModalTimeComponent = (props, ref) => {
   const [visible, setVisible] = useState(props?.visible || false);
   const [time, setTime] = useState(new Date('Thu, 01 Jan 1970 00:00:00 GMT'));
   useEffect(() => {
-    props?.timeDefault && setTime(new Date(props?.timeDefault));
-  }, [props?.timeDefault]);
+    props?.isDate
+      ? setTime(props?.timeDefault)
+      : props?.timeDefault && setTime(new Date(props?.timeDefault));
+  }, []);
   const show = () => {
     if (!props?.isLoadding) setVisible(true);
   };
@@ -35,7 +37,7 @@ const ModalTimeComponent = (props, ref) => {
     getVisible: getVisible,
   }));
   useEffect(() => {
-    props.time(time.toUTCString());
+    props?.isDate ? props?.time(time) : props?.time(time.toUTCString());
   }, [time]);
   const borderRadius = 40 * HEIGHT_SCALE;
   const renderContentModal = () => {
@@ -74,7 +76,7 @@ const ModalTimeComponent = (props, ref) => {
               minuteInterval={30}
               timeZoneOffsetInMinutes={0}
               androidVariant="iosClone"
-              mode="time"
+              mode={props?.isDate ? 'date' : 'time'}
               date={time}
               onDateChange={setTime}
             />

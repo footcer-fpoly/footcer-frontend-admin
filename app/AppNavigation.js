@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import HomeScreen from '../app/screens/Home/HomeScreen';
+import HomeScreen from '../app/screens/HomeScreen';
 import PriceScreen from './screens/PriceScreen';
-import NotificationScreen from './screens/Notification/NotificationScreen';
+// import NotificationScreen from './screens/Notification/NotificationScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LoginScreen from './screens/LoginScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -97,8 +97,9 @@ export default function AppNavigation(props) {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
+        <Tab.Screen name="Home" component={HomeStack} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Dashboard" component={BottomNavigation} />
+        {/* <Stack.Screen name="Dashboard" component={BottomNavigation} /> */}
         <Stack.Screen name="ProfileDetail" component={ProfileDetailScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="OTPScreen" component={OTPScreen} />
@@ -111,16 +112,21 @@ export default function AppNavigation(props) {
         <Stack.Screen name="InfoStadium" component={InfoStadium} />
         <Stack.Screen name="PriceScreen" component={PriceScreen} />
         <Stack.Screen name="CreateCollage" component={CreateCollage} />
+        <Tab.Screen name="Prices" component={PriceStack} />
+        {/* <Tab.Screen name="Notifications" component={NotificationStack} /> */}
+        <Tab.Screen name="Information" component={UserStack} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>
   );
 }
-const UserStack = ({navigation}) => {
-    return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Infor" component={ProfileScreen} />
-        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
-      </Stack.Navigator>
-    );
-}
+// const UserStack = ({navigation}) => {
+//     return (
+//       <Stack.Navigator screenOptions={{headerShown: false}}>
+//         <Stack.Screen name="Infor" component={ProfileScreen} />
+//         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+//       </Stack.Navigator>
+//     );
+// }

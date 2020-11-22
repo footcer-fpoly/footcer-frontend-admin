@@ -29,15 +29,17 @@ export default function PasswordScreen({ route, navigation }) {
   const [isCheck, setIsCheck] = useState(true);
   const onLogIn = () => {
     Spinner.show();
-    Number.isInteger(parseInt(password))
-      ? password.length === 6
+    password
+      ? password.length >= 6
         ? dispatch(
             SignIn(phone, password, () => {
               Spinner.hide();
               navigation.replace('Splash', { isCheckStadium: true });
             }),
           )
-        : (Message('Mật khẩu phải 6 số'), Spinner.hide(), setIsCheck(false))
+        : (Message('Mật khẩu phải trên 6 kí tự'),
+          Spinner.hide(),
+          setIsCheck(false))
       : (Message('Vui lòng nhập mật khẩu'), Spinner.hide(), setIsCheck(false));
   };
   return (
@@ -97,8 +99,18 @@ export default function PasswordScreen({ route, navigation }) {
         <View>
           <Text
             style={{
+              fontSize: fonts.font20,
+              marginTop: 20 * HEIGHT_SCALE,
+              color: colors.colorGreen,
+              textAlign: 'center',
+              fontWeight: fonts.bold,
+            }}>
+            {phone}
+          </Text>
+          <Text
+            style={{
               fontSize: fonts.font16,
-              marginTop: 50 * HEIGHT_SCALE,
+              marginTop: 20 * HEIGHT_SCALE,
               color: colors.blackColor,
             }}>
             Nhập mật khẩu:
@@ -126,11 +138,10 @@ export default function PasswordScreen({ route, navigation }) {
               style={{
                 fontSize: fonts.font16,
                 width: '100%',
+                paddingRight: 15 * WIDTH_SCALE,
               }}
               secureTextEntry={true}
               autoFocus
-              keyboardType={'number-pad'}
-              maxLength={6}
               onChangeText={setPassword}
               returnKeyType="done"
               onSubmitEditing={onLogIn}
