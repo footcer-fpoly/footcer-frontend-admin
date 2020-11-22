@@ -37,6 +37,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
 
 export default function UpdateStadium({ route, navigation }) {
+  const isCheckStadium = route?.params?.isCheckStadium;
   const item = route?.params?.item;
   const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
   const [address, setAddress] = useState({
@@ -132,10 +133,6 @@ export default function UpdateStadium({ route, navigation }) {
             type: REDUX.UPDATE_POSITION,
             payload: data.results[0]?.geometry?.location,
           });
-          console.log(
-            'UpdateStadium -> Object.values(dataAddress)',
-            Object.values(dataAddress),
-          );
 
           setAddress({
             ...address,
@@ -160,23 +157,56 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
+  const getCollage = () => {
+    API.get('/stadium/info')
+      .then(({ data }) => {
+        const obj = data?.data;
+        dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+      })
+      .catch((onError) => {
+        console.log('Stadium -> onError', onError.message);
+        Message('Lỗi');
+      });
+  };
   const apiUpdateStadium = async () => {
     Spinner.show();
     const formData = new FormData();
+    item
+      ? item?.address !== address.fullAddress &&
+        formData.append('address', address.fullAddress)
+      : formData.append('address', address.fullAddress);
+    item
+      ? item?.city !== address.city && formData.append('city', address.city)
+      : formData.append('city', address.city);
+    item
+      ? item?.stadiumName !== nameStadium &&
+        formData.append('stadiumName', nameStadium)
+      : formData.append('stadiumName', nameStadium);
+    item
+      ? item?.district !== address.district &&
+        formData.append('district', address.district)
+      : formData.append('district', address.district);
+    item
+      ? item?.ward !== address.ward && formData.append('ward', address.ward)
+      : formData.append('ward', address.ward);
+    item
+      ? item?.image !== source?.uri &&
+        formData.append('files', {
+          type: source?.type,
+          size: source?.fileSize,
+          uri: `file://${source?.path}`,
+          name: source?.fileName,
+        })
+      : formData.append('files', {
+          type: source?.type,
+          size: source?.fileSize,
+          uri: `file://${source?.path}`,
+          name: source?.fileName,
+        });
     formData.append('folder', 'stadium');
-    formData.append('stadiumName', nameStadium);
-    formData.append('address', address.fullAddress);
-    formData.append('ward', address.ward);
-    formData.append('district', address.district);
-    formData.append('city', address.city);
-    formData.append('files', {
-      type: source?.type,
-      size: source?.fileSize,
-      uri: `file://${source?.path}`,
-      name: source?.fileName,
-    });
     formData.append('latitude', reduxPosition?.lat);
     formData.append('longitude', reduxPosition?.lng);
+    console.log('UpdateStadium -> formData', formData);
 
     if (
       nameStadium &&
@@ -190,14 +220,15 @@ export default function UpdateStadium({ route, navigation }) {
     ) {
       await API.put('/stadium/update', formData)
         .then(({ data }) => {
-          data?.code === 200
-            ? (navigation.replace('Dashboard'), Message('Cập nhật thành công!'))
-            : Message('Lỗi, vui lòng thử lại');
-          console.log('apiUpdateStadium -> data', data);
+          if (data.code === 200) {
+            getCollage();
+            isCheckStadium ? navigation.replace('Home') : navigation.goBack();
+            Message('Cập nhật thành công!');
+          } else Message('Lỗi, vui lòng thử lại');
           Spinner.hide();
         })
         .catch((onError) => {
-          console.log('apiUpdateStadium -> onError', onError);
+          console.log('apiUpdateStadium -> onError', onError.message);
           Message('Lỗi, vui lòng thử lại');
           Spinner.hide();
         });
@@ -206,6 +237,8 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
+  console.log('UpdateStadium -> item?.image', item?.image, address.image);
+
   const setDefault = () => {
     const dataAddress = vietnam.data?.filter(
       (a) =>

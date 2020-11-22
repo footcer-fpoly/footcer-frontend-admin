@@ -20,50 +20,36 @@ import { REDUX } from '../redux/store/types';
 import Axios from 'axios';
 
 export default function SplashScreen({ route, navigation }) {
+  const isCheckStadium = route?.params?.isCheckStadium;
   const dispatch = useDispatch();
-  const isCheckStadium = route?.params?.isCheckStadium
-    ? route?.params?.isCheckStadium
-    : false;
   useEffect(() => {
-    isCheckStadium
-      ? API.get('/stadium/info')
+    persistStore(store, null, () => {
+      const isSignIn = store.getState().userReducer.loggedIn;
+      const token = store.getState().userReducer.token;
+      console.log('SplashScreen -> token', token);
+      if (isSignIn) {
+        Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+        API.defaults.headers.common.Authorization = `Bearer ${token}`;
+        API.get('/stadium/info')
           .then(({ data }) => {
             const obj = data?.data;
-            console.log('SplashScreen -> obj.latitude', obj);
             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
             obj?.latitude === -1 && obj?.longitude === -1
-              ? navigation.replace('UpdateStadium')
-              : navigation.replace('Dashboard');
+              ? navigation.replace('UpdateStadium', {
+                  isCheckStadium: isCheckStadium,
+                })
+              : navigation.replace('Home');
           })
           .catch((onError) => {
-            console.log('SignIn -> onError', onError);
+            console.log('Stadium -> onError', onError);
             Message('Lỗi');
-          })
-      : persistStore(store, null, () => {
-          const isSignIn = store.getState().userReducer.loggedIn;
-          const listStadium = store.getState().userReducer.listStadium;
-          const token = store.getState().userReducer.token;
-          console.log('SplashScreen -> token', token);
-          Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          API.defaults.headers.common.Authorization = `Bearer ${token}`;
-          API.get('/stadium/info')
-            .then(({ data }) => {
-              const obj = data?.data;
-              dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
-              // obj?.latitude === -1 && obj?.longitude === -1
-              //   ? navigation.replace('UpdateStadium')
-              //   : navigation.replace('Dashboard');
-            })
-            .catch((onError) => {
-              console.log('Stadium -> onError', onError);
-              Message('Lỗi');
-            });
-          isSignIn
-            ? listStadium?.latitude === -1 && listStadium?.longitude === -1
-              ? navigation.replace('UpdateStadium')
-              : navigation.replace('Dashboard')
-            : navigation.replace('Login');
-        });
+          });
+      } else {
+        setTimeout(() => {
+          navigation.replace('Login');
+        }, 2000);
+      }
+    });
   }, []);
   return (
     <ImageBackground

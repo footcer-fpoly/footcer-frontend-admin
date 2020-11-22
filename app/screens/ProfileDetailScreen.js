@@ -145,7 +145,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
               fontWeight: fonts.bold,
               color: Colors.whiteColor,
             }}>
-            Chỉnh sửa thông tin
+            Thông tin cá nhân
           </Text>
         }
       />
@@ -242,6 +242,34 @@ export default function ProfileDetailScreen({ route, navigation }) {
                 fontWeight: fonts.bold,
               }}>
               {'Lưu thay đổi'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Spinner.show();
+              dispatch({ type: REDUX.CLEAR_USER_DATA });
+              Spinner.hide();
+              navigation.replace('Login');
+            }}
+            style={{
+              backgroundColor: Colors.colorOrange,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              right: 0,
+            }}>
+            <Text
+              style={{
+                color: Colors.whiteColor,
+                fontSize: fonts.font16,
+                fontFamily: 'Times',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              Đăng xuất
             </Text>
           </TouchableOpacity>
         </View>

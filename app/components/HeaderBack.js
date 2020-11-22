@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../theme/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ItemHeader(props) {

@@ -24,6 +24,7 @@ import ModalTimeComponent from '../components/ModalTimeComponent';
 import Spinner from '../components/Spinner';
 
 export default function InfoStadium({ navigation, route }) {
+  const dispatch = useDispatch();
   const { data, id } = route?.params;
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -78,7 +79,7 @@ export default function InfoStadium({ navigation, route }) {
   const createCollage = () => {
     const sTime = new Date(startTime).getTime();
     const eTime = new Date(endTime).getTime();
-    const pTime = new Date(playTime).getTime();
+    const pTime = playTime;
     const tTime = new Date(endTime).getTime() - new Date(startTime).getTime();
     Spinner.show();
     if (nameColage && price) {
@@ -95,9 +96,21 @@ export default function InfoStadium({ navigation, route }) {
           })
             .then(({ data }) => {
               const obj = data?.data;
+              console.log('createCollage -> obj', obj);
               if (data.code === 200) {
+                API.get('/stadium/info')
+                  .then(({ data }) => {
+                    const obj = data?.data;
+                    dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+                  })
+                  .catch((onError) => {
+                    console.log('Stadium -> onError', onError.message);
+                    Message('Lỗi');
+                  });
                 Spinner.hide();
-                navigation.replace('InfoStadium');
+                navigation.replace('PriceScreen', {
+                  item: obj,
+                });
               } else {
                 Spinner.hide();
                 Message('Tạo sân con thất bại');

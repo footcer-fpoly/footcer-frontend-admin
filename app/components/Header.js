@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import Colors from '../theme/Colors';
-import { HEIGHT_SCALE, WIDTH_SCALE } from '../utils/ScaleAdaptor';
+import {
+  HEIGHT_SCALE,
+  WIDTH_SCALE,
+  getStatusBarHeight,
+} from '../utils/ScaleAdaptor';
 const Header = ({
   left,
   center,
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   },
   statusbar: {
     height: Platform.select({
-      ios: 0,
+      ios: getStatusBarHeight(true),
       android: StatusBar.currentHeight,
       default: 0,
     }),
