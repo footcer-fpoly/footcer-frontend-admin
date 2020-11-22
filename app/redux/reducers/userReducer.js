@@ -5,6 +5,7 @@ const initialState = {
   token: '',
   listStadium: {},
   listPosition: { lat: -1, lng: -1 },
+  listStadiumAdmin: {},
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -39,6 +40,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         listPosition: action.payload,
+      };
+    }
+    case REDUX.UPDATE_STADIUM_ADMIN: {
+      return {
+        ...state,
+        listStadiumAdmin: action.payload,
       };
     }
     default: {

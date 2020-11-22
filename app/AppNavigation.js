@@ -20,6 +20,8 @@ import CreateCollage from './screens/CreateCollage';
 import Spinner from './components/Spinner';
 import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
 import ServicesScreen from './screens/Services/ServicesScreen';
+import UserAdmin from './screens/UserAdmin.js';
+import StadiumAdmin from './screens/StadiumAdmin.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,38 +70,32 @@ const UserStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-// const BottomNavigation = ({ navigation }) => {
-//   return (
-//     <Tab.Navigator
-//       initialRouteName="Home"
-//       screenOptions={({ route }) => ({
-//         tabBarIcon: ({ focused, color, size }) => {
-//           let iconName;
+const BottomNavigation = ({ navigation }) => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Admin"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-//           if (route.name === 'Home') {
-//             iconName = 'home';
-//           } else if (route.name === 'Prices') {
-//             iconName = 'money';
-//           } else if (route.name === 'Notifications') {
-//             iconName = 'bell-o';
-//           } else if (route.name === 'Information') {
-//             iconName = 'user-o';
-//           }
+          if (route.name === 'Stadium') {
+            iconName = 'home';
+          } else if (route.name === 'User') {
+            iconName = 'user-o';
+          }
 
-//           return <FontAwesome name={iconName} size={size} color={color} />;
-//         },
-//       })}
-//       tabBarOptions={{
-//         activeTintColor: '#0AB134',
-//         inactiveTintColor: 'gray',
-//       }}>
-//       <Tab.Screen name="Home" component={HomeStack} />
-//       <Tab.Screen name="Prices" component={PriceStack} />
-//       <Tab.Screen name="Notifications" component={NotificationStack} />
-//       <Tab.Screen name="Information" component={UserStack} />
-//     </Tab.Navigator>
-//   );
-// };
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#0AB134',
+        inactiveTintColor: 'gray',
+      }}>
+      <Tab.Screen name="Stadium" component={StadiumAdmin} />
+      <Tab.Screen name="User" component={UserAdmin} />
+    </Tab.Navigator>
+  );
+};
 export default function AppNavigation(props) {
   return (
     <NavigationContainer>
@@ -107,7 +103,6 @@ export default function AppNavigation(props) {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Tab.Screen name="Home" component={HomeStack} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        {/* <Stack.Screen name="Dashboard" component={BottomNavigation} /> */}
         <Stack.Screen name="ProfileDetail" component={ProfileDetailScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="OTPScreen" component={OTPScreen} />
@@ -116,6 +111,7 @@ export default function AppNavigation(props) {
           name="UpdatePasswordScreen"
           component={UpdatePasswordScreen}
         />
+        <Stack.Screen name="Admin" component={BottomNavigation} />
         <Stack.Screen name="UpdateStadium" component={UpdateStadium} />
         <Stack.Screen name="InfoStadium" component={InfoStadium} />
         <Stack.Screen name="PriceScreen" component={PriceScreen} />

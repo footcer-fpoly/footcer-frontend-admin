@@ -19,6 +19,13 @@ export const SignIn = (phone, password, onSuccess = () => {}) => {
           dispatch({ type: REDUX.UPDATE_USER_TOKEN, payload: obj.token });
           dispatch({ type: REDUX.LOGGED_IN });
           onSuccess();
+        } else if (obj.role === 2) {
+          Axios.defaults.headers.common.Authorization = `Bearer ${obj.token}`;
+          API.defaults.headers.common.Authorization = `Bearer ${obj.token}`;
+          dispatch({ type: REDUX.UPDATE_USER_DATA, payload: obj });
+          dispatch({ type: REDUX.UPDATE_USER_TOKEN, payload: obj.token });
+          dispatch({ type: REDUX.LOGGED_IN });
+          onSuccess();
         } else {
           Message('Bạn không phải là chủ sân');
           Spinner.hide();

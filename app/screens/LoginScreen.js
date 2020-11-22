@@ -31,6 +31,11 @@ export default function LoginScreen({ navigation }) {
       setIsCheck(true);
       return API.post('/users/valid-phone', { phone: phone })
         .then(({ data }) => {
+          console.log(
+            '🚀 ~ file: LoginScreen.js ~ line 45 ~ checkPhone ~ data',
+            data,
+          );
+
           if (data.code === 200) {
             Spinner.hide();
             ref.current.show();

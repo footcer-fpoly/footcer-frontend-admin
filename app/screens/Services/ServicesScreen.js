@@ -36,7 +36,7 @@ export default function ServicesScreen(props) {
     nameService: '',
     priceService: '',
     imageService: '',
-    stadiumId: '4e6e08e6-2b3f-11eb-a4b1-0242ac120002',
+    stadiumId: '0b33fa60-2c8d-11eb-8038-0242ac130002',
     data: {},
   });
 
@@ -60,7 +60,10 @@ export default function ServicesScreen(props) {
       }
     });
   };
-
+  console.log(
+    '🚀 ~ file: ServicesScreen.js ~ line 75 ~ createService ~ source?.path',
+    source?.path,
+  );
   async function createService() {
     const formData = new FormData();
     formData.append('folder', 'service');
@@ -70,7 +73,7 @@ export default function ServicesScreen(props) {
     formData.append('files', {
       type: source?.type,
       size: source?.fileSize,
-      uri: `file://${source?.path}`,
+      uri: source?.uri,
       name: source?.fileName,
     });
 

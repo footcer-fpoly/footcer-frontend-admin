@@ -20,7 +20,6 @@ export default function HomeScreen({ route, navigation }) {
   const dataStadiumRedux = useSelector(
     (state) => state?.userReducer?.listStadium,
   );
-  console.log('HomeScreen -> dataStadiumRedux', dataStadiumRedux);
   return (
     <View>
       <Header
@@ -52,6 +51,10 @@ export default function HomeScreen({ route, navigation }) {
       })}
       {buttom({
         title: 'Thống kê',
+      })}
+      {buttom({
+        title: 'Duyệt sân',
+        onPress: () => navigation.navigate('Admin'),
       })}
     </View>
   );
