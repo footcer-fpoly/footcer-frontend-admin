@@ -285,6 +285,7 @@ export default function UpdateStadium({ route, navigation }) {
                         Spinner.show();
                         GetAddress(event);
                       }}
+                      mapType={Platform.OS == "android" ? "none" : "standard"}
                     />
                   </View>
                 ) : (
