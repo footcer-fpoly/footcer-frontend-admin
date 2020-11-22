@@ -130,8 +130,18 @@ export default function OTPScreen({ route, navigation }) {
         }}>
         <Text
           style={{
-            fontSize: fonts.font16,
+            fontSize: fonts.font20,
             marginTop: 50 * HEIGHT_SCALE,
+            color: colors.colorGreen,
+            textAlign: 'center',
+            fontWeight: fonts.bold,
+          }}>
+          {phone}
+        </Text>
+        <Text
+          style={{
+            fontSize: fonts.font16,
+            marginTop: 20 * HEIGHT_SCALE,
             color: colors.blackColor,
           }}>
           Vui lòng nhập mã xác thực
