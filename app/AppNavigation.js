@@ -61,13 +61,6 @@ const NotificationStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-const UserStack = ({ navigation }) => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Infor" component={ProfileScreen} />
-    </Stack.Navigator>
-  );
-};
 const BottomNavigation = ({ navigation }) => {
   return (
     <Tab.Navigator
