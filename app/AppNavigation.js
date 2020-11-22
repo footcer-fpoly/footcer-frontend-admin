@@ -122,11 +122,11 @@ export default function AppNavigation(props) {
     </NavigationContainer>
   );
 }
-// const UserStack = ({navigation}) => {
-//     return (
-//       <Stack.Navigator screenOptions={{headerShown: false}}>
-//         <Stack.Screen name="Infor" component={ProfileScreen} />
-//         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
-//       </Stack.Navigator>
-//     );
-// }
+const UserStack = ({navigation}) => {
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Infor" component={ProfileScreen} />
+        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+      </Stack.Navigator>
+    );
+}

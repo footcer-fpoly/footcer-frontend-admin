@@ -39,23 +39,28 @@ const ModalComponent = (props, ref) => {
           style={{
             flex: 1,
             borderRadius: 10 * HEIGHT_SCALE,
-            padding: 15 * HEIGHT_SCALE,
             backgroundColor: Colors.colorWhite,
             minWidth: 0.7 * WIDTH,
             maxWidth: 0.9 * WIDTH,
+            overflow: 'hidden',
           }}>
+          <View style={{backgroundColor: Colors.colorGreen,paddingVertical:10*HEIGHT_SCALE}}>
           <Text
             style={{
               fontSize: fonts.font20,
               textAlign: 'center',
+              fontFamily: 'Times',
               fontWeight: fonts.bold,
+              color: Colors.whiteColor,
             }}
             adjustsFontSizeToFit>
             {props.title}
           </Text>
+          </View>
           <View
             style={{
               marginVertical: 10 * HEIGHT_SCALE,
+              padding: 15 * HEIGHT_SCALE,
               flex: 1,
             }}>
             {props.children}
