@@ -78,7 +78,6 @@ const BottomNavigation = ({ navigation }) => {
           } else if (route.name === 'Information') {
             iconName = 'user-o';
           }
-
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
       })}
