@@ -8,28 +8,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:645190559310:android:4109bf3b472b1753b7c51f",
+        "android_client_info": {
+          "package_name": "com.footceradmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645190559310-7mmu4724cjvh65gmgonkoechdoquslti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.footceradmin",
+            "certificate_hash": "9bd07cb54139c86e6f816e459cc3a7fea30c87da"
+          }
+        },
+        {
+          "client_id": "645190559310-pqao0nn5p9obth3be4ltrbinf7s655e8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.footceradmin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFfveN_opIv2uDIt-BJjxf4HDFGjWuzqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:645190559310:android:3d0447ad07d688a4b7c51f",
         "android_client_info": {
           "package_name": "vn.mrlongg71.push_notification_test"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "645190559310-qu4ij0nnrm8d2jvnte3uqp44h0d0n2ri.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "vn.mrlongg71.push_notification_test",
-            "certificate_hash": "9bd07cb54139c86e6f816e459cc3a7fea30c87da"
-          }
-        },
-        {
-          "client_id": "645190559310-89rcnrsi2mnof442lcikvavob0inff5e.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "vn.mrlongg71.push_notification_test",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
         {
           "client_id": "645190559310-32k7o82r0ogaqtvh1cn7temqcvfsok0m.apps.googleusercontent.com",
           "client_type": 1,
