@@ -22,6 +22,7 @@ import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
 import ServicesScreen from './screens/Services/ServicesScreen';
 import UserAdmin from './screens/UserAdmin.js';
 import StadiumAdmin from './screens/StadiumAdmin.js';
+import OrderStadium from './screens/OrderStadium.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -121,6 +122,7 @@ export default function AppNavigation(props) {
         <Tab.Screen name="Information" component={UserStack} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+        <Stack.Screen name="OrderStadium" component={OrderStadium} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>

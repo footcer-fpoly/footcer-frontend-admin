@@ -56,7 +56,7 @@ export function getHeaderStream(safe) {
   });
 }
 //! TODO: check lại do modal của android
-const { width, height } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('window');
 const WIDTH = width;
 const HEIGHT = height;
 const IS_ANDROID = Platform.OS === 'android';

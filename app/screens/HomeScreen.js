@@ -40,6 +40,7 @@ export default function HomeScreen({ route, navigation }) {
       })}
       {buttom({
         title: 'Thông tin đặt sân',
+        onPress: () => navigation.navigate('OrderStadium'),
       })}
       {buttom({
         title: 'Thông tin cá nhân',
