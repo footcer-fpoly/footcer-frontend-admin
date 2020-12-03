@@ -52,6 +52,7 @@ export default function HomeScreen({ route, navigation }) {
       })}
       {buttom({
         title: 'Thống kê',
+        onPress: () => navigation.navigate('Notifications'),
       })}
     </View>
   );

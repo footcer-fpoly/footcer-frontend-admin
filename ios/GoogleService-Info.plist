@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>645190559310-8rip0e3s17pmt4dp8q9vaqd7c8qabnvr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.645190559310-8rip0e3s17pmt4dp8q9vaqd7c8qabnvr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>645190559310-7mmu4724cjvh65gmgonkoechdoquslti.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDPmAVxdQiSBQhKkU0nIdI8NTtFrDJ6Sbg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>645190559310</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.footceradmin</string>
+	<key>PROJECT_ID</key>
+	<string>footcer-4eedc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>footcer-4eedc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:645190559310:ios:987cfa171d37494bb7c51f</string>
+	<key>DATABASE_URL</key>
+	<string>https://footcer-4eedc.firebaseio.com</string>
+</dict>
+</plist>

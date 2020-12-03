@@ -231,6 +231,12 @@ const styles = StyleSheet.create({
     height: height * 0.07,
     borderRadius: width * 0.15,
   },
+  imgDelete: {
+    width: width * 0.15,
+    height: height * 0.07,
+    borderRadius: width * 0.15,
+    marginVertical:10 * HEIGHT_SCALE
+  },
   textName: {
     marginVertical: 5,
     fontFamily: 'Times',
@@ -256,6 +262,17 @@ const styles = StyleSheet.create({
   textUpon: {
     fontSize: 18,
     fontFamily: 'Times',
+  },
+  textModel: {
+    fontSize: 18,
+    fontFamily: 'Times',
+    marginVertical: 10 * HEIGHT_SCALE,
+    marginHorizontal: 10 * WIDTH_SCALE,
+  },
+  textModelBelow: {
+    fontSize: 18,
+    fontFamily: 'Times',
+    marginHorizontal: 10 * WIDTH_SCALE,
   },
   inputText: {
     borderWidth: 1,
@@ -286,7 +303,15 @@ const styles = StyleSheet.create({
     color: Colors.whiteColor,
   },
 });
+
 function ItemService(props) {
+
+    const ref = new useRef();
+    const [source, setSource] = useState();
+    const dataStadiumRedux = useSelector(
+    (state) => state?.userReducer?.listStadium,
+  );
+
     console.log(props.item.name);
 
     const dispatch = useDispatch();
@@ -328,13 +353,36 @@ function ItemService(props) {
                 top:0,
                 right:0,
                 }}
-                onPress={deleteServices}
+                // onPress={deleteServices}
+                onPress={() => ref.current.show()}
                 >
                 <Text style={{color:Colors.whiteColor}}>X</Text>
             </TouchableOpacity>
             <Image resizeMode="contain" source={{uri: props.item.image}} style={styles.img} />
             <Text style={styles.textName}>{props.item.name}</Text>
             <Text style={styles.textType}>{props.item.price}</Text>
+
+            <ModalComponent 
+              ref= {ref}
+              title="Xác nhận xoá dịch vụ"
+            >
+        <View>
+            <Text style={styles.textUpon}>Bạn có muốn xoá sản phẩm?</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image resizeMode="contain" source={{uri: props.item.image}} style={styles.imgDelete} />
+              <View>
+                <Text style={styles.textModel}>{props.item.name}</Text>
+                <Text style={styles.textModelBelow}>{props.item.price}đ</Text>
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity 
+          style={styles.touchUpload}
+          onPress={deleteServices}
+          >
+            <Text style={styles.textAdd}>Xác nhận</Text>
+          </TouchableOpacity>
+      </ModalComponent>
         </View>
     )
 }

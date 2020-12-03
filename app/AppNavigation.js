@@ -20,6 +20,7 @@ import CreateCollage from './screens/CreateCollage';
 import Spinner from './components/Spinner';
 import StadiumDetailScreen from './screens/Stadium/StadiumDetailScreen';
 import ServicesScreen from './screens/Services/ServicesScreen';
+import Notifications from './screens/PushNotification/Notifications';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -117,6 +118,7 @@ export default function AppNavigation(props) {
         <Tab.Screen name="Information" component={UserStack} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+        <Stack.Screen name="Notifications" component={Notifications} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>
