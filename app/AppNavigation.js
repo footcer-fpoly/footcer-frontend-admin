@@ -23,6 +23,7 @@ import ServicesScreen from './screens/Services/ServicesScreen';
 import UserAdmin from './screens/UserAdmin.js';
 import StadiumAdmin from './screens/StadiumAdmin.js';
 import OrderStadium from './screens/OrderStadium.js';
+import Statistics from './screens/Statistics.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,6 +102,7 @@ export default function AppNavigation(props) {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* <Tab.Screen name="Home" component={HomeStack} /> */}
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Tab.Screen name="Home" component={HomeStack} />
         <Stack.Screen name="Login" component={LoginScreen} />
@@ -123,6 +125,7 @@ export default function AppNavigation(props) {
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
         <Stack.Screen name="OrderStadium" component={OrderStadium} />
+        <Stack.Screen name="Statistics" component={Statistics} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>

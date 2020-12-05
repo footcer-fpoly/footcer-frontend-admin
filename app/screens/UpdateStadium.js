@@ -35,6 +35,7 @@ import ImagePicker from 'react-native-image-picker';
 import { convertStrings } from '../utils/convertStrings';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
+import TextInputCustom from '../components/TextInputCustom';
 
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
@@ -144,13 +145,10 @@ export default function UpdateStadium({ route, navigation }) {
               .splice(0, splitAddress?.length - 1)
               .toString(),
           });
-
-          Spinner.hide();
         })
         .catch((onError) => {
           Message('Lỗi lấy vị trí vui lòng thử lại');
           console.log('SignIn -> onError', onError);
-          Spinner.hide();
         });
     } catch (error) {
       console.log('GetLocation -> error', error);
@@ -267,6 +265,7 @@ export default function UpdateStadium({ route, navigation }) {
       source={IMAGE.background}
       style={{ width: WIDTH, height: HEIGHT, flex: 1 }}>
       <Header
+        hideBack
         center={
           <Text
             style={{
@@ -276,6 +275,17 @@ export default function UpdateStadium({ route, navigation }) {
             }}>
             Cập nhật thông tin sân
           </Text>
+        }
+        right={
+          <TouchableOpacity onPress={() => navigation.replace('Home')}>
+            <Text
+              style={{
+                fontSize: fonts.font14,
+                color: Colors.whiteColor,
+              }}>
+              Bỏ qua
+            </Text>
+          </TouchableOpacity>
         }
       />
       <ScrollView>
@@ -339,7 +349,6 @@ export default function UpdateStadium({ route, navigation }) {
                       showsUserLocation
                       showsMyLocationButton
                       onRegionChangeComplete={(event) => {
-                        Spinner.show();
                         GetAddress(event);
                       }}
                     />
@@ -394,19 +403,19 @@ export default function UpdateStadium({ route, navigation }) {
                       ? modalWard.current.show()
                       : Message('Vui lòng chọn tỉnh'),
                 })}
-                <TextInput
-                  value={address.fullAddress}
-                  placeholder="Nhập địa chỉ sân chi tiết..."
+                <TextInputCustom
                   style={{
-                    paddingHorizontal: 10 * WIDTH_SCALE,
-                    borderWidth: 1 * HEIGHT_SCALE,
-                    borderColor: Colors.colorGrayBackground,
-                    borderRadius: 6 * HEIGHT_SCALE,
+                    fontSize: fonts.font16,
+                    width: '100%',
                   }}
-                  multiline
+                  value={address.fullAddress}
+                  // textError={isError.text}
+                  // validate={isError.value}
+                  label="Nhập địa chỉ sân chi tiết(*)"
                   onChangeText={(text) =>
                     setAddress({ ...address, fullAddress: text })
                   }
+                  returnKeyType="done"
                 />
               </View>
             </View>
@@ -423,24 +432,18 @@ export default function UpdateStadium({ route, navigation }) {
                   overflow: 'hidden',
                   padding: 10 * HEIGHT_SCALE,
                 }}>
-                <View
+                <TextInputCustom
                   style={{
-                    marginTop: 10 * HEIGHT_SCALE,
-                  }}>
-                  <Text style={{ flex: 1 }}>Nhập tên sân(*):</Text>
-                  <TextInput
-                    value={nameStadium}
-                    placeholder="Sân bóng Sài Gòn 1975"
-                    style={{
-                      marginTop: 5 * HEIGHT_SCALE,
-                      paddingHorizontal: 10 * WIDTH_SCALE,
-                      borderWidth: 1 * HEIGHT_SCALE,
-                      borderColor: Colors.colorGrayBackground,
-                      borderRadius: 6 * HEIGHT_SCALE,
-                    }}
-                    onChangeText={(text) => setNameStadium(text)}
-                  />
-                </View>
+                    fontSize: fonts.font16,
+                    width: '100%',
+                  }}
+                  value={nameStadium}
+                  // textError={isError.text}
+                  // validate={isError.value}
+                  label="Nhập tên cụm sân(*)"
+                  onChangeText={setNameStadium}
+                  returnKeyType="done"
+                />
                 <Text style={{ flex: 1 }}>Chọn ảnh sân(*):</Text>
                 <TouchableOpacity
                   onPress={selectFile}

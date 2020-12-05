@@ -130,6 +130,7 @@ export default function ChangePasswordScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Header
+        navigation={navigation}
         center={
           <Text
             style={{

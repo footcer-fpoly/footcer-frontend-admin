@@ -21,26 +21,28 @@ import {
 } from '../utils/ScaleAdaptor';
 import { Message } from '../components/Message';
 import Spinner from '../components/Spinner';
+import TextInputCustom from '../components/TextInputCustom';
 
 export default function PasswordScreen({ route, navigation }) {
   const phone = route?.params?.phone;
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
-  const [isCheck, setIsCheck] = useState(true);
+  const [isError, setIsError] = useState({ value: false, text: '' });
   const onLogIn = () => {
     Spinner.show();
     password
       ? password.length >= 6
-        ? dispatch(
+        ? (setIsError({ value: false, text: '' }),
+          dispatch(
             SignIn(phone, password, () => {
               Spinner.hide();
               navigation.replace('Splash', { isCheckStadium: true });
             }),
-          )
-        : (Message('Mật khẩu phải trên 6 kí tự'),
-          Spinner.hide(),
-          setIsCheck(false))
-      : (Message('Vui lòng nhập mật khẩu'), Spinner.hide(), setIsCheck(false));
+          ))
+        : (setIsError({ value: true, text: 'Mật khẩu phải trên 6 kí tự' }),
+          Spinner.hide())
+      : (setIsError({ value: true, text: 'Vui lòng nhập mật khẩu' }),
+        Spinner.hide());
   };
   return (
     <ImageBackground
@@ -107,44 +109,36 @@ export default function PasswordScreen({ route, navigation }) {
             }}>
             {phone}
           </Text>
-          <Text
-            style={{
-              fontSize: fonts.font16,
-              marginTop: 20 * HEIGHT_SCALE,
-              color: colors.blackColor,
-            }}>
-            Nhập mật khẩu:
-          </Text>
           <View
             style={{
-              borderColor: isCheck ? colors.colorGreen : colors.colorRed,
-              borderWidth: 1 * HEIGHT_SCALE,
+              borderColor: isError ? colors.colorGreen : colors.colorRed,
               width: 0.8 * WIDTH,
-              borderRadius: 10 * HEIGHT_SCALE,
-              paddingHorizontal: 20 * WIDTH_SCALE,
               marginTop: 20 * HEIGHT_SCALE,
-              flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Image
-              source={IMAGE.password}
-              style={{
-                height: 20 * WIDTH_SCALE,
-                width: 20 * WIDTH_SCALE,
-                marginRight: 10 * WIDTH_SCALE,
-              }}
-            />
-            <TextInput
+            <TextInputCustom
               style={{
                 fontSize: fonts.font16,
                 width: '100%',
-                paddingRight: 15 * WIDTH_SCALE,
               }}
-              secureTextEntry={true}
-              autoFocus
+              textError={isError.text}
+              validate={isError.value}
+              value={password}
+              label="Nhập mật khẩu"
               onChangeText={setPassword}
               returnKeyType="done"
               onSubmitEditing={onLogIn}
+              icon={() => (
+                <Image
+                  source={IMAGE.password}
+                  style={{
+                    top: 4 * WIDTH_SCALE,
+                    height: 20 * WIDTH_SCALE,
+                    width: 20 * WIDTH_SCALE,
+                    marginRight: 10 * WIDTH_SCALE,
+                  }}
+                />
+              )}
             />
           </View>
           <TouchableOpacity
@@ -160,7 +154,6 @@ export default function PasswordScreen({ route, navigation }) {
             </Text>
           </TouchableOpacity>
         </View>
-
         <TouchableOpacity
           style={{
             backgroundColor: colors.colorGreen,

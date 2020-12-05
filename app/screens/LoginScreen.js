@@ -23,12 +23,15 @@ import API from '../server/api';
 import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
+import TextInputCustom from '../components/TextInputCustom';
+
 export default function LoginScreen({ navigation }) {
   const [phone, setPhone] = useState('');
+  const [isError, setIsError] = useState(false);
   const checkPhone = () => {
+    setIsError(false);
     Spinner.show();
     if (validatePhone(phone)) {
-      setIsCheck(true);
       return API.post('/users/valid-phone', { phone: phone })
         .then(({ data }) => {
           console.log(
@@ -53,17 +56,13 @@ export default function LoginScreen({ navigation }) {
           console.log(onError);
         });
     } else {
-      Message('Số điện thoại không hợp lệ');
-      setIsCheck(false);
+      setIsError(true);
       Spinner.hide();
     }
   };
   const ref = useRef();
-  const [isCheck, setIsCheck] = useState(true);
   return (
-    <ImageBackground
-      source={IMAGE.background}
-      style={{ width: WIDTH, height: HEIGHT }}>
+    <ImageBackground source={IMAGE.background} style={{ flex: 1 }}>
       <View
         style={{
           flex: 0.3,
@@ -124,35 +123,35 @@ export default function LoginScreen({ navigation }) {
         </Text>
         <View
           style={{
-            borderColor: isCheck ? colors.colorGreen : colors.colorRed,
-            borderWidth: 1 * HEIGHT_SCALE,
             width: 0.8 * WIDTH,
-            borderRadius: 10 * HEIGHT_SCALE,
-            paddingHorizontal: 20 * WIDTH_SCALE,
             marginTop: 20 * HEIGHT_SCALE,
-            flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Image
-            source={IMAGE.phone}
-            style={{
-              height: 20 * WIDTH_SCALE,
-              width: 20 * WIDTH_SCALE,
-              marginRight: 10 * WIDTH_SCALE,
-            }}
-          />
-          <TextInput
+          <TextInputCustom
             style={{
               fontSize: fonts.font16,
               width: '100%',
             }}
-            autoFocus
+            textError={'Số điện thoại không hợp lệ'}
+            validate={isError}
+            value={phone}
             keyboardType={'phone-pad'}
             maxLength={10}
-            placeholder="Nhập số điện thoại của bạn"
+            label="Nhập số điện thoại"
             onChangeText={setPhone}
             returnKeyType="done"
             onSubmitEditing={checkPhone}
+            icon={() => (
+              <Image
+                source={IMAGE.phone}
+                style={{
+                  top: 4 * WIDTH_SCALE,
+                  height: 20 * WIDTH_SCALE,
+                  width: 20 * WIDTH_SCALE,
+                  marginRight: 10 * WIDTH_SCALE,
+                }}
+              />
+            )}
           />
         </View>
         <TouchableOpacity

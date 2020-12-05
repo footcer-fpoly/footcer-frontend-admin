@@ -33,17 +33,19 @@
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "moment": "^2.29.1",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "react-native": "0.63.3",
     "react-native-auto-height-image": "^3.2.3",
+    "react-native-calendars": "^1.489.0",
     "react-native-chart-kit": "^6.7.0",
     "react-native-date-picker": "^3.2.5",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-flash-message": "^0.1.16",
     "react-native-geolocation-service": "^5.0.0",
     "react-native-gesture-handler": "^1.7.0",
+    "react-native-image-crop-picker": "^0.35.1",
     "react-native-image-picker": "^2.3.4",
     "react-native-indicators": "^0.17.0",
     "react-native-maps": "https://github.com/xDemon200/react-native-maps",
@@ -69,8 +71,9 @@
     "babel-jest": "^26.3.0",
     "eslint": "^7.7.0",
     "jest": "^26.4.2",
-    "metro-react-native-babel-preset": "^0.63.0",
-    "react-test-renderer": "16.13.1"
+    "jetifier": "^1.6.6",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "react-test-renderer": "17.0.1"
   },
   "jest": {
     "preset": "react-native"

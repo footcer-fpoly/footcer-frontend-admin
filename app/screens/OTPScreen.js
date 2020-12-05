@@ -39,17 +39,22 @@ export default function OTPScreen({ route, navigation }) {
   const pin6ref = useRef(null);
   const [timer, setTimer] = useState(0);
   const handleSendCode = async () => {
+    console.log(
+      '🚀 ~ file: OTPScreen.js ~ line 61 ~ handleSendCode ~ `+84${phone}`',
+      `+84${phone}`,
+    );
+
     try {
-      const confirmation = await auth().signInWithPhoneNumber(
-        `+84${phone}`,
-        true,
-      );
+      console.log('🚀 ~ begin send code');
+      const confirmation = auth().signInWithPhoneNumber(`+84${phone}`);
       Message('Đã gửi mã xác thực');
+      console.log('🚀 ~ send code success');
       Spinner.hide();
       setConfirmResult(confirmation);
       setTimer(59);
     } catch (error) {
       Message('Lỗi gửi mã xác thực');
+      console.log('🚀 ~ send code fail');
       Spinner.hide();
     }
   };
@@ -59,6 +64,7 @@ export default function OTPScreen({ route, navigation }) {
     if (pin.length === 6) {
       try {
         await confirmResult.confirm(pin);
+        auth().signOut();
         navigation.replace('UpdatePasswordScreen', { phone: phone });
         Spinner.hide();
       } catch (error) {
@@ -72,7 +78,9 @@ export default function OTPScreen({ route, navigation }) {
   };
   useEffect(() => {
     Spinner.show();
+    console.log('🚀 ~ start send code');
     phone && handleSendCode();
+    console.log('🚀 ~ end send code');
   }, []);
   const focusInput = (changePin, pin, next, prev) => {
     changePin;

@@ -8,4 +8,10 @@ export default {
   username: require('../assets/icon/username.png'),
   edit: require('../assets/icon/edit.png'),
   avatar: require('../assets/images/avatar.jpg'),
+  infor_stadium: require('../assets/icon/infor_stadium.png'),
+  profile: require('../assets/icon/profile.png'),
+  service: require('../assets/icon/service.png'),
+  stadium: require('../assets/icon/stadium.png'),
+  statistics: require('../assets/icon/statistics.png'),
+  back: require('../assets/icon/back.png'),
 };

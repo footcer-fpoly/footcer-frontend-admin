@@ -22,6 +22,7 @@ import Spinner from '../components/Spinner';
 import Axios from 'axios';
 import { REDUX } from '../redux/store/types';
 import { Message } from '../components/Message';
+import TextInputCustom from '../components/TextInputCustom';
 
 export default function UpdatePasswordScreen({ route, navigation }) {
   const phone = route?.params?.phone;
@@ -33,10 +34,10 @@ export default function UpdatePasswordScreen({ route, navigation }) {
     displayName: '',
     role: 1,
   });
-  const [isCheck, setIsCheck] = useState({
-    name: true,
-    password: true,
-    confirmPassword: true,
+  const [isError, setIsError] = useState({
+    name: false,
+    password: false,
+    confirmPassword: false,
   });
   const dispatch = useDispatch();
   const inputCell = (props) => {
@@ -89,11 +90,11 @@ export default function UpdatePasswordScreen({ route, navigation }) {
     );
   };
   const signUp = () => {
-    setIsCheck({
-      ...isCheck,
-      name: true,
-      password: true,
-      confirmPassword: true,
+    setIsError({
+      ...isError,
+      name: false,
+      password: false,
+      confirmPassword: false,
     });
     return API.post('/users/sign-up-phone', {
       phone: userSignUp.phone,
@@ -132,35 +133,35 @@ export default function UpdatePasswordScreen({ route, navigation }) {
               ? signUp()
               : (Message('Nhập lại mật khẩu không đúng'), Spinner.hide())
             : (Message('Vui lòng nhập lại mật khẩu'),
-              setIsCheck({
-                ...isCheck,
-                name: true,
-                password: true,
-                confirmPassword: false,
+              setIsError({
+                ...isError,
+                name: false,
+                password: false,
+                confirmPassword: true,
               }),
               Spinner.hide())
           : (Message('Mật khẩu phải trên 6 kí tự'),
-            setIsCheck({
-              ...isCheck,
-              name: false,
-              password: false,
-              confirmPassword: false,
+            setIsError({
+              ...isError,
+              name: true,
+              password: true,
+              confirmPassword: true,
             }),
             Spinner.hide())
         : (Message('Vui lòng nhập mật khẩu'),
-          setIsCheck({
-            ...isCheck,
-            name: true,
-            password: false,
-            confirmPassword: false,
+          setIsError({
+            ...isError,
+            name: false,
+            password: true,
+            confirmPassword: true,
           }),
           Spinner.hide())
       : (Message('Vui lòng nhập tên tài khoản'),
-        setIsCheck({
-          ...isCheck,
-          name: false,
-          password: false,
-          confirmPassword: false,
+        setIsError({
+          ...isError,
+          name: true,
+          password: true,
+          confirmPassword: true,
         }),
         Spinner.hide());
   };
@@ -199,30 +200,87 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           borderTopLeftRadius: 50 * WIDTH_SCALE,
           alignItems: 'center',
         }}>
-        {inputCell({
-          image: IMAGE.username,
-          title: 'Nhập họ và tên:',
-          onChangeText: (text) =>
-            setUserSignUp({ ...userSignUp, displayName: text?.trim() }),
-          isCheck: isCheck.name,
-        })}
-        {inputCell({
-          image: IMAGE.password,
-          title: 'Nhập lại mật khẩu:',
-          onChangeText: (text) =>
-            setUserSignUp({ ...userSignUp, password: text?.trim() }),
-          secureTextEntry: true,
-          isCheck: isCheck.password,
-        })}
-        {inputCell({
-          image: IMAGE.password,
-          title: 'Nhập lại mật khẩu:',
-          onChangeText: (text) =>
-            setUserSignUp({ ...userSignUp, confirmPassword: text?.trim() }),
-          secureTextEntry: true,
-          isDone: true,
-          isCheck: isCheck.confirmPassword,
-        })}
+        <View
+          style={{
+            width: 0.8 * WIDTH,
+            marginTop: 20 * HEIGHT_SCALE,
+            alignItems: 'center',
+          }}>
+          <TextInputCustom
+            style={{
+              fontSize: fonts.font16,
+              width: '100%',
+            }}
+            validate={isError.name}
+            textError={'Vui lòng nhập họ và tên'}
+            value={userSignUp.displayName}
+            label="Nhập họ và tên"
+            onChangeText={(text) =>
+              setUserSignUp({ ...userSignUp, displayName: text?.trim() })
+            }
+            icon={() => (
+              <Image
+                source={IMAGE.username}
+                style={{
+                  top: 4 * WIDTH_SCALE,
+                  height: 20 * WIDTH_SCALE,
+                  width: 20 * WIDTH_SCALE,
+                  marginRight: 10 * WIDTH_SCALE,
+                }}
+              />
+            )}
+          />
+          <TextInputCustom
+            style={{
+              fontSize: fonts.font16,
+              width: '100%',
+            }}
+            validate={isError.password}
+            secureTextEntry={true}
+            textError={'Vui lòng nhập mật khẩu'}
+            value={userSignUp.password}
+            label="Nhập mật khẩu"
+            onChangeText={(text) =>
+              setUserSignUp({ ...userSignUp, password: text?.trim() })
+            }
+            icon={() => (
+              <Image
+                source={IMAGE.password}
+                style={{
+                  top: 4 * WIDTH_SCALE,
+                  height: 20 * WIDTH_SCALE,
+                  width: 20 * WIDTH_SCALE,
+                  marginRight: 10 * WIDTH_SCALE,
+                }}
+              />
+            )}
+          />
+          <TextInputCustom
+            style={{
+              fontSize: fonts.font16,
+              width: '100%',
+            }}
+            secureTextEntry={true}
+            validate={isError.confirmPassword}
+            textError={'Vui lòng nhập lại mật khẩu'}
+            value={userSignUp.confirmPassword}
+            label="Nhập lại mật khẩu"
+            onChangeText={(text) =>
+              setUserSignUp({ ...userSignUp, confirmPassword: text?.trim() })
+            }
+            icon={() => (
+              <Image
+                source={IMAGE.password}
+                style={{
+                  top: 4 * WIDTH_SCALE,
+                  height: 20 * WIDTH_SCALE,
+                  width: 20 * WIDTH_SCALE,
+                  marginRight: 10 * WIDTH_SCALE,
+                }}
+              />
+            )}
+          />
+        </View>
         <TouchableOpacity
           style={{
             backgroundColor: colors.colorGreen,

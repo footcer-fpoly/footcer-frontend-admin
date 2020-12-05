@@ -204,6 +204,7 @@ export default function InfoStadium({ navigation, route }) {
   return (
     <View>
       <Header
+        navigation={navigation}
         center={
           <Text
             style={{

@@ -138,6 +138,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Header
+        navigation={navigation}
         center={
           <Text
             style={{
@@ -147,6 +148,23 @@ export default function ProfileDetailScreen({ route, navigation }) {
             }}>
             Thông tin cá nhân
           </Text>
+        }
+        right={
+          <TouchableOpacity
+            onPress={() => {
+              Spinner.show();
+              dispatch({ type: REDUX.CLEAR_USER_DATA });
+              Spinner.hide();
+              navigation.replace('Login');
+            }}>
+            <Text
+              style={{
+                fontSize: fonts.font14,
+                color: Colors.whiteColor,
+              }}>
+              Đăng xuất
+            </Text>
+          </TouchableOpacity>
         }
       />
       <View style={styles.headerContainer}>
@@ -242,34 +260,6 @@ export default function ProfileDetailScreen({ route, navigation }) {
                 fontWeight: fonts.bold,
               }}>
               {'Lưu thay đổi'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Spinner.show();
-              dispatch({ type: REDUX.CLEAR_USER_DATA });
-              Spinner.hide();
-              navigation.replace('Login');
-            }}
-            style={{
-              backgroundColor: Colors.colorOrange,
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              right: 0,
-            }}>
-            <Text
-              style={{
-                color: Colors.whiteColor,
-                fontSize: fonts.font16,
-                fontFamily: 'Times',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              Đăng xuất
             </Text>
           </TouchableOpacity>
         </View>

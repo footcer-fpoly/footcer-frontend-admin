@@ -73,6 +73,7 @@ export default function InfoStadium({ navigation }) {
     const endTime = new Date(Number(item?.endTime)).toUTCString();
     return (
       <View
+        key={item?.stadiumCollageId}
         style={{
           borderBottomWidth: 1 * HEIGHT_SCALE,
           borderBottomColor: Colors.colorGrayBackground,
@@ -248,6 +249,7 @@ export default function InfoStadium({ navigation }) {
         )}
         renderStickyHeader={() => (
           <Header
+            navigation={navigation}
             style={{
               backgroundColor: Colors.colorGreen,
               height: 70 * HEIGHT_SCALE,

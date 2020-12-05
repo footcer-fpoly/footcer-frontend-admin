@@ -107,6 +107,7 @@ export default function PriceScreen({ route, navigation }) {
     <>
       <View style={{ flex: 1 }}>
         <Header
+          navigation={navigation}
           center={
             <Text
               style={{
@@ -152,6 +153,10 @@ export default function PriceScreen({ route, navigation }) {
             </View>
           </View>
           <View style={[styles.settingsContainer, {}]}>
+            <Text style={styles.txtDate}>Các khung giờ:</Text>
+            <Text style={{ ...styles.txtDate, fontSize: fonts.font12 }}>
+              Nhấn vào khung giờ để chỉnh giá
+            </Text>
             <FlatList
               data={dataCollage?.stadiumDetails || []}
               renderItem={renderItem}

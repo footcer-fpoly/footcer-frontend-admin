@@ -18,7 +18,7 @@ import { formatNumber } from '../components/MoneyFormat';
 import moment from 'moment';
 import Spinner from '../components/Spinner';
 
-export default function OrderStadium() {
+export default function OrderStadium({ route, navigation }) {
   const [dataOrder, setDataOrder] = useState();
   const [filter, setFilter] = useState(null);
   const [check, setCheck] = useState({
@@ -261,6 +261,7 @@ export default function OrderStadium() {
   return (
     <View style={{ flex: 1 }}>
       <Header
+        navigation={navigation}
         center={
           <Text
             style={{
