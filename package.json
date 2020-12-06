@@ -1,6 +1,6 @@
 {
-  "name": "footceradmin",
-  "version": "0.0.1",
+  "name": "FCM",
+  "version": "0.0.14",
   "private": true,
   "scripts": {
     "version": "react-native-version",

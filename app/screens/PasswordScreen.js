@@ -121,6 +121,7 @@ export default function PasswordScreen({ route, navigation }) {
                 fontSize: fonts.font16,
                 width: '100%',
               }}
+              secureTextEntry={true}
               textError={isError.text}
               validate={isError.value}
               value={password}

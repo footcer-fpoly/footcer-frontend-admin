@@ -22,6 +22,7 @@ import { REDUX } from '../redux/store/types';
 import { Message } from '../components/Message';
 import ModalTimeComponent from '../components/ModalTimeComponent';
 import Spinner from '../components/Spinner';
+import TextInputCustom from '../components/TextInputCustom';
 
 export default function InfoStadium({ navigation, route }) {
   const dispatch = useDispatch();
@@ -202,7 +203,7 @@ export default function InfoStadium({ navigation, route }) {
     data && setDefault();
   }, []);
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <Header
         navigation={navigation}
         center={
@@ -216,109 +217,64 @@ export default function InfoStadium({ navigation, route }) {
           </Text>
         }
       />
-      <ScrollView>
-        <View
+      <ScrollView style={{ paddingHorizontal: 0.05 * WIDTH }}>
+        <TextInputCustom
           style={{
-            margin: 10 * WIDTH_SCALE,
-          }}>
-          <Text
-            style={{
-              fontWeight: fonts.bold,
-              left: 10 * WIDTH_SCALE,
-            }}>
-            Tên sân con:
-          </Text>
-          <View
-            style={{
-              overflow: 'hidden',
-              borderWidth: 1 * HEIGHT_SCALE,
-              borderColor: Colors.borderGreen,
-              borderRadius: 6 * HEIGHT_SCALE,
-            }}>
-            <TextInput
-              value={nameColage}
-              placeholder="Sân 1, Sân trái, Sân lớn, Sân si,...."
-              style={{
-                paddingHorizontal: 10 * WIDTH_SCALE,
-                borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.colorGrayBackground,
-                borderRadius: 6 * HEIGHT_SCALE,
-              }}
-              multiline
-              onChangeText={setNameColage}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            margin: 10 * WIDTH_SCALE,
-          }}>
-          <Text
-            style={{
-              fontWeight: fonts.bold,
-              left: 10 * WIDTH_SCALE,
-            }}>
-            Chọn thời gian:
-          </Text>
-          <View
-            style={{
-              overflow: 'hidden',
-              borderWidth: 1 * HEIGHT_SCALE,
-              borderColor: Colors.borderGreen,
-              borderRadius: 6 * HEIGHT_SCALE,
-              padding: 10 * WIDTH_SCALE,
-            }}>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={() => startTimeRef.current.show()}>
-                  <Text style={{}}>Giờ mở cửa: {startTime.substr(17, 5)}</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={() => endTimeRef.current.show()}>
-                  <Text>Giờ đóng cửa: {endTime.substr(17, 5)}</Text>
-                </TouchableOpacity>
-              </View>
+            fontSize: fonts.font16,
+            width: '100%',
+          }}
+          textError={'Số điện thoại không hợp lệ'}
+          value={nameColage}
+          label="Nhập tên sân"
+          onSubmitEditing={setNameColage}
+        />
+        <View style={{}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
+              <TextInputCustom
+                isPicker
+                style={{
+                  fontSize: fonts.font16,
+                  width: '100%',
+                }}
+                value={startTime.substr(17, 5)}
+                label="Giờ bắt đầu"
+                onSubmitEditing={setNameColage}
+                icon={() => {}}
+                onPressIcon={() => startTimeRef.current.show()}
+              />
+            </View>
+            <Text>{`    -    `}</Text>
+            <View style={{ flex: 1 }}>
+              <TextInputCustom
+                isPicker
+                style={{
+                  fontSize: fonts.font16,
+                  width: '100%',
+                }}
+                value={endTime.substr(17, 5)}
+                label="Giờ kết thúc"
+                onSubmitEditing={setNameColage}
+                icon={() => {}}
+                onPressIcon={() => endTimeRef.current.show()}
+              />
             </View>
           </View>
         </View>
         {!data && (
-          <View
+          <TextInputCustom
             style={{
-              margin: 10 * WIDTH_SCALE,
-            }}>
-            <Text
-              style={{
-                fontWeight: fonts.bold,
-                left: 10 * WIDTH_SCALE,
-              }}>
-              Chọn giá:
-            </Text>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderWidth: 1 * HEIGHT_SCALE,
-                borderColor: Colors.borderGreen,
-                borderRadius: 6 * HEIGHT_SCALE,
-              }}>
-              <TextInput
-                placeholder="50000,...."
-                style={{
-                  paddingHorizontal: 10 * WIDTH_SCALE,
-                  borderWidth: 1 * HEIGHT_SCALE,
-                  borderColor: Colors.colorGrayBackground,
-                  borderRadius: 6 * HEIGHT_SCALE,
-                }}
-                keyboardType="number-pad"
-                onChangeText={setPrice}
-              />
-            </View>
-          </View>
+              fontSize: fonts.font16,
+              width: '100%',
+            }}
+            textError={'Nhập giá'}
+            value={price}
+            label="Nhập tên sân"
+            onSubmitEditing={setPrice}
+            keyboardType="number-pad"
+          />
         )}
-        <View
-          style={{
-            margin: 10 * WIDTH_SCALE,
-          }}>
+        <View style={{}}>
           <Text
             style={{
               fontWeight: fonts.bold,
@@ -406,10 +362,7 @@ export default function InfoStadium({ navigation, route }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            margin: 10 * WIDTH_SCALE,
-          }}>
+        <View style={{}}>
           <Text
             style={{
               fontWeight: fonts.bold,
@@ -497,39 +450,40 @@ export default function InfoStadium({ navigation, route }) {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={data ? editCollage : createCollage}
-          style={{
-            alignItems: 'center',
-            backgroundColor: Colors.colorGreen,
-            // marginHorizontal: 20 * WIDTH_SCALE,
-            borderRadius: 14 * HEIGHT_SCALE,
-            width: WIDTH * 0.9,
-            alignSelf: 'center',
-          }}>
-          <Text
-            style={{
-              paddingVertical: 14 * HEIGHT_SCALE,
-              color: 'white',
-              fontSize: fonts.font16,
-              fontWeight: fonts.bold,
-            }}>
-            {data ? 'Chỉnh sửa sân con' : 'Tạo sân con'}
-          </Text>
-        </TouchableOpacity>
-        <ModalTimeComponent
-          ref={startTimeRef}
-          title="Chọn giờ mở cửa"
-          time={setStartTime}
-          timeDefault={startTime}
-        />
-        <ModalTimeComponent
-          ref={endTimeRef}
-          title="Chọn giờ đóng cửa"
-          time={setEndTime}
-          timeDefault={endTime}
-        />
       </ScrollView>
+      <TouchableOpacity
+        onPress={data ? editCollage : createCollage}
+        style={{
+          alignItems: 'center',
+          backgroundColor: Colors.colorGreen,
+          // marginHorizontal: 20 * WIDTH_SCALE,
+          width: WIDTH,
+          alignSelf: 'center',
+          position: 'absolute',
+          bottom: 0,
+        }}>
+        <Text
+          style={{
+            paddingVertical: 14 * HEIGHT_SCALE,
+            color: 'white',
+            fontSize: fonts.font16,
+            fontWeight: fonts.bold,
+          }}>
+          {data ? 'Chỉnh sửa sân con' : 'Tạo sân con'}
+        </Text>
+      </TouchableOpacity>
+      <ModalTimeComponent
+        ref={startTimeRef}
+        title="Chọn giờ mở cửa"
+        time={setStartTime}
+        timeDefault={startTime}
+      />
+      <ModalTimeComponent
+        ref={endTimeRef}
+        title="Chọn giờ đóng cửa"
+        time={setEndTime}
+        timeDefault={endTime}
+      />
     </View>
   );
 }

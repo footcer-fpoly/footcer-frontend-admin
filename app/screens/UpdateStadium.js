@@ -265,7 +265,8 @@ export default function UpdateStadium({ route, navigation }) {
       source={IMAGE.background}
       style={{ width: WIDTH, height: HEIGHT, flex: 1 }}>
       <Header
-        hideBack
+        navigation={navigation}
+        hideBack={item ? false : true}
         center={
           <Text
             style={{

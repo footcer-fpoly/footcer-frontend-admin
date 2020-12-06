@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "footceradmin.app"
-               BlueprintName = "footceradmin"
-               ReferencedContainer = "container:footceradmin.xcodeproj">
+               BuildableName = "FootcerAdmin.app"
+               BlueprintName = "FootcerAdmin"
+               ReferencedContainer = "container:FootcerAdmin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "footceradminTests.xctest"
-               BlueprintName = "footceradminTests"
-               ReferencedContainer = "container:footceradmin.xcodeproj">
+               BuildableName = "FootcerAdminTests.xctest"
+               BlueprintName = "FootcerAdminTests"
+               ReferencedContainer = "container:FootcerAdmin.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "footceradmin.app"
-            BlueprintName = "footceradmin"
-            ReferencedContainer = "container:footceradmin.xcodeproj">
+            BuildableName = "FootcerAdmin.app"
+            BlueprintName = "FootcerAdmin"
+            ReferencedContainer = "container:FootcerAdmin.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "footceradmin.app"
-            BlueprintName = "footceradmin"
-            ReferencedContainer = "container:footceradmin.xcodeproj">
+            BuildableName = "FootcerAdmin.app"
+            BlueprintName = "FootcerAdmin"
+            ReferencedContainer = "container:FootcerAdmin.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

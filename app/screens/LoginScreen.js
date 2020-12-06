@@ -176,7 +176,7 @@ export default function LoginScreen({ navigation }) {
       </View>
       <ModalComponent
         ref={ref}
-        title="Xác nhận đăng nhập"
+        title="Xác nhận số điện thoại"
         onPress={() => {
           ref.current.hide();
           navigation.navigate('OTPScreen', { phone: phone });
