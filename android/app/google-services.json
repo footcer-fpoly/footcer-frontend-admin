@@ -8,26 +8,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:645190559310:android:4109bf3b472b1753b7c51f",
+        "mobilesdk_app_id": "1:645190559310:android:cebad74c828bf7ffb7c51f",
         "android_client_info": {
-          "package_name": "com.footceradmin"
+          "package_name": "com.footcer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "645190559310-7mmu4724cjvh65gmgonkoechdoquslti.apps.googleusercontent.com",
+          "client_id": "645190559310-2oilah6uaefivj5k3ttk4mnih4i0lde7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.footceradmin",
-            "certificate_hash": "9bd07cb54139c86e6f816e459cc3a7fea30c87da"
+            "package_name": "com.footcer",
+            "certificate_hash": "ee4f144c7695be2c166fe59e10b73c7ac8b9f459"
           }
         },
         {
-          "client_id": "645190559310-pqao0nn5p9obth3be4ltrbinf7s655e8.apps.googleusercontent.com",
+          "client_id": "645190559310-8vucagpkt08n34hekas5u6qs3q7uiou7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.footceradmin",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "package_name": "com.footcer",
+            "certificate_hash": "b6085b4b041315649005a4cecb00b61099d30a08"
           }
         },
         {
@@ -46,6 +46,57 @@
             {
               "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "645190559310-8rip0e3s17pmt4dp8q9vaqd7c8qabnvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.footceradmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645190559310:android:3b028ec3d82759e5b7c51f",
+        "android_client_info": {
+          "package_name": "com.footceradmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645190559310-7mmu4724cjvh65gmgonkoechdoquslti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.footceradmin",
+            "certificate_hash": "9bd07cb54139c86e6f816e459cc3a7fea30c87da"
+          }
+        },
+        {
+          "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFfveN_opIv2uDIt-BJjxf4HDFGjWuzqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "645190559310-8rip0e3s17pmt4dp8q9vaqd7c8qabnvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.footceradmin"
+              }
             }
           ]
         }
@@ -83,6 +134,13 @@
             {
               "client_id": "645190559310-s13ldj2hbedg43osk82lie8tn7g5435k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "645190559310-8rip0e3s17pmt4dp8q9vaqd7c8qabnvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.footceradmin"
+              }
             }
           ]
         }

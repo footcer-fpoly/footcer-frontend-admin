@@ -45,9 +45,7 @@ export default function PasswordScreen({ route, navigation }) {
         Spinner.hide());
   };
   return (
-    <ImageBackground
-      source={IMAGE.background}
-      style={{ width: WIDTH, height: HEIGHT }}>
+    <ImageBackground source={IMAGE.background} style={{ flex: 1 }}>
       <View
         style={{
           flex: 0.3,

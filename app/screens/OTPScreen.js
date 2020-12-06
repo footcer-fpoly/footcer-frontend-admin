@@ -102,9 +102,7 @@ export default function OTPScreen({ route, navigation }) {
     }
   }, [timer]);
   return (
-    <ImageBackground
-      source={IMAGE.background}
-      style={{ width: WIDTH, height: HEIGHT }}>
+    <ImageBackground source={IMAGE.background} style={{ flex: 1 }}>
       <View
         style={{
           marginHorizontal: 20 * WIDTH_SCALE,
