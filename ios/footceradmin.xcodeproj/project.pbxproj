@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* footceradminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* footceradminTests.m */; };
+		00E356F31AD99517003FC87E /* FootcerAdminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FootcerAdminTests.m */; };
 		0E1C0F5449424AF8A1DDA2DB /* Times.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31F1091BA2214C239FE9C547 /* Times.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1B575F7BEFB7520FADA5997D /* libPods-footceradmin-footceradminTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9B708D0A63909D02F70069 /* libPods-footceradmin-footceradminTests.a */; };
+		1B575F7BEFB7520FADA5997D /* libPods-FootcerAdmin-FootcerAdminTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9B708D0A63909D02F70069 /* libPods-FootcerAdmin-FootcerAdminTests.a */; };
 		215D46733E57401180DFB8C6 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649BECE7886B42C5951CAB23 /* Roboto-Medium.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* footceradminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* footceradminTests.m */; };
-		32DF4FC388EB181DD46DF967 /* libPods-footceradmin-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24F127628329998678FE5E4E /* libPods-footceradmin-tvOS.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* FootcerAdminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FootcerAdminTests.m */; };
+		32DF4FC388EB181DD46DF967 /* libPods-FootcerAdmin-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24F127628329998678FE5E4E /* libPods-FootcerAdmin-tvOS.a */; };
 		545C270F74E14BDB970F63ED /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1438B6F9105C4360A9EAAA9F /* Roboto-Light.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		821BD245EE0E4137A950F407 /* Times-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F4CFD4F8E0942DE93DF3444 /* Times-Bold.ttf */; };
 		8F00BE2EEA09499A92B13187 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC9C3ADEBDB54E52B9F4A033 /* Roboto-Regular.ttf */; };
 		B300FA62497D424DB770C2F6 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F018D6DDC5584DFD8DE6EA67 /* Roboto-Bold.ttf */; };
-		D9D8DD2D7ECE86073200AE67 /* libPods-footceradmin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 120CB7EB7F22FF879CF1B020 /* libPods-footceradmin.a */; };
-		F5E5B5C0BAA1B95CE8D2D347 /* libPods-footceradmin-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A274788C746214B29E7E5880 /* libPods-footceradmin-tvOSTests.a */; };
+		D9D8DD2D7ECE86073200AE67 /* libPods-FootcerAdmin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 120CB7EB7F22FF879CF1B020 /* libPods-FootcerAdmin.a */; };
+		F5E5B5C0BAA1B95CE8D2D347 /* libPods-FootcerAdmin-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A274788C746214B29E7E5880 /* libPods-FootcerAdmin-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,78 +34,78 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = footceradmin;
+			remoteInfo = FootcerAdmin;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "footceradmin-tvOS";
+			remoteInfo = "FootcerAdmin-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* footceradminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = footceradminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* FootcerAdminTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FootcerAdminTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* footceradminTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = footceradminTests.m; sourceTree = "<group>"; };
-		120CB7EB7F22FF879CF1B020 /* libPods-footceradmin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-footceradmin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* FootcerAdminTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FootcerAdminTests.m; sourceTree = "<group>"; };
+		120CB7EB7F22FF879CF1B020 /* libPods-FootcerAdmin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FootcerAdmin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1352B45707AD4A01AD70510B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* footceradmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = footceradmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = footceradmin/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = footceradmin/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = footceradmin/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = footceradmin/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = footceradmin/main.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* FootcerAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FootcerAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FootcerAdmin/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FootcerAdmin/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FootcerAdmin/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FootcerAdmin/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FootcerAdmin/main.m; sourceTree = "<group>"; };
 		1438B6F9105C4360A9EAAA9F /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		15DC3D9D72DC40CC9224A498 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		1F4CFD4F8E0942DE93DF3444 /* Times-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Times-Bold.ttf"; path = "../app/assets/fonts/Times-Bold.ttf"; sourceTree = "<group>"; };
 		1F8D6440EE564A6E8E79B1C9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		2138AADD87334861805D5694 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		24F127628329998678FE5E4E /* libPods-footceradmin-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-footceradmin-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		24F127628329998678FE5E4E /* libPods-FootcerAdmin-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FootcerAdmin-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A11B76355BF4E40A97174EE /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* footceradmin-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "footceradmin-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* footceradmin-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "footceradmin-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* FootcerAdmin-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FootcerAdmin-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* FootcerAdmin-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FootcerAdmin-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31F1091BA2214C239FE9C547 /* Times.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Times.ttf; path = ../app/assets/fonts/Times.ttf; sourceTree = "<group>"; };
 		34B748A46E014EC8BE814A1E /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		352BCF6AE3644E5DAD18C13A /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		352F8B0B9F617DD30443FF40 /* Pods-footceradmin-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-tvOS.release.xcconfig"; path = "Target Support Files/Pods-footceradmin-tvOS/Pods-footceradmin-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		352F8B0B9F617DD30443FF40 /* Pods-FootcerAdmin-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-tvOS.release.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-tvOS/Pods-FootcerAdmin-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		3768B3A5AABB47C3B7133877 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		3FF92C94CD223478A3CC21DD /* Pods-footceradmin-footceradminTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-footceradminTests.release.xcconfig"; path = "Target Support Files/Pods-footceradmin-footceradminTests/Pods-footceradmin-footceradminTests.release.xcconfig"; sourceTree = "<group>"; };
+		3FF92C94CD223478A3CC21DD /* Pods-FootcerAdmin-FootcerAdminTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-FootcerAdminTests.release.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-FootcerAdminTests/Pods-FootcerAdmin-FootcerAdminTests.release.xcconfig"; sourceTree = "<group>"; };
 		4B0E7C1D3DCB43099E508967 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		4B31A815A1F146C5BCF20964 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		4DD3C6752B1D48DDB1619D3F /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		581408C4DB99444C2191A685 /* Pods-footceradmin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin.release.xcconfig"; path = "Target Support Files/Pods-footceradmin/Pods-footceradmin.release.xcconfig"; sourceTree = "<group>"; };
+		581408C4DB99444C2191A685 /* Pods-FootcerAdmin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin.release.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin/Pods-FootcerAdmin.release.xcconfig"; sourceTree = "<group>"; };
 		649BECE7886B42C5951CAB23 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../app/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		65E095E3DFA9405AAADD8A5B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		6A8392D4D3A341B4AC4814D6 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		6A9CB81E1E6C47FB9166A83C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		6B534B374A224DBA91CD390F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		6C9631E626580A05CC2F6AD2 /* Pods-footceradmin-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-footceradmin-tvOSTests/Pods-footceradmin-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		6C9631E626580A05CC2F6AD2 /* Pods-FootcerAdmin-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-tvOSTests/Pods-FootcerAdmin-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		7D12499676E048EFBE742C40 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		7D61C3A9B6ED4B6FA7CCF576 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		7DC1F828FBF69B43D5880F89 /* Pods-footceradmin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin.debug.xcconfig"; path = "Target Support Files/Pods-footceradmin/Pods-footceradmin.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = footceradmin/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7DC1F828FBF69B43D5880F89 /* Pods-FootcerAdmin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin.debug.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin/Pods-FootcerAdmin.debug.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FootcerAdmin/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		903B2A383EAC4E03BA41F5D7 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		943A9DCAB755450285479E37 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		984B46CD3B54FDC9ED894252 /* Pods-footceradmin-footceradminTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-footceradminTests.debug.xcconfig"; path = "Target Support Files/Pods-footceradmin-footceradminTests/Pods-footceradmin-footceradminTests.debug.xcconfig"; sourceTree = "<group>"; };
+		984B46CD3B54FDC9ED894252 /* Pods-FootcerAdmin-FootcerAdminTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-FootcerAdminTests.debug.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-FootcerAdminTests/Pods-FootcerAdmin-FootcerAdminTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F91999A34304D9F9D5ACAFD /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		A274788C746214B29E7E5880 /* libPods-footceradmin-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-footceradmin-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A274788C746214B29E7E5880 /* libPods-FootcerAdmin-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FootcerAdmin-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A30A94780E244110ADE77AE6 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		A82F263B228D44A4B805ECDB /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		AD9B708D0A63909D02F70069 /* libPods-footceradmin-footceradminTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-footceradmin-footceradminTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD9B708D0A63909D02F70069 /* libPods-FootcerAdmin-FootcerAdminTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FootcerAdmin-FootcerAdminTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE5D8C4443042D48BE667AF /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C15112389B30438FA1A021B2 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		C59EABE50A37428CB79099DF /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C66655B9ED7649C0946BD730 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		C8A0F0CEADC3406D8807169B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		C9BE3EFE486CF62A24936D51 /* Pods-footceradmin-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-footceradmin-tvOSTests/Pods-footceradmin-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C9BE3EFE486CF62A24936D51 /* Pods-FootcerAdmin-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-tvOSTests/Pods-FootcerAdmin-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3F55626E86C447DBD025D22 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		DDF2811F013846CB80EE930A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EE1152EF12A479A3E8AA297C /* Pods-footceradmin-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-footceradmin-tvOS/Pods-footceradmin-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		EE1152EF12A479A3E8AA297C /* Pods-FootcerAdmin-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-tvOS/Pods-FootcerAdmin-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		EE298A3770CC4ECAA8FF98C3 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		F018D6DDC5584DFD8DE6EA67 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../app/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		F086FC648D064F9CA68C8DD5 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B575F7BEFB7520FADA5997D /* libPods-footceradmin-footceradminTests.a in Frameworks */,
+				1B575F7BEFB7520FADA5997D /* libPods-FootcerAdmin-FootcerAdminTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9D8DD2D7ECE86073200AE67 /* libPods-footceradmin.a in Frameworks */,
+				D9D8DD2D7ECE86073200AE67 /* libPods-FootcerAdmin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32DF4FC388EB181DD46DF967 /* libPods-footceradmin-tvOS.a in Frameworks */,
+				32DF4FC388EB181DD46DF967 /* libPods-FootcerAdmin-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,20 +142,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5E5B5C0BAA1B95CE8D2D347 /* libPods-footceradmin-tvOSTests.a in Frameworks */,
+				F5E5B5C0BAA1B95CE8D2D347 /* libPods-FootcerAdmin-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* footceradminTests */ = {
+		00E356EF1AD99517003FC87E /* FootcerAdminTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* footceradminTests.m */,
+				00E356F21AD99517003FC87E /* FootcerAdminTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = footceradminTests;
+			path = FootcerAdminTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -166,7 +166,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* footceradmin */ = {
+		13B07FAE1A68108700A75B9A /* FootcerAdmin */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -177,7 +177,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = footceradmin;
+			name = FootcerAdmin;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -185,10 +185,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				120CB7EB7F22FF879CF1B020 /* libPods-footceradmin.a */,
-				AD9B708D0A63909D02F70069 /* libPods-footceradmin-footceradminTests.a */,
-				24F127628329998678FE5E4E /* libPods-footceradmin-tvOS.a */,
-				A274788C746214B29E7E5880 /* libPods-footceradmin-tvOSTests.a */,
+				120CB7EB7F22FF879CF1B020 /* libPods-FootcerAdmin.a */,
+				AD9B708D0A63909D02F70069 /* libPods-FootcerAdmin-FootcerAdminTests.a */,
+				24F127628329998678FE5E4E /* libPods-FootcerAdmin-tvOS.a */,
+				A274788C746214B29E7E5880 /* libPods-FootcerAdmin-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -226,9 +226,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* footceradmin */,
+				13B07FAE1A68108700A75B9A /* FootcerAdmin */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* footceradminTests */,
+				00E356EF1AD99517003FC87E /* FootcerAdminTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B7EB777757314D19BB885370 /* Resources */,
@@ -243,10 +243,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* footceradmin.app */,
-				00E356EE1AD99517003FC87E /* footceradminTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* footceradmin-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* footceradmin-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* FootcerAdmin.app */,
+				00E356EE1AD99517003FC87E /* FootcerAdminTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* FootcerAdmin-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* FootcerAdmin-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -283,14 +283,14 @@
 		B89A3D556DEAE7BF2A264637 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7DC1F828FBF69B43D5880F89 /* Pods-footceradmin.debug.xcconfig */,
-				581408C4DB99444C2191A685 /* Pods-footceradmin.release.xcconfig */,
-				984B46CD3B54FDC9ED894252 /* Pods-footceradmin-footceradminTests.debug.xcconfig */,
-				3FF92C94CD223478A3CC21DD /* Pods-footceradmin-footceradminTests.release.xcconfig */,
-				EE1152EF12A479A3E8AA297C /* Pods-footceradmin-tvOS.debug.xcconfig */,
-				352F8B0B9F617DD30443FF40 /* Pods-footceradmin-tvOS.release.xcconfig */,
-				C9BE3EFE486CF62A24936D51 /* Pods-footceradmin-tvOSTests.debug.xcconfig */,
-				6C9631E626580A05CC2F6AD2 /* Pods-footceradmin-tvOSTests.release.xcconfig */,
+				7DC1F828FBF69B43D5880F89 /* Pods-FootcerAdmin.debug.xcconfig */,
+				581408C4DB99444C2191A685 /* Pods-FootcerAdmin.release.xcconfig */,
+				984B46CD3B54FDC9ED894252 /* Pods-FootcerAdmin-FootcerAdminTests.debug.xcconfig */,
+				3FF92C94CD223478A3CC21DD /* Pods-FootcerAdmin-FootcerAdminTests.release.xcconfig */,
+				EE1152EF12A479A3E8AA297C /* Pods-FootcerAdmin-tvOS.debug.xcconfig */,
+				352F8B0B9F617DD30443FF40 /* Pods-FootcerAdmin-tvOS.release.xcconfig */,
+				C9BE3EFE486CF62A24936D51 /* Pods-FootcerAdmin-tvOSTests.debug.xcconfig */,
+				6C9631E626580A05CC2F6AD2 /* Pods-FootcerAdmin-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -298,9 +298,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* footceradminTests */ = {
+		00E356ED1AD99517003FC87E /* FootcerAdminTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "footceradminTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FootcerAdminTests" */;
 			buildPhases = (
 				9A08B20A35AB0B149B223E85 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -313,14 +313,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = footceradminTests;
-			productName = footceradminTests;
-			productReference = 00E356EE1AD99517003FC87E /* footceradminTests.xctest */;
+			name = FootcerAdminTests;
+			productName = FootcerAdminTests;
+			productReference = 00E356EE1AD99517003FC87E /* FootcerAdminTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* footceradmin */ = {
+		13B07F861A680F5B00A75B9A /* FootcerAdmin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "footceradmin" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FootcerAdmin" */;
 			buildPhases = (
 				5E8E07EADD74AACCF5B33D3A /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -335,14 +335,14 @@
 			);
 			dependencies = (
 			);
-			name = footceradmin;
-			productName = footceradmin;
-			productReference = 13B07F961A680F5B00A75B9A /* footceradmin.app */;
+			name = FootcerAdmin;
+			productName = FootcerAdmin;
+			productReference = 13B07F961A680F5B00A75B9A /* FootcerAdmin.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* footceradmin-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* FootcerAdmin-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "footceradmin-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FootcerAdmin-tvOS" */;
 			buildPhases = (
 				9550DD9B195018534FCF16D9 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -355,14 +355,14 @@
 			);
 			dependencies = (
 			);
-			name = "footceradmin-tvOS";
-			productName = "footceradmin-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* footceradmin-tvOS.app */;
+			name = "FootcerAdmin-tvOS";
+			productName = "FootcerAdmin-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* FootcerAdmin-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* footceradmin-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* FootcerAdmin-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "footceradmin-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FootcerAdmin-tvOSTests" */;
 			buildPhases = (
 				63AF51E9F72E98EE626BBD1B /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -374,9 +374,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "footceradmin-tvOSTests";
-			productName = "footceradmin-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* footceradmin-tvOSTests.xctest */;
+			name = "FootcerAdmin-tvOSTests";
+			productName = "FootcerAdmin-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* FootcerAdmin-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -406,7 +406,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "footceradmin" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FootcerAdmin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -419,10 +419,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* footceradmin */,
-				00E356ED1AD99517003FC87E /* footceradminTests */,
-				2D02E47A1E0B4A5D006451C7 /* footceradmin-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* footceradmin-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* FootcerAdmin */,
+				00E356ED1AD99517003FC87E /* FootcerAdminTests */,
+				2D02E47A1E0B4A5D006451C7 /* FootcerAdmin-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* FootcerAdmin-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -521,7 +521,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-footceradmin-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FootcerAdmin-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -543,7 +543,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-footceradmin-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FootcerAdmin-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -556,7 +556,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-footceradmin-footceradminTests/Pods-footceradmin-footceradminTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FootcerAdmin-FootcerAdminTests/Pods-FootcerAdmin-FootcerAdminTests-resources.sh",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -597,7 +597,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-footceradmin-footceradminTests/Pods-footceradmin-footceradminTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FootcerAdmin-FootcerAdminTests/Pods-FootcerAdmin-FootcerAdminTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9550DD9B195018534FCF16D9 /* [CP] Check Pods Manifest.lock */ = {
@@ -615,7 +615,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-footceradmin-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FootcerAdmin-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -637,7 +637,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-footceradmin-footceradminTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FootcerAdmin-FootcerAdminTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -650,7 +650,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-footceradmin/Pods-footceradmin-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FootcerAdmin/Pods-FootcerAdmin-resources.sh",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -691,7 +691,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-footceradmin/Pods-footceradmin-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FootcerAdmin/Pods-FootcerAdmin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -739,7 +739,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* footceradminTests.m in Sources */,
+				00E356F31AD99517003FC87E /* FootcerAdminTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +765,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* footceradminTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* FootcerAdminTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,12 +774,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* footceradmin */;
+			target = 13B07F861A680F5B00A75B9A /* FootcerAdmin */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* footceradmin-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* FootcerAdmin-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -787,14 +787,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 984B46CD3B54FDC9ED894252 /* Pods-footceradmin-footceradminTests.debug.xcconfig */;
+			baseConfigurationReference = 984B46CD3B54FDC9ED894252 /* Pods-FootcerAdmin-FootcerAdminTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = footceradminTests/Info.plist;
+				INFOPLIST_FILE = FootcerAdminTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -804,17 +804,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/footceradmin.app/footceradmin";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FootcerAdmin.app/FootcerAdmin";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FF92C94CD223478A3CC21DD /* Pods-footceradmin-footceradminTests.release.xcconfig */;
+			baseConfigurationReference = 3FF92C94CD223478A3CC21DD /* Pods-FootcerAdmin-FootcerAdminTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = footceradminTests/Info.plist;
+				INFOPLIST_FILE = FootcerAdminTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -824,20 +824,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/footceradmin.app/footceradmin";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FootcerAdmin.app/FootcerAdmin";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC1F828FBF69B43D5880F89 /* Pods-footceradmin.debug.xcconfig */;
+			baseConfigurationReference = 7DC1F828FBF69B43D5880F89 /* Pods-FootcerAdmin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = K77PDPCQBR;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = footceradmin/Info.plist;
+				INFOPLIST_FILE = FootcerAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -845,7 +845,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = footceradmin;
+				PRODUCT_NAME = FootcerAdmin;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -854,13 +854,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 581408C4DB99444C2191A685 /* Pods-footceradmin.release.xcconfig */;
+			baseConfigurationReference = 581408C4DB99444C2191A685 /* Pods-FootcerAdmin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = K77PDPCQBR;
-				INFOPLIST_FILE = footceradmin/Info.plist;
+				INFOPLIST_FILE = FootcerAdmin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -868,7 +868,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = footceradmin;
+				PRODUCT_NAME = FootcerAdmin;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -876,7 +876,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE1152EF12A479A3E8AA297C /* Pods-footceradmin-tvOS.debug.xcconfig */;
+			baseConfigurationReference = EE1152EF12A479A3E8AA297C /* Pods-FootcerAdmin-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -887,14 +887,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "footceradmin-tvOS/Info.plist";
+				INFOPLIST_FILE = "FootcerAdmin-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.footceradmin-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.FootcerAdmin-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -904,7 +904,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 352F8B0B9F617DD30443FF40 /* Pods-footceradmin-tvOS.release.xcconfig */;
+			baseConfigurationReference = 352F8B0B9F617DD30443FF40 /* Pods-FootcerAdmin-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -915,14 +915,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "footceradmin-tvOS/Info.plist";
+				INFOPLIST_FILE = "FootcerAdmin-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.footceradmin-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.FootcerAdmin-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -932,7 +932,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9BE3EFE486CF62A24936D51 /* Pods-footceradmin-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = C9BE3EFE486CF62A24936D51 /* Pods-FootcerAdmin-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -942,24 +942,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "footceradmin-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "FootcerAdmin-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.footceradmin-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.FootcerAdmin-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/footceradmin-tvOS.app/footceradmin-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FootcerAdmin-tvOS.app/FootcerAdmin-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C9631E626580A05CC2F6AD2 /* Pods-footceradmin-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 6C9631E626580A05CC2F6AD2 /* Pods-FootcerAdmin-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -969,17 +969,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "footceradmin-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "FootcerAdmin-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.footceradmin-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.FootcerAdmin-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/footceradmin-tvOS.app/footceradmin-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FootcerAdmin-tvOS.app/FootcerAdmin-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1100,7 +1100,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "footceradminTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FootcerAdminTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1109,7 +1109,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "footceradmin" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FootcerAdmin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1118,7 +1118,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "footceradmin-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FootcerAdmin-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1127,7 +1127,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "footceradmin-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "FootcerAdmin-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1136,7 +1136,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "footceradmin" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FootcerAdmin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

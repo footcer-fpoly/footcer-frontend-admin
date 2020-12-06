@@ -105,6 +105,7 @@ export default class TextInputCustom extends Component {
                 style={{
                   alignItems: isPicker ? 'flex-end' : null,
                   width: isPicker ? '100%' : null,
+                  height: isPicker ? '100%' : null,
                   zIndex: 9999,
                   position: 'absolute',
                   right: 0,

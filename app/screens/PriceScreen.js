@@ -12,7 +12,7 @@ import Colors from '../theme/Colors';
 import Header from '../components/Header';
 import fonts from '../theme/ConfigStyle';
 import API from '../server/api';
-import { HEIGHT, HEIGHT_SCALE } from '../utils/ScaleAdaptor';
+import { HEIGHT, HEIGHT_SCALE, WIDTH_SCALE } from '../utils/ScaleAdaptor';
 import { Message } from '../components/Message';
 import { formatNumber } from '../components/MoneyFormat';
 import ModalComponent from '../components/ModalComponent';
@@ -21,7 +21,6 @@ export default function PriceScreen({ route, navigation }) {
   const ref = useRef();
   const item = route?.params?.item;
   const [dataCollage, setData] = useState(item);
-  console.log('PriceScreen -> dataCollage', dataCollage);
   const [price, setPrice] = useState();
   const [index, setIndex] = useState();
   const getData = () => {
@@ -37,6 +36,37 @@ export default function PriceScreen({ route, navigation }) {
       .catch((onError) => {
         console.log('InfoStadium -> onError', onError.message);
         Message('Lỗi');
+      });
+  };
+  const getCollage = () => {
+    API.get('/stadium/info')
+      .then(({ data }) => {
+        const obj = data?.data;
+        setDataStadium(obj);
+        dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+      })
+      .catch((onError) => {
+        console.log('Stadium -> onError', onError.message);
+        Message('Lỗi');
+      });
+  };
+  const deleteCollage = (id) => {
+    Spinner.show();
+    API.delete(`/stadium/delete_collage/${id}`)
+      .then(({ data }) => {
+        if (data.code === 200) {
+          getCollage();
+          Spinner.hide();
+          navigation.goBack();
+          Message('Xoá sân con thành công');
+        } else {
+          Spinner.hide();
+          Message('Xoá sân con thất bại');
+        }
+      })
+      .catch((onError) => {
+        console.log(onError.message);
+        Spinner.hide();
       });
   };
   const updatePrice = () => {
@@ -77,11 +107,7 @@ export default function PriceScreen({ route, navigation }) {
     const startTime = new Date(Number(item?.startTimeDetail)).toUTCString();
     const endTime = new Date(Number(item?.endTimeDetail)).toUTCString();
     return (
-      <TouchableOpacity
-        onPress={() => {
-          setIndex(index);
-          ref.current.show();
-        }}
+      <View
         style={{
           borderBottomWidth: 1 * HEIGHT_SCALE,
           borderBottomColor: Colors.colorGrayBackground,
@@ -92,10 +118,26 @@ export default function PriceScreen({ route, navigation }) {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
+          <Text style={{ color: Colors.blackColor }}>{`${startTime.substr(
+            17,
+            5,
+          )} - ${endTime.substr(17, 5)}`}</Text>
           <Text style={styles.txtPrice}>{formatNumber(item?.price)} đ</Text>
-          <Text>{`${startTime.substr(17, 5)} - ${endTime.substr(17, 5)}`}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setIndex(index);
+              ref.current.show();
+            }}
+            style={{
+              alignItems: 'center',
+              backgroundColor: Colors.borderGreen,
+              padding: 10 * WIDTH_SCALE,
+              borderRadius: 8 * WIDTH_SCALE,
+            }}>
+            <Text style={{ color: Colors.whiteColor }}>Sửa giá</Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
   useEffect(() => {
@@ -117,6 +159,18 @@ export default function PriceScreen({ route, navigation }) {
               }}>
               Thông tin chi tiết giá
             </Text>
+          }
+          right={
+            <TouchableOpacity
+              onPress={() => deleteCollage(dataCollage?.stadiumCollageId)}>
+              <Text
+                style={{
+                  fontSize: fonts.font14,
+                  color: Colors.colorRed,
+                }}>
+                Xoá sân
+              </Text>
+            </TouchableOpacity>
           }
         />
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -151,12 +205,28 @@ export default function PriceScreen({ route, navigation }) {
                 {dataCollage?.amountPeople} người
               </Text>
             </View>
+            <TouchableOpacity
+              onPress={() => {
+                ref.current.hide();
+                navigation.navigate('CreateCollage', {
+                  data: dataCollage,
+                });
+              }}
+              style={{
+                alignSelf: 'center',
+                width: 100 * WIDTH_SCALE,
+                alignItems: 'center',
+                backgroundColor: Colors.colorOrange,
+                marginTop: 10 * WIDTH_SCALE,
+                padding: 6 * WIDTH_SCALE,
+                paddingVertical: 10 * WIDTH_SCALE,
+                borderRadius: 8 * WIDTH_SCALE,
+              }}>
+              <Text style={{ color: Colors.whiteColor }}>Chỉnh sửa</Text>
+            </TouchableOpacity>
           </View>
           <View style={[styles.settingsContainer, {}]}>
             <Text style={styles.txtDate}>Các khung giờ:</Text>
-            <Text style={{ ...styles.txtDate, fontSize: fonts.font12 }}>
-              Nhấn vào khung giờ để chỉnh giá
-            </Text>
             <FlatList
               data={dataCollage?.stadiumDetails || []}
               renderItem={renderItem}
@@ -172,14 +242,19 @@ export default function PriceScreen({ route, navigation }) {
           ref.current.hide();
         }}>
         <View
-          style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 1,
+          }}>
           <Text style={{ fontWeight: fonts.bold }}>Nhập giá: </Text>
           <TextInput
-            style={{ fontSize: fonts.font16 }}
+            style={{ fontSize: fonts.font16, width: 200 * WIDTH_SCALE }}
             placeholder="Nhập giá..."
             onChangeText={setPrice}
             keyboardType="number-pad"
           />
+          <Text>VNĐ</Text>
         </View>
       </ModalComponent>
     </>

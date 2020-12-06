@@ -3,13 +3,13 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'footceradmin' do
+target 'FCM' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
 
-  target 'footceradminTests' do
+  target 'FCMTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -24,10 +24,10 @@ target 'footceradmin' do
   end
 end
 
-target 'footceradmin-tvOS' do
-  # Pods for footceradmin-tvOS
+target 'FCM-tvOS' do
+  # Pods for FCM-tvOS
 
-  target 'footceradmin-tvOSTests' do
+  target 'FCM-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

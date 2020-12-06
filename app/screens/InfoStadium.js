@@ -7,12 +7,14 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
+  Platform,
 } from 'react-native';
 import IMAGE from '../utils/images.util';
 import fonts from '../theme/ConfigStyle';
 import Colors from '../theme/Colors';
 import Header from '../components/Header';
 import {
+  getStatusBarHeight,
   HEIGHT,
   HEIGHT_SCALE,
   WIDTH,
@@ -28,6 +30,7 @@ import ModalComponentX from '../components/ModalComponentX';
 import { formatNumber } from '../components/MoneyFormat';
 import Spinner from '../components/Spinner';
 import StarRating from 'react-native-star-rating';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function InfoStadium({ navigation }) {
   const dataStadiumRedux = useSelector(
@@ -75,26 +78,54 @@ export default function InfoStadium({ navigation }) {
       <View
         key={item?.stadiumCollageId}
         style={{
-          borderBottomWidth: 1 * HEIGHT_SCALE,
-          borderBottomColor: Colors.colorGrayBackground,
+          borderBottomWidth: 6 * HEIGHT_SCALE,
+          borderBottomColor: Colors.borderGreen,
+          flex: 1,
         }}>
         <Swipeout right={swipeoutBtns} showsButtons backgroundColor="white">
           <TouchableOpacity
             onPress={() => {
-              setIndex(index);
-              ref.current.show();
+              navigation.navigate('PriceScreen', {
+                item: item,
+              });
             }}
             style={{
-              padding: 20 * HEIGHT_SCALE,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              padding: 10 * HEIGHT_SCALE,
+              paddingHorizontal: 20 * WIDTH_SCALE,
+              flex: 1,
             }}>
-            <Text>{item?.stadiumCollageName}</Text>
-
-            <Text>{`${startTime.substr(17, 5)} - ${endTime.substr(
-              17,
-              5,
-            )}`}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 10 * HEIGHT_SCALE,
+              }}>
+              {viewModal({
+                title: 'Sân con: ',
+                content: item?.stadiumCollageName,
+              })}
+              {viewModal({
+                title: 'Thời gian: ',
+                content: `${startTime.substr(17, 5)} - ${endTime.substr(
+                  17,
+                  5,
+                )}`,
+              })}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              {viewModal({
+                title: 'Số người: ',
+                content: item?.amountPeople,
+              })}
+              {viewModal({
+                title: 'Thời gian chơi: ',
+                content: `${item?.playTime / 60000} phút`,
+              })}
+            </View>
           </TouchableOpacity>
         </Swipeout>
       </View>
@@ -172,6 +203,7 @@ export default function InfoStadium({ navigation }) {
                 Thêm sân con
               </Text>
             </TouchableOpacity>
+
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text numberOfLines={1} style={styles.sectionSpeakerText}>
@@ -391,29 +423,14 @@ export default function InfoStadium({ navigation }) {
 
   function viewModal({ title, content }) {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginBottom: 5 * HEIGHT_SCALE,
-        }}>
+      <View style={{}}>
         <Text
           style={{
             fontSize: fonts.font16,
             color: Colors.blackColor,
             flex: 1,
           }}>
-          {title}
-        </Text>
-        <Text
-          style={{
-            fontWeight: fonts.bold,
-            fontSize: fonts.font16,
-            color: Colors.colorGrayText,
-            flex: 1,
-            textAlign: 'right',
-          }}>
-          {content}
+          {`${title} ${content}`}
         </Text>
       </View>
     );
