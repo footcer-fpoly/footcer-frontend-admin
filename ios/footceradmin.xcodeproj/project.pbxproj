@@ -20,6 +20,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* FootcerAdminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FootcerAdminTests.m */; };
 		32DF4FC388EB181DD46DF967 /* libPods-FootcerAdmin-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24F127628329998678FE5E4E /* libPods-FootcerAdmin-tvOS.a */; };
 		545C270F74E14BDB970F63ED /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1438B6F9105C4360A9EAAA9F /* Roboto-Light.ttf */; };
+		7C13F26E256CE47E004E1CD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C13F26D256CE47E004E1CD2 /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		821BD245EE0E4137A950F407 /* Times-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F4CFD4F8E0942DE93DF3444 /* Times-Bold.ttf */; };
 		8F00BE2EEA09499A92B13187 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC9C3ADEBDB54E52B9F4A033 /* Roboto-Regular.ttf */; };
@@ -83,6 +84,8 @@
 		6A9CB81E1E6C47FB9166A83C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		6B534B374A224DBA91CD390F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		6C9631E626580A05CC2F6AD2 /* Pods-FootcerAdmin-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin-tvOSTests/Pods-FootcerAdmin-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		6C9631E626580A05CC2F6AD2 /* Pods-footceradmin-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-footceradmin-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-footceradmin-tvOSTests/Pods-footceradmin-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		7C13F26D256CE47E004E1CD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7D12499676E048EFBE742C40 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		7D61C3A9B6ED4B6FA7CCF576 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		7DC1F828FBF69B43D5880F89 /* Pods-FootcerAdmin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FootcerAdmin.debug.xcconfig"; path = "Target Support Files/Pods-FootcerAdmin/Pods-FootcerAdmin.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				7C13F26D256CE47E004E1CD2 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -441,6 +445,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				7C13F26E256CE47E004E1CD2 /* GoogleService-Info.plist in Resources */,
 				B300FA62497D424DB770C2F6 /* Roboto-Bold.ttf in Resources */,
 				545C270F74E14BDB970F63ED /* Roboto-Light.ttf in Resources */,
 				215D46733E57401180DFB8C6 /* Roboto-Medium.ttf in Resources */,

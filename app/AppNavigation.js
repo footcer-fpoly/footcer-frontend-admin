@@ -54,21 +54,14 @@ const PriceStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-// const NotificationStack = ({ navigation }) => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="Notification"
-//         component={NotificationScreen}
-//         options={{ headerShown: false }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
-const UserStack = ({ navigation }) => {
+const NotificationStack = ({ navigation }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Infor" component={ProfileScreen} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -126,16 +119,17 @@ export default function AppNavigation(props) {
         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
         <Stack.Screen name="OrderStadium" component={OrderStadium} />
         <Stack.Screen name="Statistics" component={Statistics} />
+        <Stack.Screen name="Notifications" component={Notifications} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>
   );
 }
-// const UserStack = ({navigation}) => {
-//     return (
-//       <Stack.Navigator screenOptions={{headerShown: false}}>
-//         <Stack.Screen name="Infor" component={ProfileScreen} />
-//         <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
-//       </Stack.Navigator>
-//     );
-// }
+const UserStack = ({navigation}) => {
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Infor" component={ProfileScreen} />
+        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+      </Stack.Navigator>
+    );
+}

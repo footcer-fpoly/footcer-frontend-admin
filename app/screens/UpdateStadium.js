@@ -352,6 +352,7 @@ export default function UpdateStadium({ route, navigation }) {
                       onRegionChangeComplete={(event) => {
                         GetAddress(event);
                       }}
+                      mapType={Platform.OS == "android" ? "none" : "standard"}
                     />
                   </View>
                 ) : (
