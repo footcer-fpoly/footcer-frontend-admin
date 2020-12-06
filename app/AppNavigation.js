@@ -24,6 +24,7 @@ import UserAdmin from './screens/UserAdmin.js';
 import StadiumAdmin from './screens/StadiumAdmin.js';
 import OrderStadium from './screens/OrderStadium.js';
 import Statistics from './screens/Statistics.js';
+import Notifications from './screens/PushNotification/Notifications';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,17 +55,7 @@ const PriceStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-const NotificationStack = ({ navigation }) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Notification"
-        component={NotificationScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
+
 const BottomNavigation = ({ navigation }) => {
   return (
     <Tab.Navigator
@@ -125,11 +116,11 @@ export default function AppNavigation(props) {
     </NavigationContainer>
   );
 }
-const UserStack = ({navigation}) => {
-    return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Infor" component={ProfileScreen} />
-        <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
-      </Stack.Navigator>
-    );
-}
+const UserStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Infor" component={ProfileScreen} />
+      <Stack.Screen name="ServiceScreen" component={ServicesScreen} />
+    </Stack.Navigator>
+  );
+};

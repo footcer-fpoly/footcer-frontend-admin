@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   Text,
@@ -19,30 +19,33 @@ import ConfigStyle from '../../theme/ConfigStyle';
 import Icon from 'react-native-vector-icons/AntDesign';
 import imagesUtil from '../../utils/images.util';
 import ImagePicker from 'react-native-image-picker';
-import {REDUX} from '../../redux/store/types';
+import { REDUX } from '../../redux/store/types';
 import API from '../../server/api';
 import { HEIGHT_SCALE, WIDTH, WIDTH_SCALE } from '../../utils/ScaleAdaptor';
+import TextInputCustom from '../../components/TextInputCustom';
+import fonts from '../../theme/ConfigStyle';
+import Header from '../../components/Header';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-export default function ServicesScreen(props) {
-    const ref = new useRef();
-    const [source, setSource] = useState();
-    const dataStadiumRedux = useSelector(
+export default function ServicesScreen({ route, navigation }) {
+  const ref = new useRef();
+  const [source, setSource] = useState();
+  const dataStadiumRedux = useSelector(
     (state) => state?.userReducer?.listStadium,
   );
   const dispatch = useDispatch();
 
-    const [dataService, setDataService] = useState({
-        nameService: '',
-        priceService: '',
-        imageService: '',
-        stadiumId: dataStadiumRedux?.stadiumId,
-        data: {},
-    });
+  const [dataService, setDataService] = useState({
+    nameService: '',
+    priceService: '',
+    imageService: '',
+    stadiumId: dataStadiumRedux?.stadiumId,
+    data: {},
+  });
 
-    console.log('idddddd' , dataStadiumRedux);
+  console.log('idddddd', dataStadiumRedux);
   const choosePhotoFromLibrary = async () => {
     var options = {
       storageOptions: {
@@ -81,31 +84,22 @@ export default function ServicesScreen(props) {
       name: source?.fileName,
     });
 
-    console.log(
-      'dataaaaa',
-      source?.type,
-      source?.fileSize,
-      source?.uri,
-      source?.fileName,
-    );
-
     API.post('/service/add', formData)
       .then(({ data }) => {
         console.log('apiUpdateStadium -> data', data);
-        if(data.code === 200){
-            API.get('/stadium/info')
-                  .then(({ data }) => {
-                    const obj = data?.data;
-                    dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
-                  })
-                  .catch((onError) => {
-                    console.log('Stadium -> onError', onError.message);
-                    Message('Lỗi');
-                  });
-            ref.current.hide();
-        }
-        else{
-            Message("Error");
+        if (data.code === 200) {
+          API.get('/stadium/info')
+            .then(({ data }) => {
+              const obj = data?.data;
+              dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+            })
+            .catch((onError) => {
+              console.log('Stadium -> onError', onError.message);
+              Message('Lỗi');
+            });
+          ref.current.hide();
+        } else {
+          Message('Error');
         }
       })
       .catch((onError) => {
@@ -114,60 +108,62 @@ export default function ServicesScreen(props) {
       });
   }
 
-  
-
   return (
-    <Container
-      header={
-        <StatusBarMain
-          title="Sản phẩm và dịch vụ"
-          arrowBack={true}
-          contentBarStyles={{ justifyContent: 'space-between' }}
-          navigation={props.navigation}
-          headerHeight={ConfigStyle.statusBarHeight}
-        />
-      }
-      headerHeight={ConfigStyle.statusBarHeight}>
-      <View style={styles.container}> 
+    <View style={{ flex: 1 }}>
+      <Header
+        navigation={navigation}
+        center={
+          <Text
+            style={{
+              fontSize: fonts.font18,
+              fontWeight: fonts.bold,
+              color: Colors.whiteColor,
+            }}>
+            {'Dịch vụ sân'}
+          </Text>
+        }
+      />
+      <View style={styles.container}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.textServices}>Dịch vụ cơ bản</Text>
-            <TouchableOpacity style={styles.addServiceButton} onPress={() => ref.current.show()}>
-                <Icon name="plus" size={20} color={Colors.whiteColor} />
-            </TouchableOpacity>
+          <Text style={styles.textServices}>Dịch vụ cơ bản</Text>
+          <TouchableOpacity
+            style={styles.addServiceButton}
+            onPress={() => ref.current.show()}>
+            <Icon name="plus" size={20} color={Colors.whiteColor} />
+          </TouchableOpacity>
         </View>
-        
-      <FlatList 
-      numColumns={2}
-      columnWrapperStyle={{justifyContent:'space-between'}}
-      data={dataStadiumRedux.service}
-      renderItem={({item,index}) => {return (
-        <ItemService ref={ref} item={item} />
-      )}}
-    />
-      <ModalComponent 
-      ref= {ref}
-      title="Thêm dịch vụ"
-       >
-        <View>
-            <Text style={styles.textUpon}>Tên dịch vụ</Text>
-            <TextInput
-              placeholder="Tên dịch vụ"
+
+        <FlatList
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          data={dataStadiumRedux.service}
+          renderItem={({ item, index }) => {
+            return <ItemService ref={ref} item={item} />;
+          }}
+        />
+        <ModalComponent hideButton ref={ref} title="Thêm dịch vụ">
+          <View>
+            <TextInputCustom
+              style={{
+                fontSize: fonts.font16,
+                width: '100%',
+              }}
+              value={dataService.nameService}
+              label="Tên dịch vụ"
               onChangeText={(text) =>
                 setDataService({ ...dataService, nameService: text })
               }
-              value={dataService.nameService}
-              placeholderTextColor="grey"
-              style={styles.inputText}
             />
-            <Text style={styles.textUpon}>Giá tiền</Text>
-            <TextInput
-              placeholder="Giá tiền"
+            <TextInputCustom
+              style={{
+                fontSize: fonts.font16,
+                width: '100%',
+              }}
+              value={dataService.priceService}
+              label="Giá tiền"
               onChangeText={(text) =>
                 setDataService({ ...dataService, priceService: text })
               }
-              value={dataService.priceService}
-              placeholderTextColor="grey"
-              style={styles.inputText}
             />
           </View>
           <View style={styles.chooserContainer}>
@@ -186,9 +182,9 @@ export default function ServicesScreen(props) {
           <TouchableOpacity style={styles.touchUpload} onPress={createService}>
             <Text style={styles.textAdd}>Thêm mới</Text>
           </TouchableOpacity>
-      </ModalComponent>
+        </ModalComponent>
       </View>
-    </Container>
+    </View>
   );
 }
 
@@ -211,7 +207,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginTop: 15,
-    marginRight:10,
+    marginRight: 10,
     width: width * 0.4 * WIDTH_SCALE,
     height: height * 0.17 * HEIGHT_SCALE,
     alignItems: 'center',
@@ -224,10 +220,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     backgroundColor: Colors.whiteColor,
     shadowRadius: 3,
-    borderTopRightRadius:10,
-    borderTopLeftRadius:7,
-    borderBottomRightRadius:7,
-    borderBottomLeftRadius:7
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
   },
   img: {
     width: width * 0.15,
@@ -238,7 +234,7 @@ const styles = StyleSheet.create({
     width: width * 0.15,
     height: height * 0.07,
     borderRadius: width * 0.15,
-    marginVertical:10 * HEIGHT_SCALE
+    marginVertical: 10 * HEIGHT_SCALE,
   },
   textName: {
     marginVertical: 5,
@@ -296,8 +292,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.colorOrange,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal:60* WIDTH_SCALE,
-    paddingVertical: 10*HEIGHT_SCALE,
+    marginHorizontal: 60 * WIDTH_SCALE,
+    paddingVertical: 10 * HEIGHT_SCALE,
     borderRadius: 10,
   },
   textAdd: {
@@ -308,85 +304,85 @@ const styles = StyleSheet.create({
 });
 
 function ItemService(props) {
-
-    const ref = new useRef();
-    const [source, setSource] = useState();
-    const dataStadiumRedux = useSelector(
+  const ref = new useRef();
+  const [source, setSource] = useState();
+  const dataStadiumRedux = useSelector(
     (state) => state?.userReducer?.listStadium,
   );
 
-    console.log(props.item.name);
+  console.log(props.item.name);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    async function deleteServices(){
-        API.delete(`/service/delete/${props.item.serviceId}`)
+  async function deleteServices() {
+    API.delete(`/service/delete/${props.item.serviceId}`)
       .then(({ data }) => {
         console.log('apiUpdateStadium -> data', data);
-        if(data.code === 200){
-            API.get('/stadium/info')
-                  .then(({ data }) => {
-                    const obj = data?.data;
-                    dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
-                  })
-                  .catch((onError) => {
-                    console.log('Stadium -> onError', onError.message);
-                    Message('Lỗi');
-                  });
-        }
-        else{
-            Message("Error");
+        if (data.code === 200) {
+          API.get('/stadium/info')
+            .then(({ data }) => {
+              const obj = data?.data;
+              dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+            })
+            .catch((onError) => {
+              console.log('Stadium -> onError', onError.message);
+              Message('Lỗi');
+            });
+        } else {
+          Message('Error');
         }
       })
       .catch((onError) => {
         console.log('apiUpdateStadium -> onError', onError);
         Message('Lỗi, vui lòng thử lại');
       });
-    }
+  }
 
-    return(
-        <View style={styles.itemContainer} key={props.item.serviceId}>
-            <TouchableOpacity style={{
-                backgroundColor:Colors.colorRed, 
-                borderRadius:20, width:25 * WIDTH_SCALE, 
-                height:20 * HEIGHT_SCALE, 
-                alignItems: 'center',
-                justifyContent:'center', 
-                position:'absolute',
-                top:0,
-                right:0,
-                }}
-                // onPress={deleteServices}
-                onPress={() => ref.current.show()}
-                >
-                <Text style={{color:Colors.whiteColor}}>X</Text>
-            </TouchableOpacity>
-            <Image resizeMode="contain" source={{uri: props.item.image}} style={styles.img} />
-            <Text style={styles.textName}>{props.item.name}</Text>
-            <Text style={styles.textType}>{props.item.price}</Text>
+  return (
+    <View style={styles.itemContainer} key={props.item.serviceId}>
+      <TouchableOpacity
+        style={{
+          backgroundColor: Colors.colorRed,
+          borderRadius: 20,
+          width: 25 * WIDTH_SCALE,
+          height: 20 * HEIGHT_SCALE,
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          top: 0,
+          right: 0,
+        }}
+        // onPress={deleteServices}
+        onPress={() => ref.current.show()}>
+        <Text style={{ color: Colors.whiteColor }}>X</Text>
+      </TouchableOpacity>
+      <Image
+        resizeMode="contain"
+        source={{ uri: props.item.image }}
+        style={styles.img}
+      />
+      <Text style={styles.textName}>{props.item.name}</Text>
+      <Text style={styles.textType}>{props.item.price}</Text>
 
-            <ModalComponent 
-              ref= {ref}
-              title="Xác nhận xoá dịch vụ"
-            >
+      <ModalComponent ref={ref} title="Xác nhận xoá dịch vụ">
         <View>
-            <Text style={styles.textUpon}>Bạn có muốn xoá sản phẩm?</Text>
-            <View style={{flexDirection: 'row'}}>
-              <Image resizeMode="contain" source={{uri: props.item.image}} style={styles.imgDelete} />
-              <View>
-                <Text style={styles.textModel}>{props.item.name}</Text>
-                <Text style={styles.textModelBelow}>{props.item.price}đ</Text>
-              </View>
+          <Text style={styles.textUpon}>Bạn có muốn xoá sản phẩm?</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Image
+              resizeMode="contain"
+              source={{ uri: props.item.image }}
+              style={styles.imgDelete}
+            />
+            <View>
+              <Text style={styles.textModel}>{props.item.name}</Text>
+              <Text style={styles.textModelBelow}>{props.item.price}đ</Text>
             </View>
           </View>
-          <TouchableOpacity 
-          style={styles.touchUpload}
-          onPress={deleteServices}
-          >
-            <Text style={styles.textAdd}>Xác nhận</Text>
-          </TouchableOpacity>
-      </ModalComponent>
         </View>
-    )
+        <TouchableOpacity style={styles.touchUpload} onPress={deleteServices}>
+          <Text style={styles.textAdd}>Xác nhận</Text>
+        </TouchableOpacity>
+      </ModalComponent>
+    </View>
+  );
 }
-

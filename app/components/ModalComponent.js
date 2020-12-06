@@ -44,18 +44,22 @@ const ModalComponent = (props, ref) => {
             maxWidth: 0.9 * WIDTH,
             overflow: 'hidden',
           }}>
-          <View style={{backgroundColor: Colors.colorGreen,paddingVertical:10*HEIGHT_SCALE}}>
-          <Text
+          <View
             style={{
-              fontSize: fonts.font20,
-              textAlign: 'center',
-              fontFamily: 'Times',
-              fontWeight: fonts.bold,
-              color: Colors.whiteColor,
-            }}
-            adjustsFontSizeToFit>
-            {props.title}
-          </Text>
+              backgroundColor: Colors.colorGreen,
+              paddingVertical: 10 * HEIGHT_SCALE,
+            }}>
+            <Text
+              style={{
+                fontSize: fonts.font20,
+                textAlign: 'center',
+                fontFamily: 'Times',
+                fontWeight: fonts.bold,
+                color: Colors.whiteColor,
+              }}
+              adjustsFontSizeToFit>
+              {props.title}
+            </Text>
           </View>
           <View
             style={{
@@ -65,26 +69,28 @@ const ModalComponent = (props, ref) => {
             }}>
             {props.children}
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-            <TouchableOpacity
-              style={{ marginHorizontal: 20 * WIDTH_SCALE }}
-              onPress={hide}>
-              <Text style={{ color: Colors.colorGrayText }}>
-                {props.cancel
-                  ? props.cancel.toUpperCase()
-                  : 'Huỷ'.toUpperCase()}
-              </Text>
-            </TouchableOpacity>
-            {!props.isHideAgree && (
-              <TouchableOpacity onPress={props.onPress}>
-                <Text style={{ color: Colors.colorGreen }}>
-                  {props.agree
-                    ? props.agree.toUpperCase()
-                    : 'Đồng ý'.toUpperCase()}
+          {!props?.hideButton && (
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <TouchableOpacity
+                style={{ marginHorizontal: 20 * WIDTH_SCALE }}
+                onPress={hide}>
+                <Text style={{ color: Colors.colorGrayText }}>
+                  {props.cancel
+                    ? props.cancel.toUpperCase()
+                    : 'Huỷ'.toUpperCase()}
                 </Text>
               </TouchableOpacity>
-            )}
-          </View>
+              {!props.isHideAgree && (
+                <TouchableOpacity onPress={props.onPress}>
+                  <Text style={{ color: Colors.colorGreen }}>
+                    {props.agree
+                      ? props.agree.toUpperCase()
+                      : 'Đồng ý'.toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
         </View>
       </View>
     );
