@@ -130,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.fcm"
+        applicationId "com.footceradmin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
