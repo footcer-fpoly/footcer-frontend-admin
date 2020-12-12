@@ -166,9 +166,7 @@ export default function UpdatePasswordScreen({ route, navigation }) {
         Spinner.hide());
   };
   return (
-    <ImageBackground
-      source={IMAGE.background}
-      style={{ width: WIDTH, height: HEIGHT, flex: 1 }}>
+    <ImageBackground source={IMAGE.background} style={{ flex: 1 }}>
       <View
         style={{
           marginHorizontal: 20 * WIDTH_SCALE,

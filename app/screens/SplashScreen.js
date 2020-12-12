@@ -55,8 +55,7 @@ export default function SplashScreen({ route, navigation }) {
     <ImageBackground
       source={IMAGE.background}
       style={{
-        width: WIDTH,
-        height: HEIGHT,
+        flex: 1,
         alignItems: 'center',
         // justifyContent: 'center',
       }}>

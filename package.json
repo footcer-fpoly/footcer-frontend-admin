@@ -23,7 +23,8 @@
     "build:aab": "npx jetify && cd android && ./gradlew bundleRelease",
     "clean:android": "cd android && ./gradlew clean && cd ../",
     "clean:ios": "cd ios && xcodebuild clean && cd ../",
-    "adb": "adb reverse tcp:8081 tcp:8081"
+    "adb": "adb reverse tcp:8081 tcp:8081",
+    "codepush": "appcenter codepush release-react -a duonghaidang2k-gmail.com/FCM -d \"Production\" -m  -t \"0.0.15\""
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -35,6 +36,9 @@
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
+    "appcenter": "4.0.0",
+    "appcenter-analytics": "4.0.0",
+    "appcenter-crashes": "4.0.0",
     "axios": "^0.21.0",
     "moment": "^2.29.1",
     "react": "17.0.1",
@@ -42,6 +46,7 @@
     "react-native-auto-height-image": "^3.2.3",
     "react-native-calendars": "^1.489.0",
     "react-native-chart-kit": "^6.7.0",
+    "react-native-code-push": "^6.4.0",
     "react-native-date-picker": "^3.2.5",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-flash-message": "^0.1.16",

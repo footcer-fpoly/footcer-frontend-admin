@@ -5,4 +5,13 @@
 	<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
 		AIzaSyBNI-E2-itVSOF0ec0BZqi2x2F7zaSiVOI
 	</string>
+	<string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">
+		DO_NOT_ASK_JAVASCRIPT
+	</string>
+	<string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">
+		ALWAYS_SEND
+	</string>
+	<string moduleConfig="true" name="CodePushDeploymentKey">
+		3qhbEdNYWDTY8lcRBkxQ310onJNZgZfz3klj-
+	</string>
 </resources>
