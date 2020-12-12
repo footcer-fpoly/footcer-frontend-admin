@@ -17,6 +17,7 @@ import { HEIGHT_SCALE, WIDTH, WIDTH_SCALE } from '../utils/ScaleAdaptor';
 import { formatNumber } from '../components/MoneyFormat';
 import moment from 'moment';
 import Spinner from '../components/Spinner';
+import IMAGE from '../utils/images.util';
 
 export default function OrderStadium({ route, navigation }) {
   const [dataOrder, setDataOrder] = useState();
@@ -110,6 +111,13 @@ export default function OrderStadium({ route, navigation }) {
     Spinner.show();
     getOrderStadium();
   }, [check]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getOrderStadium();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const renderItem = ({ index, item }) => {
     const startTime = new Date(
       Number(item?.stadium_details?.startTimeDetail),
@@ -117,53 +125,57 @@ export default function OrderStadium({ route, navigation }) {
     const endTime = new Date(
       Number(item?.stadium_details?.endTimeDetail),
     ).toUTCString();
+
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => navigation.navigate('OrderDetails', { item: item })}
         style={{
           width: 0.9 * WIDTH,
           alignSelf: 'center',
-          paddingVertical: 12 * HEIGHT_SCALE,
-          borderBottomWidth: 1 * WIDTH_SCALE,
-          borderBottomColor: Colors.greyShadow,
+          marginTop: 24 * HEIGHT_SCALE,
+          borderBottomWidth: 6 * WIDTH_SCALE,
+          borderBottomColor:
+            item?.order_status?.status === 'ACCEPT'
+              ? Colors.textGreen
+              : item?.order_status?.status === 'WAITING'
+              ? Colors.colorOrange
+              : item?.order_status?.status === 'REJECT'
+              ? Colors.colorRed
+              : Colors.colorDarkBlue,
         }}>
         <View style={{ flexDirection: 'row' }}>
           <View
             style={{
-              //   alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: 14 * WIDTH_SCALE,
-            }}>
-            <Image
-              source={{ uri: item?.user?.avatar }}
-              style={{
-                width: 80 * WIDTH_SCALE,
-                height: 80 * WIDTH_SCALE,
-                marginBottom: 8 * HEIGHT_SCALE,
-              }}
-            />
-            <Text
-              style={{
-                color: Colors.black,
-                fontSize: fonts.font18,
-                width: 100 * WIDTH_SCALE,
-              }}
-              numberOfLines={1}>
-              {item?.user?.displayName}
-            </Text>
-          </View>
-          <View
-            style={{
-              width: '100%',
+              width: '50%',
               justifyContent: 'center',
             }}>
             {textRow({
-              title: `Tên sân con: `,
+              title: `Tên sân: `,
               content: item?.stadium_collage?.stadiumCollageName,
             })}
             {textRow({
               title: `Giá tiền: `,
               content: `${formatNumber(item?.stadium_details?.price)} đ`,
             })}
+
+            {textRow({
+              title: `Tình trạng: `,
+              content:
+                item?.order_status?.status === 'ACCEPT'
+                  ? 'Đã nhận'
+                  : item?.order_status?.status === 'WAITING'
+                  ? 'Chờ xác nhận'
+                  : item?.order_status?.status === 'REJECT'
+                  ? 'Đã huỷ'
+                  : 'Hoàn thành',
+              status: item?.order_status?.status,
+            })}
+          </View>
+          <View
+            style={{
+              width: '50%',
+              justifyContent: 'center',
+            }}>
             {textRow({
               title: `Ngày: `,
               content: moment(item?.time)?.format('DD-MM-YYYY'),
@@ -172,19 +184,29 @@ export default function OrderStadium({ route, navigation }) {
               title: `Thời gian: `,
               content: `${startTime.substr(17, 5)} - ${endTime.substr(17, 5)}`,
             })}
-            {textRow({
-              title: `Tình trạng: `,
-              content:
-                item?.order_status?.status === 'ACCEPT'
-                  ? 'Đã nhận'
-                  : item?.order_status?.status === 'WAITING'
-                  ? 'Chờ xác nhận'
-                  : 'Đã huỷ',
-              status: item?.order_status?.status,
-            })}
           </View>
+          <Image
+            source={IMAGE?.pennon}
+            tintColor={
+              item?.order_status?.status === 'ACCEPT'
+                ? Colors.textGreen
+                : item?.order_status?.status === 'WAITING'
+                ? Colors.colorOrange
+                : item?.order_status?.status === 'REJECT'
+                ? Colors.colorRed
+                : Colors.colorDarkBlue
+            }
+            resizeMode="contain"
+            style={{
+              width: 28 * WIDTH_SCALE,
+              height: 28 * WIDTH_SCALE,
+              top: 10 * WIDTH_SCALE,
+              right: 10 * WIDTH_SCALE,
+              position: 'absolute',
+            }}
+          />
         </View>
-        {item?.order_status?.status === 'WAITING' && (
+        {/* {item?.order_status?.status === 'WAITING' && (
           <View
             style={{
               marginTop: 10 * HEIGHT_SCALE,
@@ -238,8 +260,8 @@ export default function OrderStadium({ route, navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-        )}
-      </View>
+        )} */}
+      </TouchableOpacity>
     );
   };
   const CheckBox = (value) => {
@@ -336,10 +358,10 @@ export default function OrderStadium({ route, navigation }) {
     return (
       <View
         style={{
+          flex: 1,
           flexDirection: 'row',
           padding: 2 * HEIGHT_SCALE,
           alignItems: 'center',
-          width: 0.75 * WIDTH,
         }}>
         <Text
           style={{
@@ -349,8 +371,9 @@ export default function OrderStadium({ route, navigation }) {
           {title}
         </Text>
         <Text
-          numberOfLines={numberLine}
+          numberOfLines={1}
           style={{
+            flex: 1,
             fontSize: fonts.font16,
             color:
               status === 'ACCEPT'
@@ -359,6 +382,8 @@ export default function OrderStadium({ route, navigation }) {
                 ? Colors.colorOrange
                 : status === 'REJECT'
                 ? Colors.colorRed
+                : status === 'FINISH'
+                ? Colors.colorDarkBlue
                 : Colors.colorGrayText,
             width: '100%',
           }}>

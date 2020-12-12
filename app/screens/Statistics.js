@@ -53,6 +53,24 @@ export default function Statistics({ route, navigation }) {
       legendFontSize: fonts?.font14,
     },
   ];
+  const dataChartMonth = [
+    {
+      name: 'khung giờ trống',
+      population:
+        Number(dataDay?.data?.totalDetails) -
+          Number(dataDay?.data?.totalDetailsOrder) || 0,
+      color: 'rgba(131, 167, 234, 1)',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: fonts?.font14,
+    },
+    {
+      name: 'Khung giờ đặt',
+      population: Number(dataDay?.data?.totalDetailsOrder) || 0,
+      color: '#F00',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: fonts?.font14,
+    },
+  ];
   const chartConfig = {
     backgroundColor: '#444',
     backgroundGradientFrom: '#444',
@@ -107,16 +125,6 @@ export default function Statistics({ route, navigation }) {
               alignSelf: 'center',
               marginVertical: 10 * HEIGHT_SCALE,
             }}>
-            {`Số khung giờ đã đặt: ${dataDay?.data?.totalDetailsOrder}/${dataDay?.data?.totalDetails}`}
-          </Text>
-          <Text
-            style={{
-              color: '#000',
-              fontSize: fonts?.font14,
-              width: ' 90%',
-              alignSelf: 'center',
-              marginVertical: 10 * HEIGHT_SCALE,
-            }}>
             {`Doanh thu: ${formatNumber(dataDay?.data?.totalPrice)} đ`}
           </Text>
           <Text
@@ -129,6 +137,26 @@ export default function Statistics({ route, navigation }) {
             }}>
             {`Số khách hàng: ${dataDay?.data?.totalCustomer} khách`}
           </Text>
+          <Text
+            style={{
+              color: '#000',
+              fontSize: fonts?.font14,
+              width: ' 90%',
+              alignSelf: 'center',
+              marginVertical: 10 * HEIGHT_SCALE,
+            }}>
+            {`Khung giờ đã đặt: ${dataDay?.data?.totalDetailsOrder}/${dataDay?.data?.totalDetails}`}
+          </Text>
+          <PieChart
+            data={dataChartMonth}
+            width={WIDTH}
+            height={220}
+            chartConfig={chartConfig}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
           <Text
             style={{
               color: '#000',
@@ -172,7 +200,7 @@ export default function Statistics({ route, navigation }) {
               alignSelf: 'center',
               marginVertical: 10 * HEIGHT_SCALE,
             }}>
-            {`Khung giờ:`}
+            {`Khung giờ đã đặt: ${dataMonth?.data?.totalDetailsOrder}/${dataMonth?.data?.totalDetails}`}
           </Text>
           <PieChart
             data={data}

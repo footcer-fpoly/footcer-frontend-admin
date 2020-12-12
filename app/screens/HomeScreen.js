@@ -22,6 +22,7 @@ import {
   WIDTH_SCALE,
 } from '../utils/ScaleAdaptor';
 import IMAGE from '../utils/images.util';
+import moment from 'moment';
 
 export default function HomeScreen({ route, navigation }) {
   const dataStadiumRedux = useSelector(
@@ -29,9 +30,7 @@ export default function HomeScreen({ route, navigation }) {
   );
   const userRedux = useSelector((state) => state?.userReducer?.userData);
   return (
-    <ImageBackground
-      source={IMAGE.background}
-      style={{ width: WIDTH, height: HEIGHT }}>
+    <View style={{ flex: 1 }}>
       <Header
         hideBack
         center={
@@ -63,12 +62,12 @@ export default function HomeScreen({ route, navigation }) {
           marginTop: 10 * HEIGHT_SCALE,
         }}>
         <View style={{}}>
-          <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
+          <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>
             {`Xin chào! ${userRedux?.displayName}`}
           </Text>
           <Text
             style={{
-              color: '#fff',
+              color: '#000',
               fontSize: 18,
               marginTop: 5 * HEIGHT_SCALE,
               fontWeight: 'bold',
@@ -126,7 +125,7 @@ export default function HomeScreen({ route, navigation }) {
           })} */}
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
     width: 80 * WIDTH_SCALE,
     borderRadius: 85 / 2,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: Colors.borderGreen,
   },
   viewRow: {
     flexDirection: 'row',
@@ -197,7 +196,7 @@ function buttom({ title = '', onPress, image }) {
       <Image
         tintColor={Colors.textGreen}
         resizeMode="cover"
-        style={{ height: 85 * WIDTH_SCALE, width: 85 * WIDTH_SCALE }}
+        style={{ height: 60 * WIDTH_SCALE, width: 60 * WIDTH_SCALE }}
         source={image}
       />
       <Text

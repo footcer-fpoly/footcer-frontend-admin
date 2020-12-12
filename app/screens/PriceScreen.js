@@ -17,12 +17,15 @@ import { Message } from '../components/Message';
 import { formatNumber } from '../components/MoneyFormat';
 import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
+import { REDUX } from '../redux/store/types';
+import { useDispatch } from 'react-redux';
 export default function PriceScreen({ route, navigation }) {
   const ref = useRef();
   const item = route?.params?.item;
   const [dataCollage, setData] = useState(item);
   const [price, setPrice] = useState();
   const [index, setIndex] = useState();
+
   const getData = () => {
     API.get(
       `/stadium/collage-details/?stadiumCollageId=${item.stadiumCollageId}&date=2000-11-30`,
@@ -38,11 +41,11 @@ export default function PriceScreen({ route, navigation }) {
         Message('Lỗi');
       });
   };
+  const dispatch = useDispatch();
   const getCollage = () => {
     API.get('/stadium/info')
       .then(({ data }) => {
         const obj = data?.data;
-        setDataStadium(obj);
         dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
       })
       .catch((onError) => {
@@ -50,6 +53,7 @@ export default function PriceScreen({ route, navigation }) {
         Message('Lỗi');
       });
   };
+  const modalDelete = useRef();
   const deleteCollage = (id) => {
     Spinner.show();
     API.delete(`/stadium/delete_collage/${id}`)
@@ -126,6 +130,7 @@ export default function PriceScreen({ route, navigation }) {
           <TouchableOpacity
             onPress={() => {
               setIndex(index);
+              setPrice(dataCollage?.stadiumDetails[index]?.price);
               ref.current.show();
             }}
             style={{
@@ -161,8 +166,7 @@ export default function PriceScreen({ route, navigation }) {
             </Text>
           }
           right={
-            <TouchableOpacity
-              onPress={() => deleteCollage(dataCollage?.stadiumCollageId)}>
+            <TouchableOpacity onPress={() => modalDelete.current.show()}>
               <Text
                 style={{
                   fontSize: fonts.font14,
@@ -249,13 +253,19 @@ export default function PriceScreen({ route, navigation }) {
           }}>
           <Text style={{ fontWeight: fonts.bold }}>Nhập giá: </Text>
           <TextInput
+            value={'123456'}
             style={{ fontSize: fonts.font16, width: 200 * WIDTH_SCALE }}
             placeholder="Nhập giá..."
             onChangeText={setPrice}
             keyboardType="number-pad"
           />
-          <Text>VNĐ</Text>
+          <Text>đ</Text>
         </View>
+      </ModalComponent>
+      <ModalComponent
+        ref={modalDelete}
+        onPress={() => deleteCollage(dataCollage?.stadiumCollageId)}>
+        <Text style={{ color: '#000' }}>Bạn có muốn xoá sân?</Text>
       </ModalComponent>
     </>
   );

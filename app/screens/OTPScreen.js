@@ -23,7 +23,7 @@ import { Message } from '../components/Message';
 
 export default function OTPScreen({ route, navigation }) {
   const phone = route?.params?.phone;
-  const [confirmResult, setConfirmResult] = useState('');
+  const [confirmResult, setConfirmResult] = useState({});
   const dispatch = useDispatch();
   const [pin1, setPin1] = useState('');
   const [pin2, setPin2] = useState('');
@@ -43,21 +43,19 @@ export default function OTPScreen({ route, navigation }) {
       '🚀 ~ file: OTPScreen.js ~ line 61 ~ handleSendCode ~ `+84${phone}`',
       `+84${phone}`,
     );
-
     try {
       console.log('🚀 ~ begin send code');
-      const confirmation = auth().signInWithPhoneNumber(`+84${phone}`);
+      const confirmation = await auth().signInWithPhoneNumber(`+84${phone}`);
       Message('Đã gửi mã xác thực');
-      console.log('🚀 ~ send code success');
       Spinner.hide();
       setConfirmResult(confirmation);
       setTimer(59);
     } catch (error) {
       Message('Lỗi gửi mã xác thực');
-      console.log('🚀 ~ send code fail');
       Spinner.hide();
     }
   };
+
   const handleVerifyCode = async () => {
     Spinner.show();
     const pin = `${pin1}${pin2}${pin3}${pin4}${pin5}${pin6}`;

@@ -60,18 +60,26 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:645190559310:android:3b028ec3d82759e5b7c51f",
+        "mobilesdk_app_id": "1:645190559310:android:53c72277bda73471b7c51f",
         "android_client_info": {
           "package_name": "com.footceradmin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "645190559310-7mmu4724cjvh65gmgonkoechdoquslti.apps.googleusercontent.com",
+          "client_id": "645190559310-2c3do6ki8c84lu5rmgskp7n7ni05o4af.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.footceradmin",
             "certificate_hash": "9bd07cb54139c86e6f816e459cc3a7fea30c87da"
+          }
+        },
+        {
+          "client_id": "645190559310-5lvcf5123jv7q2fug1qcafh652t1ohr8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.footceradmin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {

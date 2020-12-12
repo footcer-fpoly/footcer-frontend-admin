@@ -9,6 +9,7 @@ import {
   ScrollView,
   PermissionsAndroid,
   Image,
+  Platform,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignIn } from '../redux/actions/userAction';
@@ -40,7 +41,7 @@ import TextInputCustom from '../components/TextInputCustom';
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
   const item = route?.params?.item;
-  const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
+  const KEY_API = 'AIzaSyBNI-E2-itVSOF0ec0BZqi2x2F7zaSiVOI';
   const [address, setAddress] = useState({
     city: '',
     district: '',
@@ -118,6 +119,10 @@ export default function UpdateStadium({ route, navigation }) {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${event?.latitude},${event?.longitude}&key=${KEY_API}`,
         )
         .then(({ data }) => {
+          console.log(
+            '🚀 ~ file: UpdateStadium.js ~ line 121 ~ .then ~ data',
+            data,
+          );
           const splitAddress = data?.results[0]?.formatted_address?.split(',');
           const dataAddress = vietnam.data?.filter(
             (a) =>
@@ -134,7 +139,6 @@ export default function UpdateStadium({ route, navigation }) {
             type: REDUX.UPDATE_POSITION,
             payload: data.results[0]?.geometry?.location,
           });
-
           setAddress({
             ...address,
             data: Object.values(dataAddress),
@@ -278,15 +282,17 @@ export default function UpdateStadium({ route, navigation }) {
           </Text>
         }
         right={
-          <TouchableOpacity onPress={() => navigation.replace('Home')}>
-            <Text
-              style={{
-                fontSize: fonts.font14,
-                color: Colors.whiteColor,
-              }}>
-              Bỏ qua
-            </Text>
-          </TouchableOpacity>
+          !item && (
+            <TouchableOpacity onPress={() => navigation.replace('Home')}>
+              <Text
+                style={{
+                  fontSize: fonts.font14,
+                  color: Colors.whiteColor,
+                }}>
+                Bỏ qua
+              </Text>
+            </TouchableOpacity>
+          )
         }
       />
       <ScrollView>
@@ -352,7 +358,7 @@ export default function UpdateStadium({ route, navigation }) {
                       onRegionChangeComplete={(event) => {
                         GetAddress(event);
                       }}
-                      mapType={Platform.OS == "android" ? "none" : "standard"}
+                      mapType={Platform.OS === 'android' ? 'none' : 'standard'}
                     />
                   </View>
                 ) : (

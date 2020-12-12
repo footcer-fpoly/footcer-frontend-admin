@@ -14,4 +14,5 @@ export default {
   stadium: require('../assets/icon/stadium.png'),
   statistics: require('../assets/icon/statistics.png'),
   back: require('../assets/icon/back.png'),
+  pennon: require('../assets/icon/pennon.png'),
 };

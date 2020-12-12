@@ -25,6 +25,7 @@ import StadiumAdmin from './screens/StadiumAdmin.js';
 import OrderStadium from './screens/OrderStadium.js';
 import Statistics from './screens/Statistics.js';
 import Notifications from './screens/PushNotification/Notifications';
+import OrderDetails from './screens/OrderDetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -111,6 +112,7 @@ export default function AppNavigation(props) {
         <Stack.Screen name="OrderStadium" component={OrderStadium} />
         <Stack.Screen name="Statistics" component={Statistics} />
         <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
       </Stack.Navigator>
       <Spinner />
     </NavigationContainer>

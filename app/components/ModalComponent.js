@@ -44,23 +44,25 @@ const ModalComponent = (props, ref) => {
             maxWidth: 0.9 * WIDTH,
             overflow: 'hidden',
           }}>
-          <View
-            style={{
-              backgroundColor: Colors.colorGreen,
-              paddingVertical: 10 * HEIGHT_SCALE,
-            }}>
-            <Text
+          {props.title && (
+            <View
               style={{
-                fontSize: fonts.font20,
-                textAlign: 'center',
-                fontFamily: 'Times',
-                fontWeight: fonts.bold,
-                color: Colors.whiteColor,
-              }}
-              adjustsFontSizeToFit>
-              {props.title}
-            </Text>
-          </View>
+                backgroundColor: Colors.colorGreen,
+                paddingVertical: 10 * HEIGHT_SCALE,
+              }}>
+              <Text
+                style={{
+                  fontSize: fonts.font20,
+                  textAlign: 'center',
+                  fontFamily: 'Times',
+                  fontWeight: fonts.bold,
+                  color: Colors.whiteColor,
+                }}
+                adjustsFontSizeToFit>
+                {props.title}
+              </Text>
+            </View>
+          )}
           <View
             style={{
               marginVertical: 10 * HEIGHT_SCALE,
@@ -70,7 +72,13 @@ const ModalComponent = (props, ref) => {
             {props.children}
           </View>
           {!props?.hideButton && (
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                paddingHorizontal: 15 * WIDTH_SCALE,
+                paddingBottom: 10 * WIDTH_SCALE,
+              }}>
               <TouchableOpacity
                 style={{ marginHorizontal: 20 * WIDTH_SCALE }}
                 onPress={hide}>

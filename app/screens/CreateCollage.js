@@ -33,6 +33,10 @@ export default function InfoStadium({ navigation, route }) {
   const [playTime, setPlayTime] = useState('1800000');
   const [people, setPeople] = useState('5');
   const [price, setPrice] = useState();
+  console.log(
+    '🚀 ~ file: CreateCollage.js ~ line 36 ~ InfoStadium ~ price',
+    typeof price,
+  );
   const [checkTimePlay, setCheckTimePlay] = useState({
     op30: true,
     op60: false,
@@ -226,7 +230,7 @@ export default function InfoStadium({ navigation, route }) {
           textError={'Số điện thoại không hợp lệ'}
           value={nameColage}
           label="Nhập tên sân"
-          onSubmitEditing={setNameColage}
+          onChangeText={setNameColage}
         />
         <View style={{}}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -239,7 +243,6 @@ export default function InfoStadium({ navigation, route }) {
                 }}
                 value={startTime.substr(17, 5)}
                 label="Giờ bắt đầu"
-                onSubmitEditing={setNameColage}
                 icon={() => {}}
                 onPressIcon={() => startTimeRef.current.show()}
               />
@@ -254,7 +257,6 @@ export default function InfoStadium({ navigation, route }) {
                 }}
                 value={endTime.substr(17, 5)}
                 label="Giờ kết thúc"
-                onSubmitEditing={setNameColage}
                 icon={() => {}}
                 onPressIcon={() => endTimeRef.current.show()}
               />
@@ -269,8 +271,8 @@ export default function InfoStadium({ navigation, route }) {
             }}
             textError={'Nhập giá'}
             value={price}
-            label="Nhập tên sân"
-            onSubmitEditing={setPrice}
+            label="Nhập giá"
+            onChangeText={setPrice}
             keyboardType="number-pad"
           />
         )}

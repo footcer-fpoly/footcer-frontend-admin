@@ -1,6 +1,8 @@
 <resources>
-	<string name="app_name">FCM</string>
+	<string name="app_name">
+		FCM
+	</string>
 	<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-		AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q
+		AIzaSyBNI-E2-itVSOF0ec0BZqi2x2F7zaSiVOI
 	</string>
 </resources>

@@ -23,6 +23,7 @@ import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
 import API from '../server/api';
 import { REDUX } from '../redux/store/types';
+import ModalComponent from '../components/ModalComponent';
 
 export default function ProfileDetailScreen({ route, navigation }) {
   const userRedux = useSelector((state) => state?.userReducer?.userData);
@@ -76,7 +77,14 @@ export default function ProfileDetailScreen({ route, navigation }) {
       }
     });
   };
+  const logOut = () => {
+    Spinner.show();
+    dispatch({ type: REDUX.CLEAR_USER_DATA });
+    Spinner.hide();
+    navigation.replace('Login');
+  };
   const ref = useRef();
+  const modalLogOut = useRef();
   const dispatch = useDispatch();
   const updateProfile = async () => {
     Spinner.show();
@@ -150,13 +158,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
           </Text>
         }
         right={
-          <TouchableOpacity
-            onPress={() => {
-              Spinner.show();
-              dispatch({ type: REDUX.CLEAR_USER_DATA });
-              Spinner.hide();
-              navigation.replace('Login');
-            }}>
+          <TouchableOpacity onPress={() => modalLogOut.current.show()}>
             <Text
               style={{
                 fontSize: fonts.font14,
@@ -274,8 +276,15 @@ export default function ProfileDetailScreen({ route, navigation }) {
             birthday: moment(v.toString()).format('DD-MM-YYYY'),
           })
         }
-        timeDefault={user?.birthday ? user?.birthday : new Date()}
+        timeDefault={
+          user?.birthday
+            ? moment(user?.birthday).format('dddd, MMMM Do YYYY')
+            : new Date()
+        }
       />
+      <ModalComponent ref={modalLogOut} onPress={logOut}>
+        <Text style={{ color: '#000' }}>Bạn có muốn đăng xuất?</Text>
+      </ModalComponent>
     </View>
   );
 }

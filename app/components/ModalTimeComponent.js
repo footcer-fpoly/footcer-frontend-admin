@@ -13,11 +13,19 @@ import DatePicker from 'react-native-date-picker';
 
 const ModalTimeComponent = (props, ref) => {
   const [visible, setVisible] = useState(props?.visible || false);
-  const [time, setTime] = useState(new Date('Thu, 01 Jan 1970 00:00:00 GMT'));
+  const [time, setTime] = useState(
+    new Date(props?.timeDefault || 'Thu, 01 Jan 1970 00:00:00 GMT'),
+  );
+  console.log(
+    '🚀 ~ file: ModalTimeComponent.js ~ line 32 ',
+    props?.title,
+    props?.timeDefault,
+    '--',
+    time,
+  );
+
   useEffect(() => {
-    props?.isDate
-      ? setTime(props?.timeDefault)
-      : props?.timeDefault && setTime(new Date(props?.timeDefault));
+    props?.isDate && setTime(props?.timeDefault);
   }, []);
   const show = () => {
     if (!props?.isLoadding) setVisible(true);

@@ -58,6 +58,15 @@ export default function InfoStadium({ navigation }) {
   useEffect(() => {
     getCollage();
   }, []);
+
+  const average = () => {
+    let sum = 0;
+    for (let i = 0; i < dataStadium?.review?.length; i++) {
+      sum += dataStadium?.review[i].rate;
+    }
+    return Math.round((sum / dataStadium?.review?.length) * 10) / 10;
+  };
+
   const renderItem = (props) => {
     const { item, index } = props;
     var swipeoutBtns = [
@@ -248,7 +257,7 @@ export default function InfoStadium({ navigation }) {
                 <StarRating
                   disabled={true}
                   maxStars={5}
-                  rating={3.5}
+                  rating={average()}
                   fullStarColor={'yellow'}
                   starSize={15 * WIDTH_SCALE}
                 />
@@ -258,14 +267,14 @@ export default function InfoStadium({ navigation }) {
                     fontSize: fonts.font12,
                     marginHorizontal: 5 * WIDTH_SCALE,
                   }}>
-                  3.5
+                  {average() || 0}
                 </Text>
                 <Text
                   style={{
                     color: Colors.colorGrayBackground,
                     fontSize: fonts.font12,
                   }}>
-                  (12)
+                  {`(${dataStadium?.review?.length})`}
                 </Text>
               </View>
               <Text
