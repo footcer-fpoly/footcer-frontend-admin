@@ -23,6 +23,8 @@ import API from '../server/api';
 import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
+import {notificationManager} from '../utils/NotificationManager';
+
 export default function LoginScreen({ navigation }) {
   const [phone, setPhone] = useState('');
   const checkPhone = () => {
@@ -53,6 +55,52 @@ export default function LoginScreen({ navigation }) {
       Spinner.hide();
     }
   };
+
+  const senderID = "645190559310";
+
+  useEffect(() => {
+
+
+    notificationManager.configure(onRegister,onNotification,onOpenNotification, senderID)
+    
+    console.log('aaaaaaaaaaaaaaaaa');
+
+  }, [])
+
+  function onRegister(token) {
+      console.log("[Notification] Registered: ", token);
+    }
+
+  function onNotification(notify) {
+    console.log("[Notification] onNotification: ", notify);
+  }
+
+  function onOpenNotification(notify) {
+    console.log("[Notification] onOpenNotification: ", notify);
+    alert("Open Notification");
+  }
+
+  onPressCancelNotification = () => {
+    notificationManager.cancelAllLocalNotification();
+  }
+
+  onPressSendNotification = () => {
+
+    const options = {
+      soundName: 'default',
+      playSound: true,
+      vibrate: true,
+    }
+
+    notificationManager.showNotification(
+      1,
+      "App notification",
+      "Local notification",
+      {},
+      options
+    )
+  }
+
   const ref = useRef();
   const [isCheck, setIsCheck] = useState(true);
   return (
@@ -167,6 +215,44 @@ export default function LoginScreen({ navigation }) {
               fontWeight: fonts.bold,
             }}>
             Tiếp tục
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: colors.colorGreen,
+            marginTop: 20 * HEIGHT_SCALE,
+            borderRadius: 10 * HEIGHT_SCALE,
+            paddingVertical: 15 * HEIGHT_SCALE,
+            paddingHorizontal: 40 * WIDTH_SCALE,
+            alignItems: 'center',
+          }}
+          onPress={onPressSendNotification}>
+          <Text
+            style={{
+              color: colors.colorWhite,
+              fontSize: fonts.font16,
+              fontWeight: fonts.bold,
+            }}>
+            Send Notifications
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: colors.colorGreen,
+            marginTop: 20 * HEIGHT_SCALE,
+            borderRadius: 10 * HEIGHT_SCALE,
+            paddingVertical: 15 * HEIGHT_SCALE,
+            paddingHorizontal: 40 * WIDTH_SCALE,
+            alignItems: 'center',
+          }}
+          onPress={onPressCancelNotification}>
+          <Text
+            style={{
+              color: colors.colorWhite,
+              fontSize: fonts.font16,
+              fontWeight: fonts.bold,
+            }}>
+            Cancel Notifications
           </Text>
         </TouchableOpacity>
       </View>

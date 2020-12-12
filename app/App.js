@@ -11,7 +11,7 @@ export default function App(props) {
   useEffect(() => {
     notificationManager.configure();
     console.log('aaaaaaaaaaaaaaaaa');
-  })
+  }, [])
 
     return (
       <Provider store={store}>

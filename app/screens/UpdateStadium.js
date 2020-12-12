@@ -36,6 +36,7 @@ import { convertStrings } from '../utils/convertStrings';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
 
+
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
   const item = route?.params?.item;
@@ -262,6 +263,8 @@ export default function UpdateStadium({ route, navigation }) {
   useEffect(() => {
     item && setDefault();
   }, []);
+
+
   return (
     <ImageBackground
       source={IMAGE.background}
@@ -501,6 +504,27 @@ export default function UpdateStadium({ route, navigation }) {
                   fontWeight: fonts.bold,
                 }}>
                 Cập Nhật Sân
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onPressSendNotification}
+              style={{
+                alignItems: 'center',
+                backgroundColor: Colors.colorGreen,
+                // marginHorizontal: 20 * WIDTH_SCALE,
+                borderRadius: 14 * HEIGHT_SCALE,
+                width: WIDTH,
+                alignSelf: 'center',
+                marginBottom: 20 * HEIGHT_SCALE,
+              }}>
+              <Text
+                style={{
+                  paddingVertical: 14 * HEIGHT_SCALE,
+                  color: 'white',
+                  fontSize: fonts.font16,
+                  fontWeight: fonts.bold,
+                }}>
+                Send Notifications
               </Text>
             </TouchableOpacity>
           </ScrollView>

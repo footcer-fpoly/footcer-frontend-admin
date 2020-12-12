@@ -3,20 +3,41 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 
 class NotificationManager {
-    configure = () => {
+    configure = (onRegister, onNotification, onOpenNotification) => {
         PushNotification.configure({
             onRegister: function(token) {
+                onRegister(token);
                 console.log("[NotificationManager] onRegister Token: " + token);
             },
 
             onNotification: function (notification) {
                 console.log("[NotificationManager] onNOTIFICATION:", notification);
+                if(Platform.OS === 'ios') {
+                    if(notification.data.openedInForeground) {
+                        notification.userInteraction = true;
+                    }
+                } else {
+                    notification.userInteraction = true;
+                }
 
-                // process the notification
-
-                // (required) Called when a remote is received or opened, or local notification is opened
-                notification.finish(PushNotificationIOS.FetchResult.NoData);
+                if(notification.userInteraction) {
+                    onOpenNotification(notification)
+                } else {
+                    onNotification(notification)
+                }
+                
+                //Only call callback 
+                if(Platform.OS === 'ios') {
+                    if(!notification.data.openedInForeground) {
+                        notification.finish('backgroundFetchResultNoData')
+                    }
+                } else {
+                    notification.finish('backgroundFetchResultNoData')
+                }
             },
+
+            senderID: "YOUR GCM (or FCM ) SENDER ID",
+
         })
     }
 
