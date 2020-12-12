@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar, Text, View } from 'react-native';
 import AppNavigation from './AppNavigation';
 import { Provider } from 'react-redux';
@@ -7,6 +7,7 @@ import FlashMessage from 'react-native-flash-message';
 import CodePush from 'react-native-code-push';
 import Analytics from 'appcenter-analytics';
 import { Message } from './components/Message';
+import { notificationManager } from './utils/NotificationManager';
 
 export default function () {
   useEffect(() => {
@@ -24,6 +25,10 @@ export default function () {
         }
       },
     );
+  }, []);
+  useEffect(() => {
+    notificationManager.configure();
+    console.log('aaaaaaaaaaaaaaaaa');
   }, []);
   return (
     <Provider store={store}>
