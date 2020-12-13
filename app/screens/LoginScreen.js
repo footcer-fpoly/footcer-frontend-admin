@@ -24,6 +24,7 @@ import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
 import {notificationManager} from '../utils/NotificationManager';
+import {fcmService} from '../utils/FCMService'
 
 export default function LoginScreen({ navigation }) {
   const [phone, setPhone] = useState('');
@@ -61,22 +62,24 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
 
 
-    notificationManager.configure(onRegister,onNotification,onOpenNotification, senderID)
+    //notificationManager.configure(onRegister,onNotification,onOpenNotification, senderID)
+
+    fcmService.register(onRegister, onNotification, onOpenNotification);
     
     console.log('aaaaaaaaaaaaaaaaa');
 
   }, [])
 
   function onRegister(token) {
-      console.log("[Notification] Registered: ", token);
+      console.log("[NotificationFCM] Registered: ", token);
     }
 
   function onNotification(notify) {
-    console.log("[Notification] onNotification: ", notify);
+    console.log("[NotificationFCM] onNotification: ", notify);
   }
 
   function onOpenNotification(notify) {
-    console.log("[Notification] onOpenNotification: ", notify);
+    console.log("[NotificationFCM] onOpenNotification: ", notify);
     alert("Open Notification");
   }
 

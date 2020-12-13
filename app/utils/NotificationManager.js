@@ -12,18 +12,21 @@ class NotificationManager {
 
             onNotification: function (notification) {
                 console.log("[NotificationManager] onNOTIFICATION:", notification);
+
                 if(Platform.OS === 'ios') {
                     if(notification.data.openedInForeground) {
                         notification.userInteraction = true;
                     }
-                } else {
-                    notification.userInteraction = true;
                 }
 
                 if(notification.userInteraction) {
                     onOpenNotification(notification)
                 } else {
                     onNotification(notification)
+                }
+
+                if(Platform.OS === 'android') {
+                    notification.userInteraction = true;
                 }
                 
                 //Only call callback 

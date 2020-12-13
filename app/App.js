@@ -8,11 +8,6 @@ import {notificationManager} from './utils/NotificationManager';
 
 export default function App(props) {
 
-  useEffect(() => {
-    notificationManager.configure();
-    console.log('aaaaaaaaaaaaaaaaa');
-  }, [])
-
     return (
       <Provider store={store}>
         <StatusBar translucent backgroundColor={'transparent'} />
