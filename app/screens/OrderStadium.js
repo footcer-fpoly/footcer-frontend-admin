@@ -18,6 +18,7 @@ import { formatNumber } from '../components/MoneyFormat';
 import moment from 'moment';
 import Spinner from '../components/Spinner';
 import IMAGE from '../utils/images.util';
+import CFlatList from '../components/CFlatList';
 
 export default function OrderStadium({ route, navigation }) {
   const [dataOrder, setDataOrder] = useState();
@@ -345,7 +346,7 @@ export default function OrderStadium({ route, navigation }) {
         </ScrollView>
       </View>
       <View>
-        <FlatList
+        <CFlatList
           showsVerticalScrollIndicator={false}
           style={{}}
           data={dataOrder || []}

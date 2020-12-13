@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
-  Platform,
+  ScrollView,
 } from 'react-native';
 import IMAGE from '../utils/images.util';
 import fonts from '../theme/ConfigStyle';
@@ -31,6 +31,7 @@ import { formatNumber } from '../components/MoneyFormat';
 import Spinner from '../components/Spinner';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import CFlatList from '../components/CFlatList';
 
 export default function InfoStadium({ navigation }) {
   const dataStadiumRedux = useSelector(
@@ -161,19 +162,27 @@ export default function InfoStadium({ navigation }) {
   };
   return (
     <>
-      <ParallaxScrollView
-        showsVerticalScrollIndicator={false}
-        headerBackgroundColor={Colors.colorDarkBlue}
-        stickyHeaderHeight={70 * HEIGHT_SCALE}
-        parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
-        backgroundSpeed={10}
-        renderBackground={() => (
-          <View key="background">
+      <View style={{ flex: 1 }}>
+        <Header
+          navigation={navigation}
+          center={
+            <Text
+              style={{
+                fontSize: fonts.font18,
+                fontWeight: fonts.bold,
+                color: Colors.whiteColor,
+              }}>
+              {dataStadiumRedux?.stadiumName}
+            </Text>
+          }
+        />
+        <ScrollView>
+          <View>
             <Image
               source={{
                 uri: dataStadium?.image,
                 width: WIDTH,
-                height: PARALLAX_HEADER_HEIGHT,
+                height: 200 * HEIGHT_SCALE,
               }}
             />
             <View
@@ -181,157 +190,117 @@ export default function InfoStadium({ navigation }) {
                 position: 'absolute',
                 width: WIDTH,
                 backgroundColor: '#00000060',
-                height: PARALLAX_HEADER_HEIGHT,
+                height: 200 * HEIGHT_SCALE,
               }}
             />
-          </View>
-        )}
-        renderForeground={() => (
-          <View key="parallax-header" style={styles.parallaxHeader}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('CreateCollage', {
-                  id: dataStadium?.stadiumId,
-                })
-              }
-              style={{
-                alignItems: 'center',
-                width: 120 * WIDTH_SCALE,
-                position: 'absolute',
-                marginTop: StatusBar.currentHeight * 1.2,
-                right: 0,
-                backgroundColor: Colors.colorGreen,
-                padding: 10 * WIDTH_SCALE,
-                borderRadius: 5 * WIDTH_SCALE,
-                zIndex: 1,
-              }}>
-              <Text
-                style={{
-                  color: Colors.whiteColor,
-                }}>
-                Thêm sân con
-              </Text>
-            </TouchableOpacity>
-
-            <View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text numberOfLines={1} style={styles.sectionSpeakerText}>
-                  {dataStadium?.stadiumName}
-                </Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('UpdateStadium', { item: dataStadium })
-                  }
-                  style={{ marginHorizontal: 10 * WIDTH_SCALE }}>
-                  <Image
-                    tintColor={Colors.greyShadow}
-                    source={IMAGE.edit}
+            <View style={styles.parallaxHeader}>
+              <View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text numberOfLines={1} style={styles.sectionSpeakerText}>
+                    {dataStadium?.stadiumName}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('UpdateStadium', {
+                        item: dataStadium,
+                      })
+                    }
+                    style={{ marginHorizontal: 10 * WIDTH_SCALE }}>
+                    <Image
+                      tintColor={Colors.greyShadow}
+                      source={IMAGE.edit}
+                      style={{
+                        height: 20 * WIDTH_SCALE,
+                        width: 20 * WIDTH_SCALE,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {dataStadium?.verify === '0' ? (
+                  <Text
                     style={{
-                      height: 20 * WIDTH_SCALE,
-                      width: 20 * WIDTH_SCALE,
-                    }}
+                      color: '#ff0000',
+                    }}>
+                    Chưa xác thực
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      color: Colors.colorGreen,
+                    }}>
+                    Đã xác thực
+                  </Text>
+                )}
+                <View
+                  style={{
+                    width: 80 * WIDTH_SCALE,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <StarRating
+                    disabled={true}
+                    maxStars={5}
+                    rating={average()}
+                    fullStarColor={'yellow'}
+                    starSize={15 * WIDTH_SCALE}
                   />
-                </TouchableOpacity>
-              </View>
-              {dataStadium?.verify === '0' ? (
-                <Text
-                  style={{
-                    color: '#ff0000',
-                  }}>
-                  Chưa xác thực
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    color: Colors.colorGreen,
-                  }}>
-                  Đã xác thực
-                </Text>
-              )}
-              <View
-                style={{
-                  width: 80 * WIDTH_SCALE,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={average()}
-                  fullStarColor={'yellow'}
-                  starSize={15 * WIDTH_SCALE}
-                />
-                <Text
-                  style={{
-                    color: Colors.colorGrayBackground,
-                    fontSize: fonts.font12,
-                    marginHorizontal: 5 * WIDTH_SCALE,
-                  }}>
-                  {average() || 0}
-                </Text>
-                <Text
-                  style={{
-                    color: Colors.colorGrayBackground,
-                    fontSize: fonts.font12,
-                  }}>
-                  {`(${dataStadium?.review?.length})`}
-                </Text>
-              </View>
-              <Text
-                numberOfLines={1}
-                style={{
-                  ...styles.sectionTitleText,
-                  marginRight: 120 * WIDTH_SCALE,
-                }}>
-                {dataStadium?.address}
-              </Text>
-            </View>
-          </View>
-        )}
-        renderStickyHeader={() => (
-          <Header
-            navigation={navigation}
-            style={{
-              backgroundColor: Colors.colorGreen,
-              height: 70 * HEIGHT_SCALE,
-            }}
-            center={
-              <Text
-                numberOfLines={1}
-                style={{
-                  fontSize: fonts.font18,
-                  fontWeight: fonts.bold,
-                  color: Colors.whiteColor,
-                }}>
-                {dataStadium?.stadiumName}
-              </Text>
-            }
-            right={
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('CreateCollage', {
-                    id: dataStadium?.stadiumId,
-                  })
-                }>
+                  <Text
+                    style={{
+                      color: Colors.colorGrayBackground,
+                      fontSize: fonts.font12,
+                      marginHorizontal: 5 * WIDTH_SCALE,
+                    }}>
+                    {average() || 0}
+                  </Text>
+                  <Text
+                    style={{
+                      color: Colors.colorGrayBackground,
+                      fontSize: fonts.font12,
+                    }}>
+                    {`(${dataStadium?.review?.length})`}
+                  </Text>
+                </View>
                 <Text
                   numberOfLines={1}
                   style={{
-                    fontSize: fonts.font14,
-                    color: Colors.whiteColor,
+                    ...styles.sectionTitleText,
+                    marginRight: 120 * WIDTH_SCALE,
                   }}>
-                  Thêm
+                  {dataStadium?.address}
                 </Text>
-              </TouchableOpacity>
-            }
-          />
-        )}>
-        <View style={{ marginTop: 10 * HEIGHT_SCALE }}>
-          <FlatList
+              </View>
+            </View>
+          </View>
+          <CFlatList
             data={dataStadium?.stadium_collage || []}
             renderItem={renderItem}
           />
-        </View>
-      </ParallaxScrollView>
+        </ScrollView>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('CreateCollage', {
+              id: dataStadium?.stadiumId,
+            })
+          }
+          style={{
+            alignItems: 'center',
+            width: '100%',
+            right: 0,
+            backgroundColor: Colors.colorGreen,
+            padding: 15 * WIDTH_SCALE,
+            zIndex: 1,
+          }}>
+          <Text
+            style={{
+              color: Colors.whiteColor,
+              fontSize: fonts.font18,
+              fontWeight: fonts.bold,
+            }}>
+            Thêm sân con
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <ModalComponentX
         isHideAgree
         ref={ref}
@@ -445,7 +414,6 @@ export default function InfoStadium({ navigation }) {
     );
   }
 }
-const PARALLAX_HEADER_HEIGHT = 200 * HEIGHT_SCALE;
 
 const styles = StyleSheet.create({
   container: {
@@ -457,12 +425,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: WIDTH,
-    height: PARALLAX_HEADER_HEIGHT,
+    height: 200 * HEIGHT_SCALE,
   },
   parallaxHeader: {
     flex: 1,
     marginHorizontal: 10 * WIDTH_SCALE,
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
   },
   sectionSpeakerText: {
     color: 'white',

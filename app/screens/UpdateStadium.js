@@ -38,7 +38,6 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
 import TextInputCustom from '../components/TextInputCustom';
 
-
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
   const item = route?.params?.item;
@@ -174,25 +173,25 @@ export default function UpdateStadium({ route, navigation }) {
   const apiUpdateStadium = async () => {
     Spinner.show();
     const formData = new FormData();
-    item
+    item && item?.address
       ? item?.address !== address.fullAddress &&
         formData.append('address', address.fullAddress)
       : formData.append('address', address.fullAddress);
-    item
+    item && item?.city
       ? item?.city !== address.city && formData.append('city', address.city)
       : formData.append('city', address.city);
-    item
+    item && item?.stadiumName
       ? item?.stadiumName !== nameStadium &&
         formData.append('stadiumName', nameStadium)
       : formData.append('stadiumName', nameStadium);
-    item
+    item && item?.district
       ? item?.district !== address.district &&
         formData.append('district', address.district)
       : formData.append('district', address.district);
-    item
+    item && item?.ward
       ? item?.ward !== address.ward && formData.append('ward', address.ward)
       : formData.append('ward', address.ward);
-    item
+    item && item?.image
       ? item?.image !== source?.uri &&
         formData.append('files', {
           type: source?.type,
@@ -240,32 +239,37 @@ export default function UpdateStadium({ route, navigation }) {
       Spinner.hide();
     }
   };
-  console.log('UpdateStadium -> item?.image', item?.image, address.image);
 
   const setDefault = () => {
-    const dataAddress = vietnam.data?.filter(
-      (a) =>
-        convertStrings(a?.name)
-          ?.toLowerCase()
-          ?.trim()
-          .indexOf(convertStrings(item?.city)?.toLowerCase()?.trim()) !== -1,
-    );
+    const dataAddress = item?.city
+      ? vietnam.data?.filter(
+          (a) =>
+            convertStrings(a?.name)
+              ?.toLowerCase()
+              ?.trim()
+              .indexOf(convertStrings(item?.city)?.toLowerCase()?.trim()) !==
+            -1,
+        )
+      : null;
     item &&
+      item?.address &&
+      item?.city &&
+      item?.district &&
+      item?.ward &&
       setAddress({
         ...address,
         fullAddress: item?.address,
         city: item?.city,
         district: item?.district,
         ward: item?.ward,
-        data: Object.values(dataAddress),
+        data: dataAddress ? Object.values(dataAddress) : null,
       });
-    item && setNameStadium(item?.stadiumName);
-    item && setSource({ uri: item?.image });
+    item && item?.stadiumName && setNameStadium(item?.stadiumName);
+    item && item?.image && setSource({ uri: item?.image });
   };
   useEffect(() => {
     item && setDefault();
   }, []);
-
 
   return (
     <ImageBackground
@@ -517,7 +521,7 @@ export default function UpdateStadium({ route, navigation }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={onPressSendNotification}
+              // onPress={onPressSendNotification}
               style={{
                 alignItems: 'center',
                 backgroundColor: Colors.colorGreen,

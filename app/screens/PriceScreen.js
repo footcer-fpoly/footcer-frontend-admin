@@ -19,6 +19,7 @@ import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { REDUX } from '../redux/store/types';
 import { useDispatch } from 'react-redux';
+import CFlatList from '../components/CFlatList';
 export default function PriceScreen({ route, navigation }) {
   const ref = useRef();
   const item = route?.params?.item;
@@ -231,7 +232,7 @@ export default function PriceScreen({ route, navigation }) {
           </View>
           <View style={[styles.settingsContainer, {}]}>
             <Text style={styles.txtDate}>Các khung giờ:</Text>
-            <FlatList
+            <CFlatList
               data={dataCollage?.stadiumDetails || []}
               renderItem={renderItem}
             />

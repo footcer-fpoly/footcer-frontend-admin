@@ -24,11 +24,29 @@ import { Message } from '../components/Message';
 import API from '../server/api';
 import { REDUX } from '../redux/store/types';
 import ModalComponent from '../components/ModalComponent';
+import CodePush from 'react-native-code-push';
+
+var pjson = require('../../package.json');
+async function getAppVersion() {
+  const [{ appVersion }, update] = await Promise.all([
+    CodePush.getConfiguration(),
+    CodePush.getUpdateMetadata(),
+  ]);
+  if (!update) {
+    return `${appVersion}`;
+  }
+  const label = update?.label?.substring(1);
+  return `${appVersion} rev. ${label}`;
+}
 
 export default function ProfileDetailScreen({ route, navigation }) {
   const userRedux = useSelector((state) => state?.userReducer?.userData);
   const [user, setUser] = useState({});
   const [source, setSource] = useState();
+  const [isVersionCodePush, setisVersionCodePush] = useState('');
+  useEffect(() => {
+    getAppVersion().then((v) => setisVersionCodePush(v));
+  }, []);
   useEffect(() => {
     API.get('/users/profile')
       .then(({ data }) => {
@@ -266,6 +284,11 @@ export default function ProfileDetailScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <Text style={{ position: 'absolute', bottom: 0 }}>{`Phiên bản Ver. ${
+        pjson.version === isVersionCodePush
+          ? `${pjson.version}`
+          : isVersionCodePush
+      }`}</Text>
       <ModalTimeComponent
         isDate
         ref={ref}

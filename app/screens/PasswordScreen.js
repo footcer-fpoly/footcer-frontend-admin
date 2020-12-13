@@ -141,7 +141,7 @@ export default function PasswordScreen({ route, navigation }) {
             />
           </View>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.replace('Login', { phone: phone })}
             style={{ marginVertical: 10 * HEIGHT_SCALE }}>
             <Text
               style={{

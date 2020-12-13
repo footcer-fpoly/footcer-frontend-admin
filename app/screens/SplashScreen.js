@@ -35,10 +35,10 @@ export default function SplashScreen({ route, navigation }) {
             const obj = data?.data;
             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
             obj?.latitude === -1 && obj?.longitude === -1
-              ? navigation.replace('UpdateStadium', {
+              ? navigation.replace('Login', {
                   isCheckStadium: isCheckStadium,
                 })
-              : navigation.replace('Home');
+              : navigation.replace('Login');
           })
           .catch((onError) => {
             console.log('Stadium -> onError', onError);

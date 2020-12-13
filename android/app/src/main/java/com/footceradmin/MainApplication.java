@@ -14,12 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.microsoft.codepush.react.CodePush;
 
-
-//add more 
-import com.facebook.react.ReactApplication; 
-import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
-import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
-
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -50,12 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
             return CodePush.getJSBundleFile();
         }
 
-        @Override
-        protected String getJSMainModuleName() {
-          return "index";
-        }
       };
-      
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -67,7 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
   /**

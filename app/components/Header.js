@@ -32,6 +32,10 @@ const Header = ({
         <View style={[styles.iconStyle, styles.left, leftStyle]}>
           {hideBack ? null : (
             <TouchableOpacity
+              style={{
+                padding: 14 * WIDTH_SCALE,
+                paddingLeft: 0,
+              }}
               onPress={() => {
                 navigation.goBack();
               }}>
@@ -55,7 +59,7 @@ const Header = ({
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    height: 48 * HEIGHT_SCALE,
+    height: 40 * HEIGHT_SCALE,
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: 'transparent',

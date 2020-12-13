@@ -1191,7 +1191,7 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-10.2.0.tgz#78a8967f72f0b94b3a438e2dc0789ceccdcf01b9"
   integrity sha512-8oMa6tMkouS2BoGPC/Sbq5kYVXGscp/QXSBWc0JNanxlPbq5TKS7P9+dMCNKTPdPeOz3GM8y/8hjSspOQft40g==
 
-"@react-native-firebase/messaging@^10.2.0":
+"@react-native-firebase/messaging@^10.0.0":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-10.2.0.tgz#a02b69e9ec616b05ea85ab6c31cc209c6f4bac59"
   integrity sha512-HHf35avpA38SWNdPe1Dp/W0d0KCeRgbw5M3AEsoTs3B9oE/NLAQVdz5sSJzdgyVXnCKGInGsHkLn6Q3WSAvemw==

@@ -26,7 +26,8 @@ import { Message } from '../components/Message';
 import TextInputCustom from '../components/TextInputCustom';
 import { notificationManager } from '../utils/NotificationManager';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route }) {
+  const phoneBack = route?.params?.phone;
   const [phone, setPhone] = useState('');
   const [isError, setIsError] = useState(false);
   const checkPhone = () => {
@@ -45,7 +46,7 @@ export default function LoginScreen({ navigation }) {
             ref.current.show();
           } else if (data.code === 203) {
             Spinner.hide();
-            navigation.navigate('PasswordScreen', { phone: phone });
+            navigation.replace('PasswordScreen', { phone: phone });
           } else if (data.code === 209) {
             Spinner.hide();
             Message('Bạn là người dùng, không thể đăng nhập ứng dụng');
@@ -65,14 +66,13 @@ export default function LoginScreen({ navigation }) {
   const senderID = '645190559310';
 
   useEffect(() => {
+    phoneBack && setPhone(phoneBack);
     notificationManager.configure(
       onRegister,
       onNotification,
       onOpenNotification,
       senderID,
     );
-
-    console.log('aaaaaaaaaaaaaaaaa');
   }, []);
 
   function onRegister(token) {
@@ -265,7 +265,7 @@ export default function LoginScreen({ navigation }) {
         title="Xác nhận số điện thoại"
         onPress={() => {
           ref.current.hide();
-          navigation.navigate('OTPScreen', { phone: phone });
+          navigation.replace('OTPScreen', { phone: phone });
         }}>
         <Text style={{ fontWeight: fonts.bold }}>{phone}</Text>
         <Text style={{ fontSize: fonts.font16 }}>

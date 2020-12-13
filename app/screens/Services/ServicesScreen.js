@@ -25,6 +25,7 @@ import { HEIGHT_SCALE, WIDTH, WIDTH_SCALE } from '../../utils/ScaleAdaptor';
 import TextInputCustom from '../../components/TextInputCustom';
 import fonts from '../../theme/ConfigStyle';
 import Header from '../../components/Header';
+import CFlatList from '../../components/CFlatList';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -127,33 +128,26 @@ export default function ServicesScreen({ route, navigation }) {
             {'Dịch vụ sân'}
           </Text>
         }
-        right={
-          <TouchableOpacity
-            style={styles.addServiceButton}
-            onPress={() => ref.current.show()}>
-            <Text style={{ color: Colors.whiteColor, fontSize: fonts.font14 }}>
-              Thêm
-            </Text>
-          </TouchableOpacity>
-        }
       />
       <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            fontSize: fonts.font16,
-            color: Colors.colorGrayText,
-            margin: 10 * HEIGHT_SCALE,
-          }}>
-          Dịch vụ hiện có tại sân bóng:
-        </Text>
+        {!!dataStadiumRedux?.service?.length && (
+          <Text
+            style={{
+              fontSize: fonts.font16,
+              color: Colors.colorGrayText,
+              margin: 10 * HEIGHT_SCALE,
+            }}>
+            Dịch vụ hiện có tại sân bóng:
+          </Text>
+        )}
         <View style={{ flex: 1 }}>
-          <FlatList
+          <CFlatList
             numColumns={2}
             columnWrapperStyle={{
               justifyContent: 'space-evenly',
               alignItems: 'center',
             }}
-            data={dataStadiumRedux.service}
+            data={dataStadiumRedux.service || []}
             renderItem={({ item, index }) => {
               return <ItemService ref={ref} item={item} />;
             }}
@@ -202,6 +196,25 @@ export default function ServicesScreen({ route, navigation }) {
           </TouchableOpacity>
         </ModalComponent>
       </View>
+      <TouchableOpacity
+        onPress={() => ref.current.show()}
+        style={{
+          alignItems: 'center',
+          width: '100%',
+          right: 0,
+          backgroundColor: Colors.colorGreen,
+          padding: 15 * WIDTH_SCALE,
+          zIndex: 1,
+        }}>
+        <Text
+          style={{
+            color: Colors.whiteColor,
+            fontSize: fonts.font18,
+            fontWeight: fonts.bold,
+          }}>
+          Thêm dịch vụ
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

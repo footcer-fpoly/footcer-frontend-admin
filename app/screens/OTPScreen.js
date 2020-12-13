@@ -6,12 +6,15 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import IMAGE from '../utils/images.util';
 import colors from '../theme/Colors';
 import fonts from '../theme/ConfigStyle';
 import {
+  getStatusBarHeight,
   HEIGHT,
   HEIGHT_SCALE,
   WIDTH,
@@ -20,6 +23,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function OTPScreen({ route, navigation }) {
   const phone = route?.params?.phone;
@@ -39,13 +43,12 @@ export default function OTPScreen({ route, navigation }) {
   const pin6ref = useRef(null);
   const [timer, setTimer] = useState(0);
   const handleSendCode = async () => {
-    console.log(
-      '🚀 ~ file: OTPScreen.js ~ line 61 ~ handleSendCode ~ `+84${phone}`',
-      `+84${phone}`,
-    );
+    Spinner.show();
     try {
-      console.log('🚀 ~ begin send code');
-      const confirmation = await auth().signInWithPhoneNumber(`+84${phone}`);
+      const confirmation = await auth().signInWithPhoneNumber(
+        `+84${phone}`,
+        true,
+      );
       Message('Đã gửi mã xác thực');
       Spinner.hide();
       setConfirmResult(confirmation);
@@ -75,10 +78,7 @@ export default function OTPScreen({ route, navigation }) {
     }
   };
   useEffect(() => {
-    Spinner.show();
-    console.log('🚀 ~ start send code');
-    phone && handleSendCode();
-    console.log('🚀 ~ end send code');
+    // phone && handleSendCode();
   }, []);
   const focusInput = (changePin, pin, next, prev) => {
     changePin;
@@ -101,6 +101,28 @@ export default function OTPScreen({ route, navigation }) {
   }, [timer]);
   return (
     <ImageBackground source={IMAGE.background} style={{ flex: 1 }}>
+      <TouchableOpacity
+        style={{
+          zIndex: 9999,
+          backgroundColor: '#89898980',
+          position: 'absolute',
+          top: Platform.select({
+            ios: getStatusBarHeight(true),
+            android: StatusBar.currentHeight,
+            default: 0,
+          }),
+          left: 20 * WIDTH_SCALE,
+          width: 40 * WIDTH_SCALE,
+          height: 40 * WIDTH_SCALE,
+          borderRadius: 20 * WIDTH_SCALE,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onPress={() => {
+          navigation.replace('Login', { phone: phone });
+        }}>
+        <Icon style={{}} name="chevron-left" size={21} color="white" />
+      </TouchableOpacity>
       <View
         style={{
           marginHorizontal: 20 * WIDTH_SCALE,

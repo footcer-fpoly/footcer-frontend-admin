@@ -79,7 +79,7 @@ export default function HomeScreen({ route, navigation }) {
       <View
         style={{
           ...styles.viewRow,
-          flex: 0.8,
+          flex: 0.6,
         }}>
         <View
           style={{
