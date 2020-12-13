@@ -3,11 +3,11 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 
 class NotificationManager {
-    configure = (onRegister, onNotification, onOpenNotification) => {
+    configure = (onRegister, onNotification, onOpenNotification, senderID) => {
         PushNotification.configure({
             onRegister: function(token) {
-                onRegister(token);
-                console.log("[NotificationManager] onRegister Token: " + token);
+                onRegister(token.token);
+                console.log("[NotificationManager] onRegister Token: " + token.token);
             },
 
             onNotification: function (notification) {
@@ -36,7 +36,7 @@ class NotificationManager {
                 }
             },
 
-            senderID: "YOUR GCM (or FCM ) SENDER ID",
+            senderID: senderID,
 
         })
     }
