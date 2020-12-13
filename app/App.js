@@ -27,7 +27,7 @@ export default function () {
     );
   }, []);
   useEffect(() => {
-    notificationManager.configure();
+    // notificationManager.configure();
     console.log('aaaaaaaaaaaaaaaaa');
   }, []);
   return (
