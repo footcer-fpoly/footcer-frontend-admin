@@ -9,14 +9,16 @@ import Calendar from '../components/Calendar';
 import API from '../server/api';
 import moment from 'moment';
 import { formatNumber } from '../components/MoneyFormat';
+import { useSelector } from 'react-redux';
 
-export default function Statistics({ route, navigation }) {
+export default function StatisticsDay({ route, navigation }) {
   const [dataDay, setDataDay] = useState([]);
   const [dataMonth, setDataMonth] = useState([]);
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
   const [month, setMonth] = useState(moment().format('YYYY-MM'));
+  const domain = useSelector((state) => state?.userReducer?.domain);
   useEffect(() => {
-    API.get(`/statistics?day=${date}&month=`)
+    API.get(`${domain}/statistics?day=${date}&month=`)
       .then(({ data }) => {
         setDataDay(data);
       })
@@ -26,7 +28,9 @@ export default function Statistics({ route, navigation }) {
   }, [date]);
   useEffect(() => {
     API.get(
-      `/statistics?day=&month=${moment(month?.dateString)?.format('YYYY-MM')}`,
+      `${domain}/statistics?day=&month=${moment(month?.dateString)?.format(
+        'YYYY-MM',
+      )}`,
     )
       .then(({ data }) => {
         setDataMonth(data);
@@ -91,7 +95,7 @@ export default function Statistics({ route, navigation }) {
               fontWeight: fonts.bold,
               color: Colors.whiteColor,
             }}>
-            Thống kê
+            Thống kê ngày
           </Text>
         }
       />
@@ -145,7 +149,7 @@ export default function Statistics({ route, navigation }) {
               alignSelf: 'center',
               marginVertical: 10 * HEIGHT_SCALE,
             }}>
-            {`Khung giờ đã đặt: ${dataDay?.data?.totalDetailsOrder}/${dataDay?.data?.totalDetails}`}
+            {`Số sân được đặt: ${dataDay?.data?.totalDetailsOrder}/${dataDay?.data?.totalDetails}`}
           </Text>
           <PieChart
             data={dataChartMonth}
@@ -200,7 +204,7 @@ export default function Statistics({ route, navigation }) {
               alignSelf: 'center',
               marginVertical: 10 * HEIGHT_SCALE,
             }}>
-            {`Khung giờ đã đặt: ${dataMonth?.data?.totalDetailsOrder}/${dataMonth?.data?.totalDetails}`}
+            {`Số sân được đặt: ${dataMonth?.data?.totalDetailsOrder}/${dataMonth?.data?.totalDetails}`}
           </Text>
           <PieChart
             data={data}

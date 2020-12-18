@@ -6,6 +6,7 @@ const initialState = {
   listStadium: {},
   listPosition: { lat: -1, lng: -1 },
   listStadiumAdmin: {},
+  domain: null,
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -46,6 +47,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         listStadiumAdmin: action.payload,
+      };
+    }
+    case REDUX.ADD_DOMAIN: {
+      return {
+        ...state,
+        domain: action.payload,
       };
     }
     default: {

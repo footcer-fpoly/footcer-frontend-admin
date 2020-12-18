@@ -14,22 +14,29 @@ import fonts from '../theme/ConfigStyle';
 import API from '../server/api';
 import { HEIGHT, HEIGHT_SCALE, WIDTH_SCALE } from '../utils/ScaleAdaptor';
 import { Message } from '../components/Message';
-import { formatNumber } from '../components/MoneyFormat';
+import { formatNumber, removeString } from '../components/MoneyFormat';
 import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { REDUX } from '../redux/store/types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CFlatList from '../components/CFlatList';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 export default function PriceScreen({ route, navigation }) {
   const ref = useRef();
   const item = route?.params?.item;
   const [dataCollage, setData] = useState(item);
   const [price, setPrice] = useState();
+  console.log(
+    '🚀 ~ file: PriceScreen.js ~ line 30 ~ PriceScreen ~ price',
+    price,
+  );
   const [index, setIndex] = useState();
+  const domain = useSelector((state) => state?.userReducer?.domain);
 
   const getData = () => {
     API.get(
-      `/stadium/collage-details/?stadiumCollageId=${item.stadiumCollageId}&date=2000-11-30`,
+      `${domain}/stadium/collage-details/?stadiumCollageId=${item.stadiumCollageId}&date=2000-11-30`,
     )
       .then(({ data }) => {
         const obj = data?.data;
@@ -44,7 +51,7 @@ export default function PriceScreen({ route, navigation }) {
   };
   const dispatch = useDispatch();
   const getCollage = () => {
-    API.get('/stadium/info')
+    API.get(`${domain}/stadium/info`)
       .then(({ data }) => {
         const obj = data?.data;
         dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
@@ -57,7 +64,7 @@ export default function PriceScreen({ route, navigation }) {
   const modalDelete = useRef();
   const deleteCollage = (id) => {
     Spinner.show();
-    API.delete(`/stadium/delete_collage/${id}`)
+    API.delete(`${domain}/stadium/delete_collage/${id}`)
       .then(({ data }) => {
         if (data.code === 200) {
           getCollage();
@@ -77,7 +84,7 @@ export default function PriceScreen({ route, navigation }) {
   const updatePrice = () => {
     Spinner.show();
     if (price) {
-      API.put('/stadium/collage-details-update', {
+      API.put(`${domain}/stadium/collage-details-update`, {
         stadiumDetailsId: dataCollage?.stadiumDetails[index]?.stadiumDetailsId,
         price: Number(price),
       })
@@ -112,7 +119,12 @@ export default function PriceScreen({ route, navigation }) {
     const startTime = new Date(Number(item?.startTimeDetail)).toUTCString();
     const endTime = new Date(Number(item?.endTimeDetail)).toUTCString();
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          setIndex(index);
+          setPrice(dataCollage?.stadiumDetails[index]?.price);
+          ref.current.show();
+        }}
         style={{
           borderBottomWidth: 1 * HEIGHT_SCALE,
           borderBottomColor: Colors.colorGrayBackground,
@@ -127,23 +139,12 @@ export default function PriceScreen({ route, navigation }) {
             17,
             5,
           )} - ${endTime.substr(17, 5)}`}</Text>
-          <Text style={styles.txtPrice}>{formatNumber(item?.price)} đ</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setIndex(index);
-              setPrice(dataCollage?.stadiumDetails[index]?.price);
-              ref.current.show();
-            }}
-            style={{
-              alignItems: 'center',
-              backgroundColor: Colors.borderGreen,
-              padding: 10 * WIDTH_SCALE,
-              borderRadius: 8 * WIDTH_SCALE,
-            }}>
-            <Text style={{ color: Colors.whiteColor }}>Sửa giá</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.txtPrice}>{formatNumber(item?.price)} đ </Text>
+            <Icon name={'pen'} size={14} color={Colors.colorGreen} />
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   useEffect(() => {
@@ -252,13 +253,24 @@ export default function PriceScreen({ route, navigation }) {
             alignItems: 'center',
             flex: 1,
           }}>
-          <Text style={{ fontWeight: fonts.bold }}>Nhập giá: </Text>
+          <Text style={{ fontWeight: fonts.bold }}>Giá cũ: </Text>
+          <Text style={{ fontSize: fonts.font16, width: 200 * WIDTH_SCALE }}>
+            {`${removeString(price)} đ`}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 1,
+          }}>
+          <Text style={{ fontWeight: fonts.bold }}>Nhập giá mới: </Text>
           <TextInput
-            value={'123456'}
-            style={{ fontSize: fonts.font16, width: 200 * WIDTH_SCALE }}
+            style={{ fontSize: fonts.font16, width: 100 * WIDTH_SCALE }}
             placeholder="Nhập giá..."
             onChangeText={setPrice}
             keyboardType="number-pad"
+            value={formatNumber(price)}
           />
           <Text>đ</Text>
         </View>

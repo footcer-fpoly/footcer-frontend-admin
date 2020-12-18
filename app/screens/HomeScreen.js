@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ import {
 } from '../utils/ScaleAdaptor';
 import IMAGE from '../utils/images.util';
 import moment from 'moment';
+import { fcmService } from '../utils/FCMService';
+import API from '../server/api';
 
 export default function HomeScreen({ route, navigation }) {
   const dataStadiumRedux = useSelector(

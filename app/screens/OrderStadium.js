@@ -66,8 +66,9 @@ export default function OrderStadium({ route, navigation }) {
       content: 'reject',
     },
   ];
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const getOrderStadium = () => {
-    API.get(`/order/stadium/${dataStadiumRedux?.stadiumId}`)
+    API.get(`${domain}/order/stadium/${dataStadiumRedux?.stadiumId}`)
       .then(({ data }) => {
         const obj = filter
           ? data?.data?.filter((a) => a?.order_status?.status === filter)
@@ -89,35 +90,16 @@ export default function OrderStadium({ route, navigation }) {
         Spinner.hide();
       });
   };
-  const updateOrder = ({ orderId, status }) => {
-    API.put(`/order/update-status`, {
-      orderId: orderId,
-      status: status,
-      reason: status === 'ACCEPT' ? 'Chủ sân chấp nhận' : 'Chủ sân huỷ',
-    })
-      .then(({ data }) => {
-        console.log('🚀 ~ file: OrderStadium.js ~ line 42 ~ .then ~ obj', data);
-        const obj = data?.data;
-        if (data.code === 200) {
-          getOrderStadium();
-        }
-      })
-
-      .catch((onError) => {
-        console.log('Stadium -> onError', onError.message);
-        Message('Lỗi');
-      });
-  };
   useEffect(() => {
     Spinner.show();
     getOrderStadium();
   }, [check]);
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getOrderStadium();
-    });
-    return unsubscribe;
-  }, [navigation]);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     getOrderStadium();
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   const renderItem = ({ index, item }) => {
     const startTime = new Date(
@@ -158,19 +140,6 @@ export default function OrderStadium({ route, navigation }) {
               title: `Giá tiền: `,
               content: `${formatNumber(item?.stadium_details?.price)} đ`,
             })}
-
-            {textRow({
-              title: `Tình trạng: `,
-              content:
-                item?.order_status?.status === 'ACCEPT'
-                  ? 'Đã nhận'
-                  : item?.order_status?.status === 'WAITING'
-                  ? 'Chờ xác nhận'
-                  : item?.order_status?.status === 'REJECT'
-                  ? 'Đã huỷ'
-                  : 'Hoàn thành',
-              status: item?.order_status?.status,
-            })}
           </View>
           <View
             style={{
@@ -186,6 +155,7 @@ export default function OrderStadium({ route, navigation }) {
               content: `${startTime.substr(17, 5)} - ${endTime.substr(17, 5)}`,
             })}
           </View>
+
           <Image
             source={IMAGE?.pennon}
             tintColor={
@@ -201,12 +171,24 @@ export default function OrderStadium({ route, navigation }) {
             style={{
               width: 28 * WIDTH_SCALE,
               height: 28 * WIDTH_SCALE,
-              top: 10 * WIDTH_SCALE,
+              top: 0,
               right: 10 * WIDTH_SCALE,
               position: 'absolute',
             }}
           />
         </View>
+        {textRow({
+          title: `Tình trạng: `,
+          content:
+            item?.order_status?.status === 'ACCEPT'
+              ? 'Đã nhận'
+              : item?.order_status?.status === 'WAITING'
+              ? 'Chờ xác nhận'
+              : item?.order_status?.status === 'REJECT'
+              ? 'Đã huỷ'
+              : 'Hoàn thành',
+          status: item?.order_status?.status,
+        })}
         {/* {item?.order_status?.status === 'WAITING' && (
           <View
             style={{

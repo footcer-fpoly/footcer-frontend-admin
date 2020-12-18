@@ -36,7 +36,6 @@ export default function PasswordScreen({ route, navigation }) {
           dispatch(
             SignIn(phone, password, () => {
               Spinner.hide();
-              navigation.replace('Splash', { isCheckStadium: true });
             }),
           ))
         : (setIsError({ value: true, text: 'Mật khẩu phải trên 6 kí tự' }),

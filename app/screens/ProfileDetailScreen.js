@@ -41,14 +41,21 @@ async function getAppVersion() {
 
 export default function ProfileDetailScreen({ route, navigation }) {
   const userRedux = useSelector((state) => state?.userReducer?.userData);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    ...user,
+    displayName: userRedux?.displayName,
+    phone: userRedux?.phone,
+    avatar: userRedux?.avatar,
+    birthday: userRedux?.birthday || '',
+  });
   const [source, setSource] = useState();
   const [isVersionCodePush, setisVersionCodePush] = useState('');
   useEffect(() => {
     getAppVersion().then((v) => setisVersionCodePush(v));
   }, []);
+  const domain = useSelector((state) => state?.userReducer?.domain);
   useEffect(() => {
-    API.get('/users/profile')
+    API.get(`${domain}/users/profile`)
       .then(({ data }) => {
         const obj = data?.data;
         if (data.code === 200) {
@@ -98,8 +105,8 @@ export default function ProfileDetailScreen({ route, navigation }) {
   const logOut = () => {
     Spinner.show();
     dispatch({ type: REDUX.CLEAR_USER_DATA });
+    dispatch({ type: REDUX.ADD_DOMAIN, payload: domain });
     Spinner.hide();
-    navigation.replace('Login');
   };
   const ref = useRef();
   const modalLogOut = useRef();
@@ -126,11 +133,11 @@ export default function ProfileDetailScreen({ route, navigation }) {
       user?.phone !== userRedux?.phone ||
       user?.avatar !== userRedux?.avatar
     ) {
-      await API.put('/users/update', formData)
+      await API.put(`${domain}/users/update`, formData)
         .then(({ data }) => {
           if (data?.code === 200) {
             Message('Cập nhật thành công!');
-            API.get('/users/profile')
+            API.get(`${domain}/users/profile`)
               .then(({ data }) => {
                 const obj = data?.data;
                 console.log('ProfileDetailScreen -> obj', obj);
@@ -257,7 +264,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
             <View style={styles.subTitle}>
               <TouchableOpacity onPress={() => ref.current.show()}>
                 <Text style={styles.txt}>
-                  {user?.birthday ? user?.birthday : 'Nhấn để chọn'}
+                  {user?.birthday || 'Nhấn để chọn'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -284,7 +291,13 @@ export default function ProfileDetailScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Text style={{ position: 'absolute', bottom: 0 }}>{`Phiên bản Ver. ${
+      <Text
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 4,
+          fontSize: 12,
+        }}>{`Phiên bản Ver. ${
         pjson.version === isVersionCodePush
           ? `${pjson.version}`
           : isVersionCodePush
@@ -292,7 +305,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
       <ModalTimeComponent
         isDate
         ref={ref}
-        title="Chọn giờ mở cửa"
+        title="Chọn ngày sinh"
         time={(v) =>
           setUser({
             ...user,
@@ -305,7 +318,7 @@ export default function ProfileDetailScreen({ route, navigation }) {
             : new Date()
         }
       />
-      <ModalComponent ref={modalLogOut} onPress={logOut}>
+      <ModalComponent ref={modalLogOut} onPress={logOut} title="Thông báo!">
         <Text style={{ color: '#000' }}>Bạn có muốn đăng xuất?</Text>
       </ModalComponent>
     </View>

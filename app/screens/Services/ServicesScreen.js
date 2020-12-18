@@ -11,7 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import Container from '../../components/common/Container';
-import Message from '../../components/Message';
+import { Message } from '../../components/Message';
 import ModalComponent from '../../components/ModalComponent';
 import StatusBarMain from '../../components/common/StatusBarMain';
 import Colors from '../../theme/Colors';
@@ -26,6 +26,7 @@ import TextInputCustom from '../../components/TextInputCustom';
 import fonts from '../../theme/ConfigStyle';
 import Header from '../../components/Header';
 import CFlatList from '../../components/CFlatList';
+import { formatNumber } from '../../components/MoneyFormat';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -63,55 +64,51 @@ export default function ServicesScreen({ route, navigation }) {
         console.log(response.customButton);
       } else {
         setSource(response);
-        console.log('abdc', response.uri);
       }
     });
   };
+  const domain = useSelector((state) => state?.userReducer?.domain);
+
   const createService = () => {
-    // if (dataService.nameService && dataService.priceService && source) {
-    console.log(
-      '🚀 ~ file: ServicesScreen.js ~ line 71 ~ createService ~ dataService',
-      dataService.nameService,
-      dataService.priceService,
-      source,
-    );
-    //   const formData = new FormData();
-    //   formData.append('folder', 'service');
-    //   formData.append('name', dataService.nameService);
-    //   formData.append('price', dataService.priceService);
-    //   formData.append('stadiumId', dataService.stadiumId);
-    //   formData.append('files', {
-    //     type: source?.type,
-    //     size: source?.fileSize,
-    //     uri: source?.uri,
-    //     name: source?.fileName,
-    //   });
-    //   API.post('/service/add', formData)
-    //     .then(({ data }) => {
-    //       if (data.code === 200) {
-    //         API.get('/stadium/info')
-    //           .then(({ data }) => {
-    //             const obj = data?.data;
-    //             console.log(
-    //               '🚀 ~ file: ServicesScreen.js ~ line 88 ~ .then ~ obj',
-    //               obj,
-    //             );
-    //             dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
-    //           })
-    //           .catch((onError) => {
-    //             console.log('Stadium -> onError', onError.message);
-    //             Message('Lỗi');
-    //           });
-    //         ref.current.hide();
-    //       } else {
-    //         Message('Error');
-    //       }
-    //     })
-    //     .catch((onError) => {
-    //       console.log('apiUpdateStadium -> onError', onError);
-    //       Message('Lỗi, vui lòng thử lại');
-    //     });
-    // } else Message('Vui lòng cung cấp đủ thông tin');
+    if (dataService.nameService && dataService.priceService && source) {
+      const formData = new FormData();
+      formData.append('folder', 'service');
+      formData.append('name', dataService.nameService);
+      formData.append('price', dataService.priceService);
+      formData.append('stadiumId', dataService.stadiumId);
+      formData.append('files', {
+        type: source?.type,
+        uri: `file://${source?.path}`,
+        name: source?.fileName,
+      });
+      API.post(`${domain}/service/add`, formData)
+        .then(({ data }) => {
+          if (data.code === 200) {
+            API.get(`${domain}/stadium/info`)
+              .then(({ data }) => {
+                const obj = data?.data;
+
+                dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
+              })
+              .catch((onError) => {
+                console.log('Stadium -> onError', onError.message);
+                Message('Lỗi');
+              });
+            ref.current.hide();
+          } else {
+            Message('Error');
+          }
+        })
+        .catch((onError) => {
+          console.log(
+            '🚀 ~ file: ServicesScreen.js ~ line 105 ~ createService ~ onError',
+            JSON.stringify(onError),
+          );
+          Message('Lỗi, vui lòng thử lại');
+        });
+    } else {
+      Message('Vui lòng cung cấp đủ thông tin');
+    }
   };
 
   return (
@@ -149,7 +146,7 @@ export default function ServicesScreen({ route, navigation }) {
             }}
             data={dataStadiumRedux.service || []}
             renderItem={({ item, index }) => {
-              return <ItemService ref={ref} item={item} />;
+              return <ItemService ref={ref} item={item} domain={domain} />;
             }}
           />
         </View>
@@ -236,11 +233,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   itemContainer: {
-    marginRight: 10,
     width: width * 0.4 * WIDTH_SCALE,
     height: height * 0.17 * HEIGHT_SCALE,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#fff',
     elevation: 3,
     borderTopRightRadius: 10,
@@ -337,11 +332,11 @@ function ItemService(props) {
   const dispatch = useDispatch();
 
   async function deleteServices() {
-    API.delete(`/service/delete/${props.item.serviceId}`)
+    API.delete(`${props?.domain}/service/delete/${props.item.serviceId}`)
       .then(({ data }) => {
         console.log('apiUpdateStadium -> data', data);
         if (data.code === 200) {
-          API.get('/stadium/info')
+          API.get(`${props?.domain}/stadium/info`)
             .then(({ data }) => {
               const obj = data?.data;
               dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
@@ -365,26 +360,37 @@ function ItemService(props) {
       <TouchableOpacity
         style={{
           backgroundColor: Colors.colorRed,
-          borderRadius: 20,
+          borderRadius: 4,
+          borderTopRightRadius: 0,
           width: 25 * WIDTH_SCALE,
-          height: 20 * HEIGHT_SCALE,
+          height: 25 * HEIGHT_SCALE,
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
           top: 0,
           right: 0,
+          zIndex: 9999,
         }}
         // onPress={deleteServices}
         onPress={() => ref.current.show()}>
         <Text style={{ color: Colors.whiteColor }}>X</Text>
       </TouchableOpacity>
       <Image
-        resizeMode="contain"
         source={{ uri: props.item.image }}
-        style={{ width: 50, height: 50 }}
+        style={{
+          width: '100%',
+          height: 80 * WIDTH_SCALE,
+          backgroundColor: 'red',
+        }}
       />
-      <Text style={{}}>{props.item.name}</Text>
-      <Text style={{}}>{props.item.price}</Text>
+      <Text
+        numberOfLines={1}
+        style={{ fontSize: fonts.font16, fontWeight: 'bold' }}>
+        {props.item.name}
+      </Text>
+      <Text numberOfLines={1} style={{}}>
+        {formatNumber(props.item.price)} đ
+      </Text>
 
       <ModalComponent ref={ref} onPress={deleteServices}>
         <Text

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Colors from '../theme/Colors';
 import { HEIGHT_SCALE, WIDTH, WIDTH_SCALE } from '../utils/ScaleAdaptor';
@@ -12,19 +12,19 @@ import API from '../server/api';
 import { useSelector } from 'react-redux';
 import TextInputCustom from '../components/TextInputCustom';
 import Header from '../components/Header';
+import ModalComponent from '../components/ModalComponent';
 
 export default function OrderDetails({ route, navigation }) {
   const item = route?.params?.item;
-
+  const modalAccept = useRef();
+  const modalReject = useRef();
   const [filter, setFilter] = useState();
+  const domain = useSelector((state) => state?.userReducer?.domain);
   useEffect(() => {
     setFilter(item?.order_status?.status);
   }, []);
   const orderId = item?.orderId;
   const stadiumDetailsId = item?.stadium_details?.stadiumDetailsId;
-  const dataStadiumRedux = useSelector(
-    (state) => state?.userReducer?.listStadium,
-  );
   const startTime = new Date(
     Number(item?.stadium_details?.startTimeDetail),
   ).toUTCString();
@@ -39,10 +39,12 @@ export default function OrderDetails({ route, navigation }) {
     .format('YYYY-MM-DD HH:mm:ss');
 
   const updateOrder = ({ status }) => {
-    API.put(`/order/update-status`, {
+    API.put(`${domain}/order/update-status`, {
       orderId: orderId,
       status: status,
       reason: status === 'ACCEPT' ? 'Chủ sân chấp nhận' : 'Chủ sân huỷ',
+      userId: item?.user?.userId,
+      name: item?.stadium?.stadiumName,
     })
       .then(({ data }) => {
         const obj = data?.data;
@@ -53,19 +55,21 @@ export default function OrderDetails({ route, navigation }) {
       })
 
       .catch((onError) => {
-        console.log('Stadium -> onError', onError.message);
+        console.log('Stadium -> onError', onError);
         Message('Lỗi');
       });
   };
   const finishOrder = () => {
-    API.put(`/order/update-status`, {
+    API.put(`${domain}/order/update-status`, {
       orderId: orderId,
       status: 'FINISH',
       reason: 'Hoàn thành',
+      userId: item?.user?.userId,
+      name: item?.stadium?.stadiumName,
     })
       .then(({ data }) => {
         if (data.code === 200) {
-          API.put(`/order/finish`, {
+          API.put(`${domain}/order/finish`, {
             orderId: orderId,
             stadiumDetailsId: stadiumDetailsId,
           })
@@ -149,7 +153,7 @@ export default function OrderDetails({ route, navigation }) {
                 fontSize: fonts.font14,
               }}
               numberOfLines={1}>
-              0789301100
+              {item?.user?.phone}
             </Text>
           </View>
           <Image
@@ -204,7 +208,7 @@ export default function OrderDetails({ route, navigation }) {
               justifyContent: 'space-evenly',
             }}>
             <TouchableOpacity
-              onPress={() => updateOrder({ status: 'REJECT' })}
+              onPress={() => modalReject.current.show()}
               style={{
                 backgroundColor: Colors.colorRed,
                 width: 150 * WIDTH_SCALE,
@@ -225,7 +229,7 @@ export default function OrderDetails({ route, navigation }) {
             </TouchableOpacity>
             <View>
               <TouchableOpacity
-                onPress={() => updateOrder({ status: 'ACCEPT' })}
+                onPress={() => modalAccept.current.show()}
                 style={{
                   backgroundColor: Colors.borderGreen,
                   width: 150 * WIDTH_SCALE,
@@ -283,6 +287,24 @@ export default function OrderDetails({ route, navigation }) {
           )
         )}
       </ScrollView>
+      <ModalComponent
+        ref={modalAccept}
+        onPress={() => {
+          updateOrder({ status: 'ACCEPT' });
+          modalAccept.current.hide();
+        }}
+        title="Thông báo!">
+        <Text style={{ color: '#000' }}>Bạn có muốn xác nhận sân?</Text>
+      </ModalComponent>
+      <ModalComponent
+        ref={modalReject}
+        onPress={() => {
+          updateOrder({ status: 'REJECT' });
+          modalReject.current.hide();
+        }}
+        title="Thông báo!">
+        <Text style={{ color: '#000' }}>Bạn có muốn đăng xuất?</Text>
+      </ModalComponent>
     </View>
   );
 }
@@ -293,6 +315,8 @@ function textRow({ title, content, numberLine = 1, status }) {
         fontSize: fonts.font16,
         width: '100%',
       }}
+      editable={false}
+      selectTextOnFocus={false}
       value={content}
       // textError={isError.text}
       // validate={isError.value}

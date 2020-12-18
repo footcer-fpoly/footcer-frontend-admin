@@ -1,5 +1,5 @@
 import messaging from '@react-native-firebase/messaging';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 class FCMService {
   register = (onRegister, onNotification, onOpenNotification) => {
@@ -90,10 +90,10 @@ class FCMService {
     messaging()
       .getInitialNotification()
       .then((remoteMessage) => {
-        console.log(
-          '[FCMService] getInitialNotification Notification caused app to open from quit state:',
-          remoteMessage,
-        );
+        // console.log(
+        //   '[FCMService] getInitialNotification Notification caused app to open from quit state:',
+        //   remoteMessage,
+        // );
         if (remoteMessage?.data) {
           onOpenNotification(remoteMessage);
           //  this.removeDeliveredNotification(notification.notificationId)

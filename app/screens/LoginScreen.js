@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Alert,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SignIn } from '../redux/actions/userAction';
@@ -24,24 +25,20 @@ import ModalComponent from '../components/ModalComponent';
 import Spinner from '../components/Spinner';
 import { Message } from '../components/Message';
 import { notificationManager } from '../utils/NotificationManager';
-import { fcmService } from '../utils/FCMService';
 import TextInputCustom from '../components/TextInputCustom';
+import { useSelector } from 'react-redux';
 
 export default function LoginScreen({ navigation, route }) {
   const phoneBack = route?.params?.phone;
   const [phone, setPhone] = useState('');
   const [isError, setIsError] = useState(false);
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const checkPhone = () => {
     setIsError(false);
     Spinner.show();
     if (validatePhone(phone)) {
-      return API.post('/users/valid-phone', { phone: phone })
+      return API.post(`${domain}/users/valid-phone`, { phone: phone })
         .then(({ data }) => {
-          console.log(
-            '🚀 ~ file: LoginScreen.js ~ line 45 ~ checkPhone ~ data',
-            data,
-          );
-
           if (data.code === 200) {
             Spinner.hide();
             ref.current.show();
@@ -64,50 +61,9 @@ export default function LoginScreen({ navigation, route }) {
     }
   };
 
-  const senderID = '645190559310';
-
   useEffect(() => {
     phoneBack && setPhone(phoneBack);
-
-    //notificationManager.configure(onRegister,onNotification,onOpenNotification, senderID)
-
-    fcmService.register(onRegister, onNotification, onOpenNotification);
-
-    console.log('aaaaaaaaaaaaaaaaa');
   }, []);
-
-  function onRegister(token) {
-    console.log('[NotificationFCM] Registered: ', token);
-  }
-
-  function onNotification(notify) {
-    console.log('[NotificationFCM] onNotification: ', notify);
-  }
-
-  function onOpenNotification(notify) {
-    console.log('[NotificationFCM] onOpenNotification: ', notify);
-    alert('Open Notification');
-  }
-
-  const onPressCancelNotification = () => {
-    notificationManager.cancelAllLocalNotification();
-  };
-
-  const onPressSendNotification = () => {
-    const options = {
-      soundName: 'default',
-      playSound: true,
-      vibrate: true,
-    };
-
-    notificationManager.showNotification(
-      1,
-      'App notification',
-      'Local notification',
-      {},
-      options,
-    );
-  };
 
   const ref = useRef();
   return (
@@ -222,7 +178,7 @@ export default function LoginScreen({ navigation, route }) {
             Tiếp tục
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: colors.colorGreen,
             marginTop: 20 * HEIGHT_SCALE,
@@ -259,7 +215,7 @@ export default function LoginScreen({ navigation, route }) {
             }}>
             Cancel Notifications
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <ModalComponent
         ref={ref}

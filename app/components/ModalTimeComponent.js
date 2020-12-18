@@ -16,13 +16,6 @@ const ModalTimeComponent = (props, ref) => {
   const [time, setTime] = useState(
     new Date(props?.timeDefault || 'Thu, 01 Jan 1970 00:00:00 GMT'),
   );
-  console.log(
-    '🚀 ~ file: ModalTimeComponent.js ~ line 32 ',
-    props?.title,
-    props?.timeDefault,
-    '--',
-    time,
-  );
 
   useEffect(() => {
     props?.isDate && setTime(props?.timeDefault);

@@ -3,7 +3,7 @@
 		FCM
 	</string>
 	<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-		AIzaSyBNI-E2-itVSOF0ec0BZqi2x2F7zaSiVOI
+		AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q
 	</string>
 	<string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">
 		DO_NOT_ASK_JAVASCRIPT

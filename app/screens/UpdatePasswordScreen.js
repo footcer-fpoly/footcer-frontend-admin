@@ -23,6 +23,7 @@ import Axios from 'axios';
 import { REDUX } from '../redux/store/types';
 import { Message } from '../components/Message';
 import TextInputCustom from '../components/TextInputCustom';
+import { useSelector } from 'react-redux';
 
 export default function UpdatePasswordScreen({ route, navigation }) {
   const phone = route?.params?.phone;
@@ -89,6 +90,8 @@ export default function UpdatePasswordScreen({ route, navigation }) {
       </View>
     );
   };
+  const domain = useSelector((state) => state?.userReducer?.domain);
+
   const signUp = () => {
     setIsError({
       ...isError,
@@ -96,7 +99,8 @@ export default function UpdatePasswordScreen({ route, navigation }) {
       password: false,
       confirmPassword: false,
     });
-    return API.post('/users/sign-up-phone', {
+
+    return API.post(`${domain}/users/sign-up-phone`, {
       phone: userSignUp.phone,
       password: userSignUp.password,
       avatar: userSignUp.avatar,
@@ -112,7 +116,6 @@ export default function UpdatePasswordScreen({ route, navigation }) {
           dispatch({ type: REDUX.UPDATE_USER_TOKEN, payload: obj.token });
           dispatch({ type: REDUX.LOGGED_IN });
           Spinner.hide();
-          navigation.replace('Splash', { isCheckStadium: true });
         } else {
           Spinner.hide();
           Message('Đăng kí thất bại');
@@ -214,7 +217,7 @@ export default function UpdatePasswordScreen({ route, navigation }) {
             value={userSignUp.displayName}
             label="Nhập họ và tên"
             onChangeText={(text) =>
-              setUserSignUp({ ...userSignUp, displayName: text?.trim() })
+              setUserSignUp({ ...userSignUp, displayName: text })
             }
             icon={() => (
               <Image

@@ -37,12 +37,13 @@ export default function InfoStadium({ navigation }) {
   const dataStadiumRedux = useSelector(
     (state) => state?.userReducer?.listStadium,
   );
-  const [dataStadium, setDataStadium] = useState();
+  const [dataStadium, setDataStadium] = useState(dataStadiumRedux);
   const ref = useRef();
   const dispatch = useDispatch();
   const [index, setIndex] = useState();
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const getCollage = () => {
-    API.get('/stadium/info')
+    API.get(`${domain}/stadium/info`)
       .then(({ data }) => {
         const obj = data?.data;
         setDataStadium(obj);
@@ -143,7 +144,7 @@ export default function InfoStadium({ navigation }) {
   };
   const deleteCollage = (id) => {
     Spinner.show();
-    API.delete(`/stadium/delete_collage/${id}`)
+    API.delete(`${domain}/stadium/delete_collage/${id}`)
       .then(({ data }) => {
         if (data.code === 200) {
           getCollage();
@@ -171,6 +172,7 @@ export default function InfoStadium({ navigation }) {
                 fontSize: fonts.font18,
                 fontWeight: fonts.bold,
                 color: Colors.whiteColor,
+                textAlign: 'center',
               }}>
               {dataStadiumRedux?.stadiumName}
             </Text>
@@ -181,9 +183,8 @@ export default function InfoStadium({ navigation }) {
             <Image
               source={{
                 uri: dataStadium?.image,
-                width: WIDTH,
-                height: 200 * HEIGHT_SCALE,
               }}
+              style={{ width: WIDTH, height: 200 * HEIGHT_SCALE }}
             />
             <View
               style={{
@@ -195,7 +196,12 @@ export default function InfoStadium({ navigation }) {
             />
             <View style={styles.parallaxHeader}>
               <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
                   <Text numberOfLines={1} style={styles.sectionSpeakerText}>
                     {dataStadium?.stadiumName}
                   </Text>
@@ -203,6 +209,7 @@ export default function InfoStadium({ navigation }) {
                     onPress={() =>
                       navigation.navigate('UpdateStadium', {
                         item: dataStadium,
+                        isCheckStadium: true,
                       })
                     }
                     style={{ marginHorizontal: 10 * WIDTH_SCALE }}>
@@ -231,7 +238,12 @@ export default function InfoStadium({ navigation }) {
                     Đã xác thực
                   </Text>
                 )}
-                <View
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Review', {
+                      item: dataStadium?.review || [],
+                    })
+                  }
                   style={{
                     width: 80 * WIDTH_SCALE,
                     flexDirection: 'row',
@@ -259,7 +271,7 @@ export default function InfoStadium({ navigation }) {
                     }}>
                     {`(${dataStadium?.review?.length})`}
                   </Text>
-                </View>
+                </TouchableOpacity>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -274,6 +286,7 @@ export default function InfoStadium({ navigation }) {
           <CFlatList
             data={dataStadium?.stadium_collage || []}
             renderItem={renderItem}
+            style={{ flex: 1 }}
           />
         </ScrollView>
         <TouchableOpacity
@@ -438,6 +451,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.font18,
     fontWeight: fonts.bold,
     paddingVertical: 5 * HEIGHT_SCALE,
+    maxWidth: '90%',
   },
   sectionTitleText: {
     color: 'white',

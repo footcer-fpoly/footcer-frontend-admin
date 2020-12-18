@@ -16,8 +16,9 @@ export default function StadiumAdmin({ route, navigation }) {
   );
   const [check, setCheck] = useState({ all: true, filter: false });
   const dispatch = useDispatch();
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const getStadium = () => {
-    API.get('/stadium/list')
+    API.get(`${domain}/stadium/list`)
       .then(({ data }) => {
         const obj = data?.data;
         if (data.code === 200) {
@@ -115,16 +116,23 @@ export default function StadiumAdmin({ route, navigation }) {
       <FlatList
         data={dataStadium}
         renderItem={({ item, index }) => {
-          return <Item onPress={getStadium} item={item} index={index} />;
+          return (
+            <Item
+              onPress={getStadium}
+              item={item}
+              index={index}
+              domain={domain}
+            />
+          );
         }}
       />
     </View>
   );
 }
 
-const Item = ({ item, index, onPress }) => {
+const Item = ({ item, index, onPress, domain }) => {
   const acceptStadium = () => {
-    API.get(`/admin/accept-stadium/${item?.stadiumId}`)
+    API.get(`${domain}/admin/accept-stadium/${item?.stadiumId}`)
       .then(({ data }) => {
         const obj = data?.data;
         if (data.code === 200) {

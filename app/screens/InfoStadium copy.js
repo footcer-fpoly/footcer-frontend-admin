@@ -17,8 +17,9 @@ import { Message } from '../components/Message';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 export default function InfoStadium({ navigation }) {
   const [dataStadium, setDataStadium] = useState();
+  const domain = useSelector((state) => state?.userReducer?.domain);
   useEffect(() => {
-    API.get('stadium/info')
+    API.get(`${domain}stadium/info`)
       .then(({ data }) => {
         data?.code === 200
           ? setDataStadium(data?.data)

@@ -78,7 +78,7 @@ export default function OTPScreen({ route, navigation }) {
     }
   };
   useEffect(() => {
-    // phone && handleSendCode();
+    phone && handleSendCode();
   }, []);
   const focusInput = (changePin, pin, next, prev) => {
     changePin;

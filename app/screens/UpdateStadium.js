@@ -41,7 +41,7 @@ import TextInputCustom from '../components/TextInputCustom';
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
   const item = route?.params?.item;
-  const KEY_API = 'AIzaSyBNI-E2-itVSOF0ec0BZqi2x2F7zaSiVOI';
+  const KEY_API = 'AIzaSyAmh-Tqfy35GzzQlGED6HLigQtXN4dMi7Q';
   const [address, setAddress] = useState({
     city: '',
     district: '',
@@ -98,7 +98,7 @@ export default function UpdateStadium({ route, navigation }) {
   };
   const GetPosition = async () => {
     await requestLocationPermission();
-    reduxPosition?.lat !== -1 && reduxPosition?.lng !== -1 && Spinner.show();
+    // reduxPosition?.lat !== -1 && reduxPosition?.lng !== -1 && Spinner.show();
     Geolocation.getCurrentPosition(
       (position) => {
         const newPosition = {
@@ -119,10 +119,6 @@ export default function UpdateStadium({ route, navigation }) {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${event?.latitude},${event?.longitude}&key=${KEY_API}`,
         )
         .then(({ data }) => {
-          console.log(
-            '🚀 ~ file: UpdateStadium.js ~ line 121 ~ .then ~ data',
-            data,
-          );
           const splitAddress = data?.results[0]?.formatted_address?.split(',');
           const dataAddress = vietnam.data?.filter(
             (a) =>
@@ -153,14 +149,16 @@ export default function UpdateStadium({ route, navigation }) {
         .catch((onError) => {
           Message('Lỗi lấy vị trí vui lòng thử lại');
           console.log('SignIn -> onError', onError);
+          Spinner.hide();
         });
     } catch (error) {
       console.log('GetLocation -> error', error);
       Spinner.hide();
     }
   };
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const getCollage = () => {
-    API.get('/stadium/info')
+    API.get(`${domain}/stadium/info`)
       .then(({ data }) => {
         const obj = data?.data;
         dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
@@ -220,11 +218,11 @@ export default function UpdateStadium({ route, navigation }) {
       reduxPosition?.lat &&
       reduxPosition?.lng
     ) {
-      await API.put('/stadium/update', formData)
+      await API.put(`${domain}/stadium/update`, formData)
         .then(({ data }) => {
           if (data.code === 200) {
             getCollage();
-            isCheckStadium ? navigation.replace('Home') : navigation.goBack();
+            !isCheckStadium ? navigation.replace('Home') : navigation.goBack();
             Message('Cập nhật thành công!');
           } else Message('Lỗi, vui lòng thử lại');
           Spinner.hide();
@@ -365,7 +363,7 @@ export default function UpdateStadium({ route, navigation }) {
                       onRegionChangeComplete={(event) => {
                         GetAddress(event);
                       }}
-                      mapType={Platform.OS === 'android' ? 'none' : 'standard'}
+                      mapType={'standard'}
                     />
                   </View>
                 ) : (
@@ -418,15 +416,17 @@ export default function UpdateStadium({ route, navigation }) {
                       ? modalWard.current.show()
                       : Message('Vui lòng chọn tỉnh'),
                 })}
-                <TextInputCustom
+                <TextInput
+                  multiline
                   style={{
                     fontSize: fonts.font16,
                     width: '100%',
+                    padding: 10 * HEIGHT_SCALE,
                   }}
                   value={address.fullAddress}
                   // textError={isError.text}
                   // validate={isError.value}
-                  label="Nhập địa chỉ sân chi tiết(*)"
+                  placeholder="Nhập địa chỉ sân chi tiết(*)"
                   onChangeText={(text) =>
                     setAddress({ ...address, fullAddress: text })
                   }
@@ -482,10 +482,11 @@ export default function UpdateStadium({ route, navigation }) {
                         color={Colors.borderGreen}
                         size={50 * WIDTH_SCALE}
                       />
-                      <AutoHeightImage
-                        width={0.9 * WIDTH}
-                        source={{ uri: source?.uri }}
-                        style={{ borderRadius: 6 * HEIGHT_SCALE }}
+                      <Image
+                        source={{
+                          uri: source?.uri,
+                        }}
+                        style={{ width: WIDTH, height: 200 * HEIGHT_SCALE }}
                       />
                     </View>
                   ) : (
@@ -499,49 +500,26 @@ export default function UpdateStadium({ route, navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={apiUpdateStadium}
-              style={{
-                alignItems: 'center',
-                backgroundColor: Colors.colorGreen,
-                // marginHorizontal: 20 * WIDTH_SCALE,
-                borderRadius: 14 * HEIGHT_SCALE,
-                width: WIDTH,
-                alignSelf: 'center',
-                marginBottom: 20 * HEIGHT_SCALE,
-              }}>
-              <Text
-                style={{
-                  paddingVertical: 14 * HEIGHT_SCALE,
-                  color: 'white',
-                  fontSize: fonts.font16,
-                  fontWeight: fonts.bold,
-                }}>
-                Cập Nhật Sân
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              // onPress={onPressSendNotification}
-              style={{
-                alignItems: 'center',
-                backgroundColor: Colors.colorGreen,
-                // marginHorizontal: 20 * WIDTH_SCALE,
-                borderRadius: 14 * HEIGHT_SCALE,
-                width: WIDTH,
-                alignSelf: 'center',
-                marginBottom: 20 * HEIGHT_SCALE,
-              }}>
-              <Text
-                style={{
-                  paddingVertical: 14 * HEIGHT_SCALE,
-                  color: 'white',
-                  fontSize: fonts.font16,
-                  fontWeight: fonts.bold,
-                }}>
-                Send Notifications
-              </Text>
-            </TouchableOpacity>
           </ScrollView>
+          <TouchableOpacity
+            onPress={apiUpdateStadium}
+            style={{
+              alignItems: 'center',
+              backgroundColor: Colors.colorGreen,
+              // marginHorizontal: 20 * WIDTH_SCALE,
+              width: WIDTH,
+              alignSelf: 'center',
+            }}>
+            <Text
+              style={{
+                paddingVertical: 14 * HEIGHT_SCALE,
+                color: 'white',
+                fontSize: fonts.font16,
+                fontWeight: fonts.bold,
+              }}>
+              Cập Nhật Sân
+            </Text>
+          </TouchableOpacity>
         </View>
         <ModalComponent
           isHideAgree

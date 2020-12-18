@@ -79,6 +79,7 @@ export default function InfoStadium({ navigation, route }) {
         break;
     }
   };
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const startTimeRef = useRef();
   const endTimeRef = useRef();
   const createCollage = () => {
@@ -90,7 +91,7 @@ export default function InfoStadium({ navigation, route }) {
     if (nameColage && price) {
       if (sTime < eTime) {
         if (Number(tTime) >= Number(pTime)) {
-          API.post('/stadium/add-collage', {
+          API.post(`${domain}/stadium/add-collage`, {
             stadiumCollageName: nameColage,
             amountPeople: people,
             startTime: new Date(startTime)?.getTime()?.toString(),
@@ -103,7 +104,7 @@ export default function InfoStadium({ navigation, route }) {
               const obj = data?.data;
               console.log('createCollage -> obj', obj);
               if (data.code === 200) {
-                API.get('/stadium/info')
+                API.get(`${domain}/stadium/info`)
                   .then(({ data }) => {
                     const obj = data?.data;
                     dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
@@ -126,11 +127,11 @@ export default function InfoStadium({ navigation, route }) {
               Spinner.hide();
             });
         } else {
-          Message('Thời gian trận đấu lớn hơn giờ mở cửa');
+          Message('Thời gian mở cửa phải lớn hơn thời gian chơi');
           Spinner.hide();
         }
       } else {
-        Message('Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
+        Message('Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
         Spinner.hide();
       }
     } else {
@@ -147,7 +148,7 @@ export default function InfoStadium({ navigation, route }) {
     if (nameColage) {
       if (sTime < eTime) {
         if (Number(tTime) >= Number(pTime)) {
-          API.put('/stadium/update-collage', {
+          API.put(`${domain}/stadium/update-collage`, {
             stadiumCollageName: nameColage,
             amountPeople: people,
             startTime: new Date(startTime)?.getTime()?.toString(),

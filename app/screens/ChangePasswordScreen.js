@@ -21,6 +21,7 @@ import Header from '../components/Header';
 import { useSelector } from 'react-redux';
 
 export default function ChangePasswordScreen({ route, navigation }) {
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const userRedux = useSelector((state) => state?.userReducer?.userData);
   const [isCheck, setIsCheck] = useState({
     password: true,
@@ -28,7 +29,7 @@ export default function ChangePasswordScreen({ route, navigation }) {
   });
   const [data, setData] = useState({ password: '', confirmPassword: '' });
   const handleChangePassword = () => {
-    API.put('/users/change-password', {
+    API.put(`${domain}/users/change-password`, {
       password: data?.password,
       phone: userRedux?.phone,
     })
