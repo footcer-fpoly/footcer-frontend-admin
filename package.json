@@ -1,6 +1,6 @@
 {
   "name": "FCM",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "private": true,
   "scripts": {
     "version": "react-native-version",
@@ -24,7 +24,7 @@
     "clean:android": "cd android && ./gradlew clean && cd ../",
     "clean:ios": "cd ios && xcodebuild clean && cd ../",
     "adb": "adb reverse tcp:8081 tcp:8081",
-    "codepush": "appcenter codepush release-react -a duonghaidang2k-gmail.com/FCM -d \"Production\" -m  -t \"0.0.15\""
+    "codepush": "appcenter codepush release-react -a duonghaidang2k-gmail.com/FCM -d \"Production\" -m  -t \"0.0.16\""
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -32,6 +32,7 @@
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-firebase/app": "^10.2.0",
     "@react-native-firebase/auth": "^10.2.0",
+    "@react-native-firebase/database": "^10.3.0",
     "@react-native-firebase/messaging": "^10.0.0",
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
