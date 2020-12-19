@@ -1,6 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { Platform } from 'react-native';
+import { Message } from '../components/Message';
 
 class NotificationManager {
   configure = (onRegister, onNotification, onOpenNotification, senderID) => {
@@ -11,19 +12,19 @@ class NotificationManager {
       },
 
       onNotification: function (notification) {
-        console.log('[NotificationManager] onNOTIFICATION:', notification);
+        console.log('[NotificationManager] onNOTIFICATION:', notification.data);
 
         if (Platform.OS === 'ios') {
           if (notification.data.openedInForeground) {
             notification.userInteraction = true;
           }
         }
-
-        if (notification.userInteraction) {
-          onOpenNotification(notification);
-        } else {
-          onNotification(notification);
-        }
+        Message(JSON.stringify(notification));
+        // if (notification?.userInteraction) {
+        //   onOpenNotification(notification);
+        // } else {
+        // onNotification(notification);
+        // }
 
         if (Platform.OS === 'android') {
           notification.userInteraction = true;
@@ -70,6 +71,13 @@ class NotificationManager {
     };
   };
   showNotification = (id, title, message, data = {}, options = {}) => {
+    console.log(
+      '🚀 ~ file: NotificationManager.js ~ line 74 ~ NotificationManager ~ id, title, message, data',
+      id,
+      title,
+      message,
+      data,
+    );
     PushNotification.localNotification({
       /* Android only properties */
       ...this._buildAndroidNotification(id, title, message, data, options),

@@ -94,12 +94,12 @@ export default function OrderStadium({ route, navigation }) {
     Spinner.show();
     getOrderStadium();
   }, [check]);
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     getOrderStadium();
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getOrderStadium();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const renderItem = ({ index, item }) => {
     const startTime = new Date(
@@ -111,7 +111,9 @@ export default function OrderStadium({ route, navigation }) {
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('OrderDetails', { item: item })}
+        onPress={() =>
+          navigation.navigate('OrderDetails', { id: item?.orderId })
+        }
         style={{
           width: 0.9 * WIDTH,
           alignSelf: 'center',
@@ -189,61 +191,6 @@ export default function OrderStadium({ route, navigation }) {
               : 'Hoàn thành',
           status: item?.order_status?.status,
         })}
-        {/* {item?.order_status?.status === 'WAITING' && (
-          <View
-            style={{
-              marginTop: 10 * HEIGHT_SCALE,
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-            }}>
-            <TouchableOpacity
-              onPress={() =>
-                updateOrder({ orderId: item?.orderId, status: 'REJECT' })
-              }
-              style={{
-                backgroundColor: Colors.colorRed,
-                width: 150 * WIDTH_SCALE,
-                borderTopLeftRadius: 10 * WIDTH_SCALE,
-                borderBottomRightRadius: 10 * WIDTH_SCALE,
-              }}>
-              <Text
-                style={{
-                  color: Colors.whiteColor,
-                  fontSize: fonts.font16,
-                  fontFamily: 'Times',
-                  textAlign: 'center',
-                  paddingHorizontal: 10,
-                  paddingVertical: 12 * HEIGHT_SCALE,
-                }}>
-                Huỷ sân
-              </Text>
-            </TouchableOpacity>
-            <View>
-              <TouchableOpacity
-                onPress={() =>
-                  updateOrder({ orderId: item?.orderId, status: 'ACCEPT' })
-                }
-                style={{
-                  backgroundColor: Colors.borderGreen,
-                  width: 150 * WIDTH_SCALE,
-                  borderTopLeftRadius: 10 * WIDTH_SCALE,
-                  borderBottomRightRadius: 10 * WIDTH_SCALE,
-                }}>
-                <Text
-                  style={{
-                    color: Colors.whiteColor,
-                    fontSize: fonts.font16,
-                    fontFamily: 'Times',
-                    textAlign: 'center',
-                    paddingHorizontal: 10,
-                    paddingVertical: 12 * HEIGHT_SCALE,
-                  }}>
-                  Xác nhận sân
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )} */}
       </TouchableOpacity>
     );
   };
@@ -327,14 +274,16 @@ export default function OrderStadium({ route, navigation }) {
           })}
         </ScrollView>
       </View>
-      <View>
-        <CFlatList
-          showsVerticalScrollIndicator={false}
-          style={{}}
-          data={dataOrder || []}
-          renderItem={renderItem}
-        />
-      </View>
+      <ScrollView showHorizontalScrollIndicator showVerticalScrollIndicator>
+        <View>
+          <CFlatList
+            showsVerticalScrollIndicator={false}
+            style={{}}
+            data={dataOrder || []}
+            renderItem={renderItem}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
   function textRow({ title, content, numberLine = 1, status }) {

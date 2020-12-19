@@ -146,7 +146,7 @@ export default function ChangePasswordScreen({ route, navigation }) {
       <View style={styles.bodyContainer}>
         {inputCell({
           image: IMAGE.password,
-          title: 'Nhập lại mật khẩu:',
+          title: 'Nhập mật khẩu mới:',
           onChangeText: (text) => setData({ ...data, password: text?.trim() }),
           secureTextEntry: true,
           isCheck: isCheck.password,

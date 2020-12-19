@@ -15,4 +15,7 @@ export default {
   statistics: require('../assets/icon/statistics.png'),
   back: require('../assets/icon/back.png'),
   pennon: require('../assets/icon/pennon.png'),
+  notification: require('../assets/icon/notification.png'),
+  book_close: require('../assets/icon/book_close.png'),
+  book_open: require('../assets/icon/book_open.png'),
 };

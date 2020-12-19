@@ -28,8 +28,8 @@ import StatisticsWeek from './screens/StatisticsWeek.js';
 import Notifications from './screens/PushNotification/Notifications';
 import OrderDetails from './screens/OrderDetails';
 import ReviewScreen from './screens/ReviewScreen';
+import NotificationScreen from './screens/NotificationScreen';
 import { useSelector } from 'react-redux';
-import { navigationRef } from './AppRootNavigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,6 +63,8 @@ const HomeStack = () => {
         <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="OrderDetails" component={OrderDetails} />
         <Stack.Screen name="Review" component={ReviewScreen} />
+        <Stack.Screen name="Notification" component={NotificationScreen} />
+        <Stack.Screen name="Admin" component={StadiumAdmin} />
       </>
     );
   } else {
@@ -76,6 +78,7 @@ const HomeStack = () => {
           name="UpdatePasswordScreen"
           component={UpdatePasswordScreen}
         />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
       </>
     );
   }
@@ -109,11 +112,8 @@ const BottomNavigation = ({ navigation }) => {
 };
 export default function AppNavigation(props) {
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {HomeStack()}
-      </Stack.Navigator>
-      <Spinner />
-    </NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {HomeStack()}
+    </Stack.Navigator>
   );
 }

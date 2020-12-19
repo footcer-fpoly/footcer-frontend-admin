@@ -3,10 +3,13 @@ import { Message } from '../../components/Message';
 import Spinner from '../../components/Spinner';
 import API from '../../server/api';
 import { REDUX } from '../store/types';
+import { store as Store } from '../store';
 
 export const SignIn = (phone, password, onSuccess = () => {}) => {
   return (dispatch, store) => {
-    return API.post('/users/sign-in-phone', {
+    const domain = Store?.getState()?.userReducer?.domain;
+    console.log('🚀 ~ file: userAction.js ~ line 10 ~ return ~ domain', domain);
+    return API.post(`${domain}/users/sign-in-phone`, {
       phone: phone,
       password: password.toLowerCase(),
     })
@@ -33,7 +36,7 @@ export const SignIn = (phone, password, onSuccess = () => {}) => {
       })
       .catch((onError) => {
         Spinner.hide();
-        console.log('SignIn -> onError', onError);
+        console.log('SignIn -> onError', JSON.stringify(onError));
         Message('Vui lòng kiểm tra thông tin đăng nhập');
       });
   };

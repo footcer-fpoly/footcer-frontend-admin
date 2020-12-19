@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import Container from '../components/common/Container';
@@ -25,12 +26,39 @@ import IMAGE from '../utils/images.util';
 import moment from 'moment';
 import { fcmService } from '../utils/FCMService';
 import API from '../server/api';
+import { firebase } from '@react-native-firebase/messaging';
 
 export default function HomeScreen({ route, navigation }) {
   const dataStadiumRedux = useSelector(
     (state) => state?.userReducer?.listStadium,
   );
+
+  const domain = useSelector((state) => state?.userReducer?.domain);
   const userRedux = useSelector((state) => state?.userReducer?.userData);
+  useEffect(() => {
+    // fcmService?.registerAppWithFCM();
+    // fcmService?.register(onRegister, onNotification, onOpenNotification);
+    // notificationManager?.configure(onOpenNotification);
+    firebase
+      .messaging()
+      .getToken()
+      .then((token) => {
+        console.log(
+          '🚀 ~ file: HomeScreen.js ~ line 46 ~ .then ~ token',
+          token,
+        );
+        API.put(`${domain}/users/update-notify`, { tokenNotify: token })
+          .then(({ data }) => {
+            console.log(
+              '🚀 ~ file: HomeScreen.js ~ line 48 ~ .then ~ data',
+              data,
+            );
+          })
+          .catch((onError) => {
+            console.log('Token Noti -> onError', onError);
+          });
+      });
+  }, []);
   return (
     <View style={{ flex: 1 }}>
       <Header
@@ -41,9 +69,19 @@ export default function HomeScreen({ route, navigation }) {
               fontSize: fonts.font18,
               fontWeight: fonts.bold,
               color: Colors.whiteColor,
+              textAlign: 'center',
             }}>
             {dataStadiumRedux?.stadiumName}
           </Text>
+        }
+        right={
+          <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+            <Image
+              tintColor={Colors?.colorRed}
+              source={IMAGE?.notification}
+              style={{ width: 25 * WIDTH_SCALE, height: 25 * WIDTH_SCALE }}
+            />
+          </TouchableOpacity>
         }
       />
       <TouchableOpacity

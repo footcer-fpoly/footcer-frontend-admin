@@ -63,24 +63,28 @@ export default function ServicesScreen({ route, navigation }) {
         console.log('User tapped custom button: ', response.customButton);
         console.log(response.customButton);
       } else {
-        setSource(response);
+        // setSource(response);
       }
     });
   };
   const domain = useSelector((state) => state?.userReducer?.domain);
 
   const createService = () => {
-    if (dataService.nameService && dataService.priceService && source) {
+    if (
+      dataService.nameService &&
+      dataService.priceService
+      //  && source
+    ) {
       const formData = new FormData();
-      formData.append('folder', 'service');
+      // formData.append('folder', 'service');
       formData.append('name', dataService.nameService);
       formData.append('price', dataService.priceService);
       formData.append('stadiumId', dataService.stadiumId);
-      formData.append('files', {
-        type: source?.type,
-        uri: `file://${source?.path}`,
-        name: source?.fileName,
-      });
+      // formData.append('files', {
+      //   type: source?.type,
+      //   uri: `file://${source?.path}`,
+      //   name: source?.fileName,
+      // });
       API.post(`${domain}/service/add`, formData)
         .then(({ data }) => {
           if (data.code === 200) {

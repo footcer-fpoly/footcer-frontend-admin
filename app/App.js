@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, createRef } from 'react';
 import { StatusBar, Text, View, Alert } from 'react-native';
 import AppNavigation from './AppNavigation';
 import { Provider } from 'react-redux';
@@ -7,10 +7,13 @@ import FlashMessage from 'react-native-flash-message';
 import CodePush from 'react-native-code-push';
 import Analytics from 'appcenter-analytics';
 import Crashes from 'appcenter-crashes';
-import { Message } from './components/Message';
-import { notificationManager } from './utils/NotificationManager';
-import { fcmService } from './utils/FCMService';
+
 import API from './server/api';
+import PushNotification from 'react-native-push-notification';
+import { NavigationContainer } from '@react-navigation/native';
+import { firebase } from '@react-native-firebase/messaging';
+import Spinner from './components/Spinner';
+import Colors from './theme/Colors';
 
 let DEBUG = __DEV__ ? true : false;
 export default function () {
@@ -34,53 +37,105 @@ export default function () {
       },
     );
   }, []);
+  const navigation = createRef();
   useEffect(() => {
-    fcmService.register(onRegister, onNotification, onOpenNotification);
+    // firebase
+    //   .messaging()
+    //   .getToken()
+    //   .then((token) => {
+    //     Clipboard.setString(token);
+    //     console.log(
+    //       'phat ~ file: App.js ~ line 82 ~  FCM registration tokens ',
+    //       token,
+    //     );
+    //   });
+    PushNotification.configure({
+      onNotification: (notification) => {
+        if (notification) {
+          navigation.current?.navigate('OrderDetails', {
+            id: notification?.generalId,
+          });
+        }
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+    const unsubscribe = firebase
+      .messaging()
+      .onMessage(async (remoteMessage) => {
+        console.log(
+          '🚀 ~ file: App.js ~ line 70 ~ .onMessage ~ remoteMessage',
+          remoteMessage,
+        );
+        PushNotification.localNotification({
+          largeIcon: 'ic_launcher',
+          smallIcon: 'ic_notification',
+          color: Colors.colorGreen,
+          groupSummary: false,
+          ongoing: false,
+          priority: 'high',
+          visibility: 'private',
+          ignoreInForeground: false,
+          onlyAlertOnce: true,
+          channelId: 'fcm',
+          messageId: remoteMessage?.id,
+          autoCancel: false,
+          generalId: JSON.parse(remoteMessage?.data?.body)?.generalId,
+          title: JSON.parse(remoteMessage?.data?.body)?.title, // (optional)
+          message: JSON.parse(remoteMessage?.data?.body)?.content, // (required)
+          userInfo: {}, // (optional) default: {} (using null throws a JSON value '<null>' error)
+          playSound: true, // (optional) default: true
+          soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+          // repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+        });
+        // }
+      });
+
+    firebase.messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      tapOnNotification(remoteMessage, false);
+    });
+    firebase
+      .messaging()
+      .getInitialNotification()
+      .then((remoteMessage) => {
+        if (remoteMessage) {
+          tapOnNotification(remoteMessage, true);
+        }
+      });
+
+    return unsubscribe;
   }, []);
-
-  function onRegister(token) {
-    // console.log('[NotificationFCM] Registered: ', token);
-  }
-
-  function onNotification(notify) {
-    onPressSendNotification(notify);
-  }
-
-  function onOpenNotification(notify) {
+  const tapOnNotification = (remoteMessage, isInitApp) => {
     console.log(
-      '🚀 ~ file: App.js ~ line 58 ~ onOpenNotification ~ notify',
-      notify,
+      '🚀 ~ file: App.js ~ line 96 ~ tapOnNotification ~ remoteMessage',
+      remoteMessage,
+      isInitApp,
     );
-    // Alert.alert('Open Notification');
-  }
-
-  const onPressCancelNotification = () => {
-    notificationManager.cancelAllLocalNotification();
+    const delayTime = isInitApp ? 2000 : 0;
+    // if (remoteMessage?.data?.reviewId) {
+    //   setTimeout(
+    //     () =>
+    //       navigation.current?.navigate(ROUTE_KEY.ReviewDetails, {
+    //         id: remoteMessage?.data?.reviewId,
+    //       }),
+    //     delayTime,
+    //   );
+    // } else if (remoteMessage?.data?.menuId) {
+    //   setTimeout(
+    //     () => navigation.current?.navigate(ROUTE_KEY.MenuChoice),
+    //     delayTime,
+    //   );
+    // }
   };
 
-  const onPressSendNotification = (notify) => {
-    console.log(
-      '🚀 ~ file: App.js ~ line 67 ~ onPressSendNotification ~ notify',
-      notify,
-    );
-    const options = {
-      soundName: 'default',
-      playSound: true,
-      vibrate: true,
-    };
-    notificationManager.showNotification(
-      1,
-      notify?.title,
-      notify?.body,
-      {},
-      options,
-    );
-  };
   return (
     <Provider store={store}>
-      <StatusBar translucent backgroundColor={'transparent'} />
-      <AppNavigation />
-      <FlashMessage position="top" floating={true} />
+      <NavigationContainer ref={navigation}>
+        <StatusBar translucent backgroundColor={'transparent'} />
+        <AppNavigation />
+        <FlashMessage position="top" floating={true} />
+        <Spinner />
+      </NavigationContainer>
     </Provider>
   );
 }

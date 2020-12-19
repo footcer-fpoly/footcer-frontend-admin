@@ -15,36 +15,54 @@ import Header from '../components/Header';
 import ModalComponent from '../components/ModalComponent';
 
 export default function OrderDetails({ route, navigation }) {
-  const item = route?.params?.item;
+  const id = route?.params?.id;
+  console.log('🚀 ~ file: OrderDetails.js ~ line 20 ~ OrderDetails ~ id', id);
   const modalAccept = useRef();
   const modalReject = useRef();
   const [filter, setFilter] = useState();
   const domain = useSelector((state) => state?.userReducer?.domain);
+  const [dataOrder, setDataOrder] = useState();
   useEffect(() => {
-    setFilter(item?.order_status?.status);
+    setFilter(dataOrder?.order_status?.status);
   }, []);
-  const orderId = item?.orderId;
-  const stadiumDetailsId = item?.stadium_details?.stadiumDetailsId;
+  const getDataOrderDetail = () => {
+    API.get(`${domain}/getDataOrderDetail/${id}`)
+      .then(({ data }) => {
+        const obj = data?.data;
+        data?.code === 200 && setDataOrder(obj);
+      })
+      .catch((onError) => {
+        console.log('Stadium -> onError', onError.response.data);
+        Message('Lỗi');
+      });
+  };
+
+  useEffect(() => {
+    getDataOrderDetail();
+  }, []);
+
+  const orderId = dataOrder?.orderId;
+  const stadiumDetailsId = dataOrder?.stadium_details?.stadiumDetailsId;
   const startTime = new Date(
-    Number(item?.stadium_details?.startTimeDetail),
+    Number(dataOrder?.stadium_details?.startTimeDetail),
   ).toUTCString();
   const endTime = new Date(
-    Number(item?.stadium_details?.endTimeDetail),
+    Number(dataOrder?.stadium_details?.endTimeDetail),
   ).toUTCString();
   const dateTimeCurrent = moment().format('YYYY-MM-DD HH:mm:ss');
   const dateTimeOrder = moment(
-    `${item?.time.substr(0, 10)} ${startTime.substr(17, 5)}`,
+    `${dataOrder?.time.substr(0, 10)} ${startTime.substr(17, 5)}`,
   )
     .zone(-7)
     .format('YYYY-MM-DD HH:mm:ss');
 
   const updateOrder = ({ status }) => {
     API.put(`${domain}/order/update-status`, {
-      orderId: orderId,
+      orderId: id,
       status: status,
       reason: status === 'ACCEPT' ? 'Chủ sân chấp nhận' : 'Chủ sân huỷ',
-      userId: item?.user?.userId,
-      name: item?.stadium?.stadiumName,
+      userId: dataOrder?.user?.userId,
+      name: dataOrder?.stadium?.stadiumName,
     })
       .then(({ data }) => {
         const obj = data?.data;
@@ -53,7 +71,6 @@ export default function OrderDetails({ route, navigation }) {
           setFilter('ACCEPT');
         }
       })
-
       .catch((onError) => {
         console.log('Stadium -> onError', onError);
         Message('Lỗi');
@@ -64,8 +81,8 @@ export default function OrderDetails({ route, navigation }) {
       orderId: orderId,
       status: 'FINISH',
       reason: 'Hoàn thành',
-      userId: item?.user?.userId,
-      name: item?.stadium?.stadiumName,
+      userId: dataOrder?.user?.userId,
+      name: dataOrder?.stadium?.stadiumName,
     })
       .then(({ data }) => {
         if (data.code === 200) {
@@ -128,7 +145,7 @@ export default function OrderDetails({ route, navigation }) {
             padding: 10 * HEIGHT_SCALE,
           }}>
           <Image
-            source={{ uri: item?.user?.avatar }}
+            source={{ uri: dataOrder?.user?.avatar }}
             style={{
               width: 100 * WIDTH_SCALE,
               height: 100 * WIDTH_SCALE,
@@ -144,7 +161,7 @@ export default function OrderDetails({ route, navigation }) {
                 fontSize: fonts.font18,
               }}
               numberOfLines={1}>
-              {item?.user?.displayName}
+              {dataOrder?.user?.displayName}
             </Text>
             <Text
               style={{
@@ -153,7 +170,7 @@ export default function OrderDetails({ route, navigation }) {
                 fontSize: fonts.font14,
               }}
               numberOfLines={1}>
-              {item?.user?.phone}
+              {dataOrder?.user?.phone}
             </Text>
           </View>
           <Image
@@ -171,11 +188,11 @@ export default function OrderDetails({ route, navigation }) {
         </View>
         {textRow({
           title: `Tên sân: `,
-          content: item?.stadium_collage?.stadiumCollageName,
+          content: dataOrder?.stadium_collage?.stadiumCollageName,
         })}
         {textRow({
           title: `Giá tiền: `,
-          content: `${formatNumber(item?.stadium_details?.price)} đ`,
+          content: `${formatNumber(dataOrder?.stadium_details?.price)} đ`,
         })}
         {textRow({
           title: `Tình trạng: `,
@@ -185,7 +202,7 @@ export default function OrderDetails({ route, navigation }) {
               : filter === 'WAITING'
               ? 'Chờ xác nhận'
               : filter === 'REJECT'
-              ? item?.order_status?.isUser
+              ? dataOrder?.order_status?.isUser
                 ? 'Người dùng huỷ'
                 : 'Chủ sân huỷ'
               : 'Hoàn thành',
@@ -194,7 +211,7 @@ export default function OrderDetails({ route, navigation }) {
 
         {textRow({
           title: `Ngày: `,
-          content: moment(item?.time)?.format('DD-MM-YYYY'),
+          content: moment(dataOrder?.time)?.format('DD-MM-YYYY'),
         })}
         {textRow({
           title: `Thời gian: `,
@@ -251,7 +268,7 @@ export default function OrderDetails({ route, navigation }) {
             </View>
           </View>
         ) : (
-          !item?.finish &&
+          !dataOrder?.finish &&
           filter === 'ACCEPT' && (
             <View
               style={{

@@ -5,8 +5,14 @@ import Colors from '../theme/Colors';
 import { HEIGHT_SCALE, WIDTH, WIDTH_SCALE } from '../utils/ScaleAdaptor';
 import fonts from '../theme/ConfigStyle';
 import StarRating from 'react-native-star-rating';
+import CFlatList from '../components/CFlatList';
 
 export default function ReviewScreen({ route, navigation }) {
+  const item = route?.params?.item;
+  console.log(
+    '🚀 ~ file: ReviewScreen.js ~ line 11 ~ ReviewScreen ~ item',
+    item,
+  );
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <Header
@@ -22,18 +28,18 @@ export default function ReviewScreen({ route, navigation }) {
           </Text>
         }
       />
-      <ScrollView showsHorizontalScrollIndicator={true}>
+      <CFlatList data={item || []} renderItem={renderItem} />
+
+      {/* {renderItem()}
         {renderItem()}
         {renderItem()}
         {renderItem()}
         {renderItem()}
-        {renderItem()}
-        {renderItem()}
-      </ScrollView>
+        {renderItem()} */}
     </View>
   );
 
-  function renderItem() {
+  function renderItem(props) {
     return (
       <View
         style={{
@@ -45,8 +51,7 @@ export default function ReviewScreen({ route, navigation }) {
         <View>
           <Image
             source={{
-              uri:
-                'https://i.pinimg.com/236x/0d/7d/b0/0d7db08b7a4a5e31c2f8bfb353b0a882.jpg',
+              uri: props?.item?.user?.avatar,
             }}
             style={{
               height: 80 * WIDTH_SCALE,
@@ -56,11 +61,23 @@ export default function ReviewScreen({ route, navigation }) {
           />
         </View>
         <View style={{ marginLeft: 20 * WIDTH_SCALE, flex: 1 }}>
-          <View style={{ width: 120 * WIDTH_SCALE }}>
+          <Text
+            style={{
+              width: '100%',
+              color: Colors.blackColor,
+              fontSize: fonts.font16,
+              fontWeight: 'bold',
+              //
+            }}
+            multiline>
+            {props?.item?.user?.displayName}
+          </Text>
+          <View
+            style={{ width: 120 * WIDTH_SCALE, marginTop: 2 * WIDTH_SCALE }}>
             <StarRating
               disabled={true}
               maxStars={5}
-              rating={5}
+              rating={props?.item?.rate || 0}
               fullStarColor={'yellow'}
               starSize={20 * WIDTH_SCALE}
             />
@@ -71,7 +88,9 @@ export default function ReviewScreen({ route, navigation }) {
               color: Colors.colorGrayText,
               marginTop: 8 * WIDTH_SCALE,
             }}
-            multiline>{`Em cần tìm người yêu làm Dev <3 I love you 3000 yeeu`}</Text>
+            multiline>
+            {props?.item.content}
+          </Text>
         </View>
       </View>
     );

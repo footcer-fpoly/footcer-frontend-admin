@@ -81,21 +81,22 @@ class FCMService {
         '[FCMService] onNotificationOpenedApp Notification caused app to open from background state:',
       );
       if (remoteMessage) {
-        const notification = remoteMessage.notification;
-        onOpenNotification(notification);
+        // onOpenNotification(remoteMessage);
         // this.removeDeliveredNotification(notification.notificationId)
       }
     });
 
+    // When the application is opened from the quit state
     messaging()
       .getInitialNotification()
       .then((remoteMessage) => {
-        // console.log(
-        //   '[FCMService] getInitialNotification Notification caused app to open from quit state:',
-        //   remoteMessage,
-        // );
-        if (remoteMessage?.data) {
-          onOpenNotification(remoteMessage);
+        console.log(
+          '[FCMService] getInitialNotification Notification caused app to open from quit state:',
+          remoteMessage,
+        );
+        if (remoteMessage) {
+          const notification = remoteMessage.notification;
+          // onOpenNotification(notification);
           //  this.removeDeliveredNotification(notification.notificationId)
         }
       });
@@ -109,7 +110,7 @@ class FCMService {
         } else {
           notification = remoteMessage.notification;
         }
-        onNotification(notification);
+        // onNotification(notification);
       }
     });
 
@@ -122,8 +123,6 @@ class FCMService {
 
   unRegister = () => {
     this.messageListener();
-    // this.notifyOpenAppListenner();
-    // this.initialNotifyListenner();
   };
 }
 

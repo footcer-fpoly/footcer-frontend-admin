@@ -22,26 +22,18 @@ import database from '@react-native-firebase/database';
 import { fcmService } from '../utils/FCMService';
 
 export default function SplashScreen({ route, navigation }) {
-  const domain = useSelector((state) => state?.userReducer?.domain);
+  // const domain = useSelector((state) => state?.userReducer?.domain);
+  const [domain, setDomain] = useState();
   const [tokenNoti, setTokenNoti] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
-    async () => {
-      await database()
-        .ref('/settings/domain')
-        .on('value', (snapshot) => {
-          dispatch({ type: REDUX.ADD_DOMAIN, payload: snapshot.val() });
-        });
-    };
+    database()
+      .ref('/settings/domain')
+      .on('value', (snapshot) => {
+        dispatch({ type: REDUX.ADD_DOMAIN, payload: snapshot.val() });
+        setDomain(snapshot.val());
+      });
   }, []);
-  useEffect(() => {
-    fcmService.register(onRegister);
-  }, []);
-
-  function onRegister(token) {
-    setTokenNoti(token);
-    // console.log('[NotificationFCM] Registered: ', token);
-  }
   useEffect(() => {
     persistStore(store, null, () => {
       const isSignIn = store.getState().userReducer.loggedIn;
@@ -50,29 +42,13 @@ export default function SplashScreen({ route, navigation }) {
       Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       API.defaults.headers.common.Authorization = `Bearer ${token}`;
       if (domain) {
-        console.log(
-          '🚀 ~ file: SplashScreen.js ~ line 43 ~ persistStore ~ domain',
-          domain,
-        );
-        tokenNoti &&
-          API.put(`${domain}/users/update-notify`, { tokenNotify: tokenNoti })
-            .then(({ data }) => {
-              const obj = data?.data;
-              console.log(
-                '🚀 ~ file: SplashScreen.js ~ line 33 ~ .then ~ obj',
-                data,
-              );
-            })
-            .catch((onError) => {
-              console.log('Token Noti -> onError', onError);
-            });
         if (isSignIn) {
           API.get(`${domain}/stadium/info`)
             .then(({ data }) => {
               const obj = data?.data;
               dispatch({ type: REDUX.UPDATE_STADIUM, payload: obj });
               obj?.latitude === -1 && obj?.longitude === -1
-                ? navigation.replace('UpdateStadium')
+                ? navigation.replace('UpdateStadium', { id: obj })
                 : navigation.replace('Home');
             })
             .catch((onError) => {

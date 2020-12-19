@@ -32,11 +32,13 @@ import Spinner from '../components/Spinner';
 import vietnam from '../assets/json/vietnam.json';
 import ModalComponent from '../components/ModalComponent';
 import { REDUX } from '../redux/store/types';
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
 import { convertStrings } from '../utils/convertStrings';
 import AutoHeightImage from 'react-native-auto-height-image';
 import { SkypeIndicator } from 'react-native-indicators';
 import TextInputCustom from '../components/TextInputCustom';
+import ImagePicker from 'react-native-image-crop-picker';
+import CFlatList from '../components/CFlatList';
 
 export default function UpdateStadium({ route, navigation }) {
   const isCheckStadium = route?.params?.isCheckStadium;
@@ -52,7 +54,8 @@ export default function UpdateStadium({ route, navigation }) {
     longitude: '',
     data: {},
   });
-  const [source, setSource] = useState();
+  const [source, setSource] = useState([]);
+
   const [nameStadium, setNameStadium] = useState();
   const modalCity = useRef();
   const modalWard = useRef();
@@ -63,23 +66,15 @@ export default function UpdateStadium({ route, navigation }) {
     (state) => state?.userReducer?.listPosition,
   );
   const selectFile = async () => {
-    var options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        console.log(response.customButton);
-      } else {
-        setSource(response);
-      }
+    ImagePicker.openPicker({
+      width: 1600,
+      height: 900,
+      cropping: true,
+      multiple: true,
+    }).then((image) => {
+      const a = [...image, ...source];
+      a?.length > 5 && Message('Bạn chỉ có thể cọn 5 ảnh');
+      setSource(a?.slice(0, 5));
     });
   };
   const requestLocationPermission = async () => {
@@ -168,8 +163,8 @@ export default function UpdateStadium({ route, navigation }) {
         Message('Lỗi');
       });
   };
-  const apiUpdateStadium = async () => {
-    Spinner.show();
+  const apiUpdateStadium = () => {
+    // Spinner.show();
     const formData = new FormData();
     item && item?.address
       ? item?.address !== address.fullAddress &&
@@ -189,53 +184,82 @@ export default function UpdateStadium({ route, navigation }) {
     item && item?.ward
       ? item?.ward !== address.ward && formData.append('ward', address.ward)
       : formData.append('ward', address.ward);
-    item && item?.image
-      ? item?.image !== source?.uri &&
-        formData.append('files', {
-          type: source?.type,
-          size: source?.fileSize,
-          uri: `file://${source?.path}`,
-          name: source?.fileName,
-        })
-      : formData.append('files', {
-          type: source?.type,
-          size: source?.fileSize,
-          uri: `file://${source?.path}`,
-          name: source?.fileName,
-        });
-    formData.append('folder', 'stadium');
     formData.append('latitude', reduxPosition?.lat);
     formData.append('longitude', reduxPosition?.lng);
-    console.log('UpdateStadium -> formData', formData);
-
+    formData.append('folder', 'stadium');
     if (
-      nameStadium &&
-      address?.fullAddress &&
-      address?.ward &&
-      address?.district &&
-      address?.city &&
-      source &&
-      reduxPosition?.lat &&
-      reduxPosition?.lng
+      nameStadium !== item?.nameStadium ||
+      address?.fullAddress !== item?.address ||
+      address?.city !== item?.city ||
+      address?.district !== item?.district ||
+      address?.ward !== item?.ward
     ) {
-      await API.put(`${domain}/stadium/update`, formData)
+      if (
+        nameStadium &&
+        address?.fullAddress &&
+        address?.ward &&
+        address?.district &&
+        address?.city &&
+        reduxPosition?.lat &&
+        reduxPosition?.lng
+      ) {
+        API.put(`${domain}/stadium/update`, formData)
+          .then(({ data }) => {
+            if (data.code === 200) {
+              !isCheckStadium
+                ? navigation.replace('Home')
+                : navigation.goBack();
+              Message('Cập nhật thành công!');
+            } else Message('Lỗi, vui lòng thử lại');
+          })
+          .catch((onError) => {
+            console.log('apiUpdateStadium -> onError', onError.response.data);
+            Message('Lỗi, vui lòng thử lại');
+          });
+      } else {
+        Message('Vui lòng nhập đầy đủ thông tin!');
+        Spinner.hide();
+      }
+    }
+  };
+  const uploadImage = () => {
+    const formUpImage = new FormData();
+    formUpImage.append('folder', 'stadium');
+    formUpImage.append('generalId', item?.stadiumId);
+    source?.length &&
+      source?.map((item, index) => {
+        console.log(
+          '🚀 ~ file: UpdateStadium.js ~ line 231 ~ source?.map ~ index',
+          index,
+        );
+        if (item.path && index < 5) {
+          let pathParts = item?.path?.split('/');
+          return formUpImage.append('files', {
+            type: item?.mime,
+            name: pathParts[pathParts.length - 1],
+            uri: item?.path,
+          });
+        }
+      });
+    source?.length &&
+      API.post(`${domain}/stadium/upload-images`, formUpImage)
         .then(({ data }) => {
           if (data.code === 200) {
-            getCollage();
-            !isCheckStadium ? navigation.replace('Home') : navigation.goBack();
-            Message('Cập nhật thành công!');
-          } else Message('Lỗi, vui lòng thử lại');
+            console.log(
+              '🚀 ~ file: UpdateStadium.js ~ line 241 ~ .then ~ data',
+              data,
+            );
+          } else Message('Lỗi lưu hình');
           Spinner.hide();
         })
         .catch((onError) => {
-          console.log('apiUpdateStadium -> onError', onError.message);
-          Message('Lỗi, vui lòng thử lại');
+          console.log(
+            '🚀 ~ file: UpdateStadium.js ~ line 237 ~ apiUpdateStadium ~ onError',
+            onError?.response?.data,
+          );
+          Message('Lỗi lưu hình, vui lòng thử lại');
           Spinner.hide();
         });
-    } else {
-      Message('Vui lòng nhập đầy đủ thông tin!');
-      Spinner.hide();
-    }
   };
 
   const setDefault = () => {
@@ -249,21 +273,23 @@ export default function UpdateStadium({ route, navigation }) {
             -1,
         )
       : null;
-    item &&
+    if (item) {
       item?.address &&
-      item?.city &&
-      item?.district &&
-      item?.ward &&
-      setAddress({
-        ...address,
-        fullAddress: item?.address,
-        city: item?.city,
-        district: item?.district,
-        ward: item?.ward,
-        data: dataAddress ? Object.values(dataAddress) : null,
-      });
-    item && item?.stadiumName && setNameStadium(item?.stadiumName);
-    item && item?.image && setSource({ uri: item?.image });
+        item?.city &&
+        item?.district &&
+        item?.ward &&
+        setAddress({
+          ...address,
+          fullAddress: item?.address,
+          city: item?.city,
+          district: item?.district,
+          ward: item?.ward,
+          data: dataAddress ? Object.values(dataAddress) : null,
+        });
+      item?.stadiumName && setNameStadium(item?.stadiumName);
+      setSource(item?.stadium_images);
+    }
+    // item && item?.image && setSource({ uri: item?.image });
   };
   useEffect(() => {
     item && setDefault();
@@ -464,45 +490,96 @@ export default function UpdateStadium({ route, navigation }) {
                   onPress={selectFile}
                   style={{
                     flex: 1,
-                    backgroundColor: Colors.colorGrayBackground,
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginTop: 5 * HEIGHT_SCALE,
                     borderRadius: 6 * HEIGHT_SCALE,
                   }}>
-                  {source ? (
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        minHeight: 60 * WIDTH_SCALE,
-                      }}>
-                      <SkypeIndicator
-                        style={{ alignSelf: 'center', position: 'absolute' }}
-                        color={Colors.borderGreen}
-                        size={50 * WIDTH_SCALE}
-                      />
-                      <Image
-                        source={{
-                          uri: source?.uri,
-                        }}
-                        style={{ width: WIDTH, height: 200 * HEIGHT_SCALE }}
-                      />
-                    </View>
+                  {source?.length ? (
+                    <CFlatList
+                      data={source}
+                      renderItem={({ item, index }) => {
+                        return (
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              minHeight: 60 * WIDTH_SCALE,
+                              marginBottom: 10 * HEIGHT_SCALE,
+                              borderRadius: 10 * HEIGHT_SCALE,
+                              overflow: 'hidden',
+                            }}>
+                            <SkypeIndicator
+                              style={{
+                                alignSelf: 'center',
+                                position: 'absolute',
+                              }}
+                              color={Colors.borderGreen}
+                              size={50 * WIDTH_SCALE}
+                            />
+                            <Image
+                              source={{
+                                uri: item?.path || item?.url,
+                              }}
+                              style={{
+                                flex: 1,
+                                width: 330 * WIDTH_SCALE,
+                                height: 180 * HEIGHT_SCALE,
+                              }}
+                            />
+                            <TouchableOpacity
+                              onPress={() =>
+                                item?.path
+                                  ? setSource(
+                                      source?.filter(
+                                        (a) => a?.path !== item?.path,
+                                      ),
+                                    )
+                                  : setSource(
+                                      source?.filter(
+                                        (a) => a?.url !== item?.url,
+                                      ),
+                                    )
+                              }
+                              style={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                backgroundColor: 'red',
+                                width: 30 * WIDTH_SCALE,
+                                height: 30 * WIDTH_SCALE,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}>
+                              <Text style={{ color: '#fff' }}>X</Text>
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      }}
+                    />
                   ) : (
+                    // <TouchableOpacity
+                    //   onPress={selectFile}
+                    //   style={{ width: '100%', height: '100%' }}>
                     <Text
                       style={{
                         paddingVertical: 25 * HEIGHT_SCALE,
+                        alignSelf: 'center',
                       }}>
                       Nhấn để chọn ảnh
                     </Text>
+                    // </TouchableOpacity>
                   )}
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
           <TouchableOpacity
-            onPress={apiUpdateStadium}
+            onPress={() => {
+              apiUpdateStadium();
+              uploadImage();
+              getCollage();
+            }}
             style={{
               alignItems: 'center',
               backgroundColor: Colors.colorGreen,

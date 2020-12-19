@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation, route }) {
             ref.current.show();
           } else if (data.code === 203) {
             Spinner.hide();
-            navigation.replace('PasswordScreen', { phone: phone });
+            navigation.navigate('PasswordScreen', { phone: phone });
           } else if (data.code === 209) {
             Spinner.hide();
             Message('Bạn là người dùng, không thể đăng nhập ứng dụng');
@@ -178,51 +178,13 @@ export default function LoginScreen({ navigation, route }) {
             Tiếp tục
           </Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={{
-            backgroundColor: colors.colorGreen,
-            marginTop: 20 * HEIGHT_SCALE,
-            borderRadius: 10 * HEIGHT_SCALE,
-            paddingVertical: 15 * HEIGHT_SCALE,
-            paddingHorizontal: 40 * WIDTH_SCALE,
-            alignItems: 'center',
-          }}
-          onPress={onPressSendNotification}>
-          <Text
-            style={{
-              color: colors.colorWhite,
-              fontSize: fonts.font16,
-              fontWeight: fonts.bold,
-            }}>
-            Send Notifications
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: colors.colorGreen,
-            marginTop: 20 * HEIGHT_SCALE,
-            borderRadius: 10 * HEIGHT_SCALE,
-            paddingVertical: 15 * HEIGHT_SCALE,
-            paddingHorizontal: 40 * WIDTH_SCALE,
-            alignItems: 'center',
-          }}
-          onPress={onPressCancelNotification}>
-          <Text
-            style={{
-              color: colors.colorWhite,
-              fontSize: fonts.font16,
-              fontWeight: fonts.bold,
-            }}>
-            Cancel Notifications
-          </Text>
-        </TouchableOpacity> */}
       </View>
       <ModalComponent
         ref={ref}
         title="Xác nhận số điện thoại"
         onPress={() => {
           ref.current.hide();
-          navigation.replace('OTPScreen', { phone: phone });
+          navigation.navigate('OTPScreen', { phone: phone });
         }}>
         <Text style={{ fontWeight: fonts.bold }}>{phone}</Text>
         <Text style={{ fontSize: fonts.font16 }}>
